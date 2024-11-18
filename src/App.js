@@ -33,6 +33,7 @@ import ProductDetail from './pages/products/ProductDetail';
 import Cart from './pages/orders/Cart';
 import AboutUs from './pages/products/AboutUs';
 import Profile from './pages/users/Profile';
+import LoginUser from './pages/users/LoginUser';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -54,6 +55,7 @@ function App() {
           <Route path="/cart" element={<Cart cartItems={cartItems} onRemoveFromCart={handleRemoveFromCart} />} />
           <Route path="/àproposdenous" element={<AboutUs />} />
           <Route path="/profil" element={<Profile />} />
+          <Route path="/connection" element={<LoginUser />} />
         </Routes>
       </MainLayout>
     </Router>

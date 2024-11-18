@@ -24,7 +24,7 @@ function Header() {
             <ul>
               <li> <Link to="/profil">Mon Compte</Link></li>
               <li> <Link to="/LoginSupplier">comment etre un fournisseur?</Link></li>
-              <li><Link to="/LoginUser">se connecter</Link></li>
+              <li><Link to="/connection">se connecter</Link></li>
               <li><Link to="/#">se déconnecter</Link></li>
 
             </ul>
