@@ -1,31 +1,5 @@
-/*import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;*/
-
-
 import React, { useState } from 'react';
+import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
 import Home from './pages/products/Home';
@@ -34,8 +8,21 @@ import Cart from './pages/orders/Cart';
 import AboutUs from './pages/products/AboutUs';
 import Profile from './pages/users/Profile';
 import LoginUser from './pages/users/LoginUser';
+import Register from './pages/users/Register';
+import Verification from './pages/users/Verification';
+import Reconnection from './pages/users/Reconnection';
+import Reregister from './pages/users/Reregister';
+import LoginSupplier from './pages/users/LoginSupplier';
+import Historique from './pages/orders/historique';
 
 function App() {
+  const orders = [
+    { id: 1, description: 'Commande 1', date: '2024-11-28' },
+    { id: 2, description: 'Commande 2', date: '2024-11-27' },
+    { id: 3, description: 'Commande 3', date: '2024-11-26' },
+    // Ajoutez plus de commandes ici
+  ];
+
   const [cartItems, setCartItems] = useState([]);
 
   const handleAddToCart = (product) => {
@@ -56,6 +43,12 @@ function App() {
           <Route path="/àproposdenous" element={<AboutUs />} />
           <Route path="/profil" element={<Profile />} />
           <Route path="/connection" element={<LoginUser />} />
+          <Route path="/inscription" element={<Register />} />
+          <Route path="/reconnection" element={<Reconnection />} />
+          <Route path="/reinscription" element={<Reregister />} />
+          <Route path="/verification" element={<Verification email="utilisateur@example.com" nom="Utilisateur" />}/>
+          <Route path="/form_fournisseur" element={<LoginSupplier />} />
+          <Route path="/historique" element={<Historique orders={orders} />} />
         </Routes>
       </MainLayout>
     </Router>

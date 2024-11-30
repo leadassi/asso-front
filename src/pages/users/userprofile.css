@@ -1,0 +1,157 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+  }
+  
+  .user-profile {
+    padding: 2%;
+    padding-left: 20%;
+    padding-right: 20%;
+    background-color: #fff;
+    position: relative;
+  }
+  
+  .avatar-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10%;
+    margin-left: 10%;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid #ddd;
+  }
+
+  .background-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 20vh;
+    margin-left: 20%;
+    margin-right: 40%;
+    background-size: cover;
+    background-image: url(fontprofile.jpg);
+    background-position: center;
+    
+  }
+  
+  .background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+  
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .user-info, .order-history {
+    background: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .info-item, .order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .edit-icon {
+    cursor: pointer;
+    color: #c28e8e;
+  }
+  
+  .view-all-btn {
+    background-color: #bb9b7e;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .view-all-btn:hover {
+    background-color: #74613f;
+  }
+  
+  .footer-icons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-right: 2%;
+  
+  }
+  
+  .icon {
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1;
+  }
+  
+  .icon:hover {
+    color: #74613f;
+  }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content-grid {
+    display: block;
+  }
+
+  .user-info, .order-history {
+    margin-bottom: 20px;
+  }
+
+  .background-image-container {
+    position: fixed; /* Occupe tout l'écran */
+    top:12%;
+    left: 0;
+    width: 100%; /* Largeur totale */
+    height: 17vh; /* Hauteur totale */
+    margin: 0; /* Pas de marges */
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+  @media (min-width: 726px) and (max-width: 992px) {
+    .content-grid {
+      display: block;
+    }
+  
+    .user-info, .order-history {
+      margin-bottom: 20px;
+    }
+  
+    .background-image-container {
+      position: absolute; /* Occupe tout l'écran */
+     
+      left: 0;
+      width: 100%; /* Largeur totale */
+      height: 40vh; /* Hauteur totale */
+      margin: 0; /* Pas de marges */
+      background-size: cover;
+      background-position: center;
+    }
+  }
+
+
+  
