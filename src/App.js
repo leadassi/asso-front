@@ -14,7 +14,13 @@ import Reconnection from './pages/users/Reconnection';
 import Reregister from './pages/users/Reregister';
 import LoginSupplier from './pages/users/LoginSupplier';
 import Historique from './pages/orders/historique';
-
+import QRCodeScanner from "./pages/delivries/QRCodeScanner";
+import MapWithItinerary from "./pages/Itineraires/Carte";
+import Acceuil from "./pages/Acceuil/Acceuil";
+import Cosmetics from "./pages/Acceuil/Cosmetics";
+import Clothing from "./pages/Acceuil/Dresses";
+import Aliments from "./pages/Acceuil/Aliments";
+import Description from "./pages/Description/Description";
 function App() {
   const orders = [
     { id: 1, description: 'Commande 1', date: '2024-11-28' },
@@ -49,6 +55,13 @@ function App() {
           <Route path="/verification" element={<Verification email="utilisateur@example.com" nom="Utilisateur" />}/>
           <Route path="/form_fournisseur" element={<LoginSupplier />} />
           <Route path="/historique" element={<Historique orders={orders} />} />
+          <Route path="/cosmetics" element={<Cosmetics />} />
+          <Route path="/Clothing" element={<Clothing />} />
+          <Route path="/aliments" element={<Aliments />} />
+          <Route path="/description" element={<Description />} />
+          <Route path="/scanner" element={<QRCodeScanner />} />
+          <Route path="/map" element={<MapWithItinerary />} />
+          <Route path="/Acceuil" element={<Acceuil />} />
         </Routes>
       </MainLayout>
     </Router>
