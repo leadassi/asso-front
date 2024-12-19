@@ -83,10 +83,10 @@
 
 .scanner {
   width: 100%;
-  max-width: 320px;
+  max-width: 420px;
   height: auto;
-  border: 6px solid #020a16;
-  border-radius: 30px;
+  border: 5px solid #020a16;
+  border-radius: 10px;
   margin-bottom: 25px;
 }
 
