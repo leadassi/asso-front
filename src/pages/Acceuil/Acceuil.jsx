@@ -91,6 +91,19 @@ const Accueil = () => {
   };
 
   const currentImage = galleryImages[currentIndex] || {};
+  // Fonction pour gérer le clic sur l'image
+  const handleImageClick = (image) => {
+    // Naviguer vers la page /description en envoyant l'état avec les informations de l'image
+    navigate('/description', {
+      state: {
+        imageSrc: image.src,
+        name: image.name,
+        price: image.price,
+        rating: image.rating,
+        description: image.description,
+      }
+    });
+  };
   
   return (
     <div className="accueil-page">
@@ -98,32 +111,35 @@ const Accueil = () => {
       <div className="spacer"></div>
 
       <div className="carousel-container">
-        {/* Images floutées en arrière-plan */}
-        <div className="carousel-background">
-          {Array(9)
-            .fill(currentImage.src)
-            .map((src, index) => (
-              <img key={index} src={src} alt={`Background ${index}`} className="blurred-image" />
-            ))}
-        </div>
-
-        {/* Image principale */}
-        <div className="carousel-center">
-          <img
-            src={currentImage.src}
-            alt={currentImage.name}
-            className="carousel-image"
-          />
-        </div>
-
-        {/* Navigation */}
-        <button className="carousel-prev" onClick={prevImage}>
-          &#10094;
-        </button>
-        <button className="carousel-next" onClick={nextImage}>
-          &#10095;
-        </button>
+      {/* Images floutées en arrière-plan */}
+      <div className="carousel-background">
+        {Array(9)
+          .fill(currentImage.src)
+          .map((src, index) => (
+            <img key={index} src={src} alt={`Background ${index}`} className="blurred-image" />
+          ))}
       </div>
+
+      {/* Image principale */}
+      <div className="carousel-center">
+        <img
+          src={currentImage.src}
+          alt={currentImage.name}
+          className="carousel-image"
+          onClick={() => handleImageClick(currentImage)} // Lorsqu'on clique sur l'image, on passe les infos à la page de description
+        />
+      </div>
+
+      {/* Navigation */}
+      <button className="carousel-prev" onClick={prevImage}>
+        &#10094;
+      </button>
+      <button className="carousel-next" onClick={nextImage}>
+        &#10095;
+      </button>
+    </div>
+  );
+
 
 
 
@@ -185,6 +201,9 @@ const Accueil = () => {
           </div>
         </div>
       )}*/}
+
+
+      
 
       
 
