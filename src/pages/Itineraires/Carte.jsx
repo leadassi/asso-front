@@ -52,7 +52,6 @@ const Carte = () => {
 
   return (
     <div className="itinerary-container">
-      <h1>Calcul d'itinéraire</h1>
       <FormComponent
         onSubmit={handleFormSubmit}
         depart={depart}

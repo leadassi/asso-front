@@ -128,18 +128,18 @@ const Clothing = () => {
                         style={{
                           background:
                             color === "all"
-                              ? "linear-gradient(to right, red, green, yellow, black, white)" // Dégradé pour "all"
+                              ? "linear-gradient(to right, red, green, yellow, black, white)"
                               : color === "rouge"
-                              ? "radial-gradient(circle, #ff4d4d, #cc0000)" // Dégradé pour rouge
+                              ? "radial-gradient(circle, #ff4d4d, #cc0000)"
                               : color === "vert"
-                              ? "radial-gradient(circle, #80ff80, #009933)" // Dégradé pour vert
+                              ? "radial-gradient(circle, #80ff80, #009933)"
                               : color === "jaune"
-                              ? "radial-gradient(circle, #ffff80, #e6b800)" // Dégradé pour jaune
+                              ? "radial-gradient(circle, #ffff80, #e6b800)"
                               : color === "noir"
-                              ? "radial-gradient(circle, #555555, #000000)" // Dégradé pour noir
+                              ? "radial-gradient(circle, #555555, #000000)"
                               : color === "blanc"
-                              ? "radial-gradient(circle, #ffffff, #f2f2f2)" // Dégradé pour blanc
-                              : color, // Couleur par défaut
+                              ? "radial-gradient(circle, #ffffff, #f2f2f2)"
+                              : color,
                         }}
                         onClick={() => setSelectedColor(color)}
                       ></button>
@@ -179,13 +179,13 @@ const Clothing = () => {
         </div>
       )}
 
-      {/* Affichage des produits pour la catégorie "Chapeaux" */}
+      {/* Affichage des produits pour les catégories */}
       {category === "Chapeaux" ? (
-        <Chapeaux /> // Affichage du composant Chapeaux
-      ) :category === "Vetements" ? (
-        <Vetements /> // Affichage du composant Vetements
+        <Chapeaux />
+      ) : category === "Vetements" ? (
+        <Vetements />
       ) : category === "Sacs" ? (
-        <Sacs /> // Affichage du composant sacs
+        <Sacs />
       ) : (
         <div className="category-content">
           <h2>Produits disponibles</h2>

@@ -17,7 +17,8 @@ const Accueil = () => {
   const [modalImage, setModalImage] = useState("");
   /*const [isCoursesModalOpen, setIsCoursesModalOpen] = useState(false);*/
   const [favorites, setFavorites] = useState([]);
-
+  // État pour la page actuelle
+  const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
 
   // Change l'image toutes les 6 secondes
@@ -88,6 +89,8 @@ const Accueil = () => {
       return [...prevFavorites, id]; // Ajoute aux favoris
     });
   };
+
+  const currentImage = galleryImages[currentIndex] || {};
   
   return (
     <div className="accueil-page">
@@ -95,27 +98,33 @@ const Accueil = () => {
       <div className="spacer"></div>
 
       <div className="carousel-container">
-        <div className="carousel-center">
-          {/* Carrousel */}
-          <div className="carousel-3d">
-            <div className="carousel-item">
-              <img
-                src={images[currentIndex]}
-                alt={`Carrousel ${currentIndex + 1}`}
-                className="carousel-image main-image"
-              />
-            </div>
-          </div>
+        {/* Images floutées en arrière-plan */}
+        <div className="carousel-background">
+          {Array(9)
+            .fill(currentImage.src)
+            .map((src, index) => (
+              <img key={index} src={src} alt={`Background ${index}`} className="blurred-image" />
+            ))}
         </div>
 
-  {/* Navigation */}
-  <button className="carousel-prev" onClick={prevImage}>
-    &#10094;
-  </button>
-  <button className="carousel-next" onClick={nextImage}>
-    &#10095;
-  </button>
-</div>
+        {/* Image principale */}
+        <div className="carousel-center">
+          <img
+            src={currentImage.src}
+            alt={currentImage.name}
+            className="carousel-image"
+          />
+        </div>
+
+        {/* Navigation */}
+        <button className="carousel-prev" onClick={prevImage}>
+          &#10094;
+        </button>
+        <button className="carousel-next" onClick={nextImage}>
+          &#10095;
+        </button>
+      </div>
+
 
 
       {/* Navigation des catégories */}
@@ -179,73 +188,84 @@ const Accueil = () => {
 
       
 
-      {/* Section Produits */}
-      <section className="products" id="products">
+<section className="products" id="products">
   <h1 className="heading">
-     <span>Nos Produits</span>
+    <span>Nos Produits</span>
   </h1>
   <div className="carousel-products-container">
-    {/* Bouton précédent */}
-    <button className="carousel-prev" onClick={prevImage}>
-      &#10094;
-    </button>
-
-    {/* Bloc de produits */}
     <div className="carousel-products">
-      {galleryImages.slice(currentIndex, currentIndex + 4).map((image, index) => (
-        <div className="box" key={index}>
-          <div className="icons">
-            <button
-              className="icon-button fas fa-plus"
-              title="View Details"
-              onClick={() =>
-                navigate('/description', {
-                  state: {
-                    imageSrc: image.src,
-                    name: image.name,
-                    price: image.price,
-                    rating: image.rating,
-                    description: image.description,
-                  },
-                })
-              }
-            ></button>
+      {galleryImages
+        .slice(currentPage * 8, currentPage * 8 + 8) // 8 images par page
+        .map((image, index) => (
+          <div className="box" key={index}>
+            <div className="icons">
+              <button
+                className="icon-button fas fa-plus"
+                title="View Details"
+                onClick={() =>
+                  navigate('/description', {
+                    state: {
+                      imageSrc: image.src,
+                      name: image.name,
+                      price: image.price,
+                      rating: image.rating,
+                      description: image.description,
+                    },
+                  })
+                }
+              ></button>
               <button
                 className="icon-button fas fa-heart"
                 title="Add to Favorites"
                 onClick={() => toggleFavorite(image.id)}
                 style={{
-                  color: favorites.includes(image.id) ? "red" : "black",
-                }}>
-              </button>
-
-            <button
-              className="icon-button fas fa-eye"
-              title="View Image"
-              onClick={() => openModal(image.src)}
-            ></button>
-          </div>
-          <img src={image.src} alt={image.name} />
-          <div className="content">
-            <h3>{image.name}</h3>
-            <div className="price">{image.price} FCFA</div>
-            <div className="stars">
-              {[...Array(5)].map((_, i) => (
-                <i key={i} className={`fa-star ${i < image.rating ? 'fas' : 'far'}`}></i>
-
-              ))}
+                  color: favorites.includes(image.id) ? 'red' : 'black',
+                }}
+              ></button>
+              <button
+                className="icon-button fas fa-eye"
+                title="View Image"
+                onClick={() => openModal(image.src)}
+              ></button>
+            </div>
+            <img src={image.src} alt={image.name} />
+            <div className="content">
+              <h3>{image.name}</h3>
+              <div className="price">{image.price} FCFA</div>
+              <div className="stars">
+                {[...Array(5)].map((_, i) => (
+                  <i
+                    key={i}
+                    className={`fa-star ${
+                      i < image.rating ? 'fas' : 'far'
+                    }`}
+                  ></i>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
+  </div>
 
-    {/* Bouton suivant */}
-    <button className="carousel-next" onClick={nextImage}>
-      &#10095;
-    </button>
+  {/* Pagination */}
+  <div className="carousel-bar">
+    {Array.from(
+      { length: Math.ceil(galleryImages.length / 8) },
+      (_, i) => (
+        <div
+          key={i}
+          className={`carousel-dot ${currentPage === i ? 'active' : ''}`}
+          onClick={() => setCurrentPage(i)}
+        >
+          {i + 1}
+        </div>
+      )
+    )}
   </div>
 </section>
+
+
 
       {/* Section Catégories 
             

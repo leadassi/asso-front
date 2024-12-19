@@ -41,6 +41,7 @@ const Navbar = () => {
               <option value="Clothing">Clothing</option>
               <option value="aliments">Aliments</option>
               <option value="cosmetics">Cosmetics</option>
+              <option value="cosmetics">Favories</option>
             </select>
           </div>
           <button type="submit" className="search-button">
