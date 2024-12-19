@@ -115,6 +115,9 @@
 }
 /* Menu Icon */
 /* Dropdown Menu Container */
+
+/* Menu Icon */
+/* Dropdown Menu Container */
 .dropdown-menu {
   background-color: #f9f9f9; /* Gris clair pour l'arrière-plan */
   border: 1px solid #ddd;
@@ -233,4 +236,110 @@
 .service-client-container:hover .service-client-tooltip {
   opacity: 1;
   visibility: visible;
+}
+/**/
+/* Menu déroulant */
+.dropdown-menu {
+  position: absolute;
+  top: 50px; /* Ajuster selon la position du menu */
+  left: 0;
+  background-color: blue;
+  width: 250px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Sections du menu */
+.dropdown-section {
+  padding: 10px 15px;
+}
+
+/* Titre des sections */
+.dropdown-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+/* Bloc d'accueil */
+.welcome-section {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.welcome-title {
+  display: flex;
+  align-items: center;
+  color: #333;
+}
+
+.welcome-title i {
+  margin-right: 8px;
+  font-size: 20px;
+  color: #ffd700; /* Couleur de l'icône */
+}
+
+/* Liste des éléments */
+.dropdown-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-list li {
+  padding: 8px 0;
+  color: #555;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-list li:hover {
+  background-color: #f1f1f1;
+}
+
+/* Séparateurs entre les sections */
+.dropdown-separator {
+  border: none;
+  height: 1px;
+  background-color: #ddd;
+  margin: 10px 0;
+}
+
+/* Icône et texte dans les éléments de liste */
+.dropdown-list li i {
+  margin-right: 10px;
+  font-size: 18px;
+  color: #777;
+}
+
+/* Style pour le bouton de connexion */
+.dropdown-list li:last-child {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.dropdown-list li:last-child:hover {
+  background-color: transparent;
+  color: #0056b3;
+}
+
+/* Animation pour afficher le menu */
+.dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in, visibility 0.3s ease-in;
 }
