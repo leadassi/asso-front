@@ -1,0 +1,193 @@
+.navbar {
+  width: 100%;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.3); /* Transparence */
+  backdrop-filter: blur(10px); /* Flou pour l'effet de transparence */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.navbar-logo {
+  height: 60px;
+  border-radius: 30px; /* Arrondir les coins du logo */
+}
+/* Barre de recherche */
+.search-form {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.search-input,
+.search-category,
+.search-button {
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  height: 40px;
+}
+
+.search-input {
+  border: 1px solid #ddd;
+  border-radius: 5px 0 0 5px;
+  width: 200px;
+  padding: 5px 10px;
+}
+
+.search-category {
+  border: 1px solid #ddd;
+  border-left: none;
+  width: 200px;
+  text-align: center;
+  background-color: #fff;
+  appearance: none; /* Supprime le style par défaut */
+  padding: 5px 10px;
+  position: relative;
+  color: #000;
+  cursor: pointer;
+}
+
+/* Ajout d'une flèche descendante personnalisée */
+.search-category-container {
+  position: relative;
+}
+
+.search-category-container::after {
+  content: "\25BC"; /* Code Unicode pour la flèche vers le bas */
+  font-size: 0.8rem;
+  color: #000; /* Couleur noire */
+  position: absolute;
+  right: 10px; /* Position à droite */
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Empêche les interactions */
+}
+
+.search-button {
+  background-color: #ff8c00;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  width: 50px;
+  transition: background-color 0.3s;
+  margin-right: 15px;
+}
+
+.search-button:hover {
+  background-color: #e67e22;
+}
+
+.icon-container-1 {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espacement entre les icônes */
+}
+
+.icon-button-1 {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.icon-button-1:hover {
+  color: #007bff;
+}
+
+.fas {
+  color: black;
+}
+/* Menu Icon */
+/* Dropdown Menu Container */
+.dropdown-menu {
+  background-color: #f9f9f9; /* Gris clair pour l'arrière-plan */
+  border: 1px solid #ddd;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  width: 250px;
+  box-shadow: #ffff;
+  z-index: 10;
+  padding: 10px 0;
+  border-radius: 5px;
+}
+
+/* Section Accueil avec Bonjour */
+.welcome-section {
+  background-color: #333; /* Gris sombre au lieu de noir pur */
+  color: #fff;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.welcome-section .icon-button-1 {
+  margin-right: 10px;
+  font-size: 18px;
+  font-weight: 20px ;
+  color: #ffcc00; /* Jaune doux pour l'icône */
+}
+
+.welcome-title {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Titre des sections */
+.dropdown-title {
+  color:black; /* Gris foncé pour le titre */
+  font-weight: bold;
+  margin: 10px 15px;
+  font-size: 15px;
+}
+
+/* Liste des sous-titres */
+.dropdown-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 15px;
+}
+
+.dropdown-list li {
+  margin-bottom: 10px;
+  color:#fff; /* Gris moyen pour une meilleure lisibilité */
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.dropdown-list li:hover {
+  color: #ff6600; /* Couleur d'accentuation au survol */
+  cursor: pointer;
+}
+
+/* Séparateur fin */
+.dropdown-separator {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 10px 0;
+}
+
+/* Ajustement des paddings et espacements */
+.dropdown-section {
+  padding: 5px 0;
+}

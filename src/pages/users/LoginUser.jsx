@@ -15,14 +15,27 @@ const LoginUser = () => {
   const navigate = useNavigate();
   
 
-   // Récupérer le jeton CSRF depuis le backend
-   /*const fetchCsrfToken = async () => {
+  const fetchCsrfToken = async () => {
     try {
-      const response = await axios.get('http://localhost:9091/Utilisateurs/csrf-token', { withCredentials: true });
-      console.log('Réponse de /csrf-token :', response);
-      if (response.data && response.data.token) {
-        return response.data.token;
+      const response = await fetch('http://localhost:9091/Utilisateurs/csrf-token', {
+        method: 'GET',
+        credentials: 'include', // Inclut les informations de session (cookies)
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erreur lors de la récupération du jeton CSRF : ${response.statusText}`);
       }
+
+      const data = await response.json();
+      console.log('Réponse du jeton CSRF:', data);
+
+      if (data.token) {
+        return data.token.replace(/"/g, ''); // Renvoie le jeton CSRF récupéré
+      }
+
       throw new Error('Jeton CSRF non trouvé dans la réponse.');
     } catch (err) {
       console.error('Erreur lors de la récupération du jeton CSRF :', err);
@@ -34,7 +47,6 @@ const LoginUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation des champs
     if (!email || !mot_passe) {
       setError('Veuillez remplir tous les champs.');
       return;
@@ -49,138 +61,36 @@ const LoginUser = () => {
       const password = 'password123'; // Mot de passe Basic Auth
       const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
 
-      // Envoyer la requête POST pour la connexion
-      const response = await axios.post(
-        'http://localhost:9091/Utilisateurs/connexion',
-        { email, mot_passe: mot_passe },
-        {
-          headers: {
-            Authorization: authHeader,
-            'X-CSRF-TOKEN': csrfToken, // Ajouter le jeton CSRF
-          },
-          withCredentials: true,
-        }
-      );
+      // Effectuer la requête POST pour la connexion
+      const response = await fetch('http://localhost:9091/Utilisateurs/connexion', {
+        method: 'POST',
+        headers: {
+          Authorization: authHeader,
+          'X-CSRF-TOKEN': csrfToken,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, mot_passe }),
+        credentials: 'include', // Inclure les cookies dans la requête
+      });
 
-      console.log('Connexion réussie:', response.data);
+      if (!response.ok) {
+        throw new Error(`Erreur ${response.status}: ${response.statusText}`);
+      }
 
+      const data = await response.json();
+      console.log('Connexion réussie:', data);
+      
       // Sauvegarder les informations utilisateur dans le localStorage
-      localStorage.setItem('user', JSON.stringify(response.data));
+      sessionStorage.setItem('utilisateurId', JSON.stringify(data.id));
+      sessionStorage.setItem('utilisateurNom', JSON.stringify(data.nom));
+      sessionStorage.setItem('utilisateurPrenom', JSON.stringify(data.prenom));
 
       // Rediriger l'utilisateur vers la page d'accueil
-      navigate('/');
+      navigate('/'); // Modifier selon la route de votre page profil
     } catch (err) {
       console.error('Erreur de connexion:', err);
-      setError(err.response?.data?.error || 'Une erreur est survenue.');
-    }*/
-
-
-      /*const fetchCsrfToken = async () => {
-        try {
-          const response = await axios.get('http://localhost:9091/Utilisateurs/csrf-token', { withCredentials: true });
-          console.log('Réponse de /csrf-token :', response);
-          if (response.data && response.data.csrfToken) {
-            return response.data.csrfToken; // Utiliser csrfToken renvoyé par le backend
-          }
-          throw new Error('Jeton CSRF non trouvé dans la réponse.');
-        } catch (err) {
-          console.error('Erreur lors de la récupération du jeton CSRF :', err);
-          throw err;
-        }
-      };*/
-
-      /*async function fetchCsrfToken() {
-        const response = await fetch('http://localhost:9091/csrf-token', {
-          method: 'GET',
-          credentials: 'include', // Inclure les cookies
-        });
-      
-        if (!response.ok) {
-          throw new Error('Impossible de récupérer le jeton CSRF');
-        }
-      
-        const data = await response.json();
-        return data.csrfToken; // Adaptez cette ligne selon la réponse de votre backend
-      }*/
-
-        const fetchCsrfToken = async () => {
-  try {
-    const response = await fetch('http://localhost:9091/Utilisateurs/csrf-token', {
-      method: 'GET',
-      credentials: 'include', // Inclut les informations de session (cookies)
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`Erreur lors de la récupération du jeton CSRF : ${response.statusText}`);
+      setError(err.message || 'Une erreur est survenue.');
     }
-
-    const data = await response.json();
-    console.log('Réponse de /csrf-token :', data);
-
-    if (data && data.csrfToken) {
-      return data.csrfToken; // Renvoie le jeton CSRF récupéré
-    }
-
-    throw new Error('Jeton CSRF non trouvé dans la réponse.');
-  } catch (err) {
-    console.error('Erreur lors de la récupération du jeton CSRF :', err);
-    throw err;
-  }
-};
-
-                                                                                                                                                                                                                                                                                                                                                                                                                          
-    
-      // Soumettre le formulaire de connexion
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        // Validation des champs
-        if (!email || !mot_passe) {
-          setError('Veuillez remplir tous les champs.');
-          return;
-        }
-    
-        try {
-          
-          const csrfToken = await fetchCsrfToken();
-          // Ajouter les informations d'authentification Basic
-          const username = 'user'; // Nom d'utilisateur Basic Auth
-          const password = 'password123'; // Mot de passe Basic Auth
-          const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
-        
-          // Envoyer la requête POST pour la connexion
-          const response = await fetch('http://localhost:9091/Utilisateurs/connexion', {
-            method: 'POST',
-            headers: {
-              Authorization: authHeader,
-              'X-CSRF-Token': csrfToken, // Ajouter le jeton CSRF
-              'Content-Type': 'application/json', // Indiquer que le corps de la requête est en JSON
-            },
-            body: JSON.stringify({ email, mot_passe }), // Convertir les données en JSON
-            credentials: 'include', // Inclure les cookies
-          });
-        
-          if (!response.ok) {
-            throw new Error(`Erreur ${response.status}: ${response.statusText}`);
-          }
-        
-          const data = await response.json();
-          console.log('Connexion réussie:', data);
-        
-          // Sauvegarder les informations utilisateur dans le localStorage
-          localStorage.setItem('user', JSON.stringify(data));
-        
-          // Rediriger l'utilisateur vers la page d'accueil
-          navigate('/');
-        } catch (err) {
-          console.error('Erreur de connexion:', err);
-          setError(err.message || 'Une erreur est survenue.');
-        }
-        
-
   };
 
   return (

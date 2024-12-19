@@ -1,0 +1,174 @@
+.products {
+    padding: 30px 5%;
+    background: rgba(255, 255, 255, 0.3); /* Transparence */
+    backdrop-filter: blur(10px); /* Flou pour l'effet de transparence */
+  }
+  
+  .products .heading {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: var(--black);
+  }
+  
+  .products .heading span {
+    color: var(--orange);
+  }
+  
+  .products .box-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: space-between; /* Pour espacer les images uniformément */
+  }
+  
+  .products .box-container .box {
+    border: 0.1rem solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: #f9f9f9;
+    flex: 1 1 calc(23% - 1rem); /* Ajuste la taille pour 4 images par ligne */
+    max-width: 23%; /* Limite à 23% de la largeur pour chaque boîte */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .products .box-container .box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .products .box-container .box img {
+    height: 8rem; /* Ajuste la hauteur de l'image */
+    width: auto; /* Conserve les proportions */
+    margin: 1rem auto; /* Centre l'image dans la boîte */
+    display: block;
+    filter: drop-shadow(0 0.5rem 1rem rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease;
+  }
+  
+  .products .box-container .box:hover img {
+    transform: scale(1.1);
+  }
+  
+  .products .box-container .box .icons {
+    display: flex;
+    flex-flow: column;
+    position: absolute;
+    top: 0.5rem;
+    left: -10rem;
+    transition: left 0.3s ease;
+  }
+  
+  .products .box-container .box:hover .icons {
+    left: 1rem;
+  }
+  .products .box-container .box .icons a {
+    height: 3.5rem;
+    width: 4rem;
+    line-height: 3.5rem;
+    font-size: 1.5rem;
+    color: var(--black); /* Couleur par défaut des icônes */
+    border: 0.1rem solid var(--black); /* Bordure noire */
+    border-radius: 0.5rem;
+    background:#fff; /* Fond blanc */
+    margin-top: 0.5rem;
+    text-align: center;
+    transition: background 0.3s ease, color 0.3s ease, border 0.3s ease; /* Transition fluide */
+  }
+  
+  .products .box-container .box .icons a:hover {
+    background: orange; /* Fond orange au survol */
+    color: #fff; /* Texte blanc */
+    border-color: var(--orange); /* Bordure orange */
+  }
+  
+  
+  .products .box-container .box .content {
+    padding: 1rem;
+  }
+  
+  .products .box-container .box .content h3 {
+    color: var(--black);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .products .box-container .box .content .price {
+    color: var(--black);
+    font-size: 1.8rem;
+    font-weight: bolder;
+    padding: 0.5rem 0;
+  }
+  
+  .products .box-container .box .content .price span {
+    color: var(--orange);
+    font-size: 1.2rem;
+    text-decoration: line-through;
+  }
+  
+  .products .box-container .box .content .stars {
+    padding-bottom: 0.5rem;
+  }
+  
+  .products .box-container .box .content .stars i {
+    font-size: 1.5rem;
+    color: rgb(204, 33, 33);
+  }
+
+  /*classe Modale */
+
+  /* Modale */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: hidden; /* Empêche le débordement */
+}
+
+.modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-image {
+  width: auto;
+  height: auto;
+  max-width: 100%; /* L'image ne dépassera pas la largeur de la modale */
+  max-height: 100%; /* L'image ne dépassera pas la hauteur de la modale */
+  border-radius: 8px;
+  object-fit: contain; /* L'image est contenue dans la modale sans distorsion */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: #000;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: var(--orange);
+}
+
+  

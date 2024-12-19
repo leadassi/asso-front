@@ -1,0 +1,17 @@
+.cosmetics-page {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .cosmetics-page h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .cosmetics-page p {
+    font-size: 18px;
+    color: #555;
+  }
+  

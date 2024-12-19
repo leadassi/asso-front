@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import axios from 'axios';
+//import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Register = () => {
@@ -32,7 +33,6 @@ const Register = () => {
     pays: "",
     ville: "",
     quartier: "",
-    BP: "",
   });
 
   const [message, setMessage] = useState('');
@@ -51,32 +51,98 @@ const Register = () => {
   }
 };
 
-  const handleSubmit = async (e) =>  {
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Fonction pour afficher temporairement le mot de passe
+  const handleTogglePassword = () => {
+    setShowPassword(true);
+    setTimeout(() => {
+      setShowPassword(false);
+    }, 1000); // 1 seconde pour afficher le mot de passe
+  };
+
+  const fetchCsrfToken = async () => {
+    try {
+      const response = await fetch("http://localhost:9091/Utilisateurs/csrf-token", {
+        method: "GET",
+        credentials: "include", // Inclut les cookies (sessions)
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Erreur lors de la récupération du jeton CSRF : ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      if (data.token) {
+        return data.token.replace(/"/g, ''); // Renvoie uniquement la valeur du token CSRF
+      }
+      throw new Error("Jeton CSRF non trouvé dans la réponse.");
+    } catch (error) {
+      console.error("Erreur lors de la récupération du jeton CSRF :", error);
+      throw error;
+    }
+  };
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    try {
-        const response = await axios.post("http://localhost:9091/Utilisateurs/inscription", formData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
   
-        if (response.status === 200 || response.status === 201) {
-          console.log("Inscription réussie :", response.data);
-          setMessage("Inscription réussie !");
-          navigate("/verification"); 
-        } else {
-          console.error("Erreur lors de l'inscription :", response.data);
-          setMessage(response.data.message || "Une erreur est survenue.");
-        }
-      } catch (error) {
-        console.error("Erreur réseau ou serveur :", error.response ? error.response.data : error.message);
-        setMessage(error.response?.data?.message || "Erreur réseau ou serveur.");
+    try {
+      // Récupérer le jeton CSRF
+      const csrfToken = await fetchCsrfToken();
+  
+      // Ajouter l'en-tête Authorization avec Basic Auth
+      const username = 'user'; // Nom d'utilisateur Basic Auth
+      const password = 'password123'; // Mot de passe Basic Auth
+      const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
+  
+      // Effectuer la requête POST avec le jeton CSRF et Basic Auth
+      const response = await fetch("http://localhost:9091/Utilisateurs/inscription", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": csrfToken, // Inclure le token CSRF
+          Authorization: authHeader, // Ajouter Basic Auth
+        },
+        body: JSON.stringify(formData),
+        credentials: "include", // Inclure les cookies (sessions)
+      });
+  
+      if (response.ok) {
+        const responseText = await response.text(); // Récupère la réponse brute
+      const data = responseText ? JSON.parse(responseText) : null; // Parse seulement si non vide
+
+      console.log("Inscription réussie :", data);
+
+      // Message de succès et redirection
+      setMessage("Inscription réussie !");
+      sessionStorage.setItem("utilisateur", JSON.stringify(data.utilisateur));
+      sessionStorage.setItem("email",formData.email);
+
+      navigate("/verification"); // Rediriger vers une page de vérification
+    } else {
+      const responseText = await response.text();
+        //const errorData = await response.json();
+        const errorData = responseText ? JSON.parse(responseText) : { message: "Une erreur est survenue." };
+        console.log(formData.BP)
+        console.error("Erreur lors de l'inscription :", errorData);
+  
+        // Afficher un message d'erreur propre sans `window.alert`
+        setMessage(errorData.message || "Une erreur est survenue.");
+      }
+    } catch (error) {
+      console.error("Erreur réseau ou serveur :", error.message);
+      
+      // Afficher une erreur propre sans `window.alert`
+      setMessage("Erreur réseau ou serveur.");
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-    };
+  };
+  
 
   
 
@@ -163,19 +229,33 @@ const Register = () => {
             <small className="form-text text-muted text-tertiary-emphasis"><i>Merci d'entrer un e-mail valide.</i></small>
           </div>
 
-          <div className="form-group mt-3 text-warning-emphasis">
-            <label htmlFor="passwordInput">Mot de passe</label>
-            <input
-              type="password"
-              name="mot_passe"
-              className="form-control border border-warning-subtle bg-warning-subtle"
-              id="passwordInput"
-              placeholder="Mot de passe"
-              value={formData.mot_passe}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+          
+          <div className="form-group mt-3 text-warning-emphasis" style={{ position: "relative" }}>
+        <label htmlFor="passwordInput">Mot de passe</label>
+        <input
+          type={showPassword ? "text" : "password"}
+          name="mot_passe"
+          className="form-control border border-warning-subtle bg-warning-subtle"
+          id="passwordInput"
+          placeholder="Mot de passe"
+          value={formData.mot_passe}
+          onChange={handleInputChange}
+          required
+        />
+        <span
+          onClick={handleTogglePassword}
+          style={{
+            position: "absolute",
+            right: "10px",
+            top: "50%",
+            transform: "translateY(50%)",
+            cursor: "pointer",
+            color: "#ffc107",
+          }}
+        >
+          {showPassword ? <FaEye /> : <FaEyeSlash />}
+        </span>
+      </div>
 
           <div className="form-group mt-3 text-warning-emphasis">
             <label htmlFor="numeroInput">Numéro de téléphone</label>
@@ -257,19 +337,6 @@ const Register = () => {
           )}
         </div>
 
-          <div className="form-group mt-3 text-warning-emphasis">
-            <label htmlFor="BPInput">Boîte Postale</label>
-            <input
-              type="text"
-              name="BP"
-              className="form-control border border-warning-subtle bg-warning-subtle"
-              id="BPInput"
-              placeholder="BP"
-              value={formData.BP}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
           <br/>
           <button type="submit" className="btn  w-100" style={{ backgroundColor: '#D97706' }} onMouseEnter={(e) => (e.target.style.backgroundColor = '#b45309')} onMouseLeave={(e) => (e.target.style.backgroundColor = '#D97706')} disabled={loading}>
                         {loading ? "Inscription..." : "S'inscrire"}
