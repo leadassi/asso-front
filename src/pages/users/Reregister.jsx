@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import "../../App.js";
@@ -17,32 +16,85 @@ const Reregister = () => {
     navigate("/connection"); 
   };
 
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault(); 
-
+  const fetchCsrfToken = async () => {
     try {
-      
-      const response = await axios.post('http://localhost:9091/Utilisateurs/reinscription', {
-        email,
-        nouveauMotDePasse,
-        code,
+      const response = await fetch('http://localhost:9091/Utilisateurs/csrf-token', {
+        method: 'GET',
+        credentials: 'include', // Inclut les informations de session (cookies)
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
 
-      // Gérer la réponse en cas de succès
-      console.log(response.data);
-      setMessage('Mot de passe réinitialisé avec succès. Vous pouvez maintenant vous connecter.');
-      navigate('/connection');
-      setError(''); 
+      if (!response.ok) {
+        throw new Error(`Erreur lors de la récupération du jeton CSRF : ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Réponse du jeton CSRF:', data);
+
+      if (data.token) {
+        return data.token.replace(/"/g, ''); // Renvoie le jeton CSRF récupéré
+      }
+
+      throw new Error('Jeton CSRF non trouvé dans la réponse.');
     } catch (err) {
-      // Gérer les erreurs en cas de problème
-      setError(
-        err.response?.data?.message || 'Une erreur est survenue. Veuillez réessayer.'
-      );
-      setMessage(''); 
+      console.error('Erreur lors de la récupération du jeton CSRF :', err);
+      throw err;
     }
   };
 
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email || !nouveauMotDePasse || !code) {
+      setError('Tous les champs sont obligatoires.');
+      return;
+    }
+  
+    try {
+
+      const csrfToken = await fetchCsrfToken();
+
+      // Ajouter les informations d'authentification Basic
+      const username = 'user'; // Nom d'utilisateur Basic Auth
+      const password = 'password123'; // Mot de passe Basic Auth
+      const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
+
+      const response = await fetch('http://localhost:9091/Utilisateurs/reinscription', {
+        method: 'POST',
+        headers: {
+          Authorization: authHeader,
+          'X-CSRF-TOKEN': csrfToken,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          nouveauMotDePasse,
+          code,
+        }),
+        credentials: "include",
+      });
+  
+      if (!response.ok) {
+        // Si la réponse HTTP indique une erreur
+        const errorData = await response.json(); // Récupérer les détails de l'erreur
+        throw new Error(errorData.message || 'Une erreur est survenue. Veuillez réessayer.');
+      }
+  
+      const data = await response.json(); // Récupérer les données de la réponse
+      console.log(data);
+      setMessage('Mot de passe réinitialisé avec succès. Vous pouvez maintenant vous connecter.');
+      navigate('/connection');
+      setError('');
+    } catch (err) {
+      // Gérer les erreurs en cas de problème
+      setError(err.message || 'Une erreur est survenue. Veuillez réessayer.');
+      setMessage('');
+    }
+  };
+  
   return (
     <div className="cont">
     <div className=" container d-flex justify-content-center align-items-center vh-100">

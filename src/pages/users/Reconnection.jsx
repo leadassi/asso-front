@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 
@@ -11,26 +10,79 @@ const Reconnection = () => {
 
   const navigate = useNavigate();
 
+  const fetchCsrfToken = async () => {
+    try {
+
+      const response = await fetch('http://localhost:9091/Utilisateurs/csrf-token', {
+        method: 'GET',
+        credentials: 'include', // Inclut les informations de session (cookies)
+        headers: {
+          'Content-Type': 'application/json',
+          
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erreur lors de la récupération du jeton CSRF : ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Réponse du jeton CSRF:', data);
+
+      if (data.token) {
+        return data.token.replace(/"/g, ''); // Renvoie le jeton CSRF récupéré
+      }
+
+      throw new Error('Jeton CSRF non trouvé dans la réponse.');
+    } catch (err) {
+      console.error('Erreur lors de la récupération du jeton CSRF :', err);
+      throw err;
+    }
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault(); 
-
+  
     try {
-      
-      const response = await axios.post('http://localhost:9091/Utilisateurs/reconnexion', { email });
 
-      // Gérer la réponse en cas de succès
-      console.log(response.data);
+
+      // Récupérer le jeton CSRF
+      const csrfToken = await fetchCsrfToken();
+
+      // Ajouter les informations d'authentification Basic
+      const username = 'user'; // Nom d'utilisateur Basic Auth
+      const password = 'password123'; // Mot de passe Basic Auth
+      const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
+
+      const response = await fetch(`http://localhost:9091/Utilisateurs/reconnexion?email=${encodeURIComponent(email)}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: authHeader,
+          'X-CSRF-TOKEN': csrfToken,
+        },
+        credentials: 'include',
+      });
+  
+      if (!response.ok) {
+        // Si le statut HTTP indique une erreur
+        const errorData = await response.json(); // Extraire les détails de l'erreur
+        throw new Error(errorData.message || 'Une erreur est survenue. Veuillez réessayer.');
+      }
+  
+      const data = await response.json(); // Extraire les données de la réponse
+      console.log(data);
       setMessage('Un code de réinitialisation a été envoyé à votre e-mail.');
       navigate('/reinscription');
       setError(''); 
     } catch (err) {
       // Gérer les erreurs en cas de problème
-      setError(
-        err.response?.data?.message || 'Une erreur est survenue. Veuillez réessayer.'
-      );
+      setError(err.message || 'Une erreur est survenue. Veuillez réessayer.');
       setMessage(''); 
     }
   };
+  
 
   return (
     <div className="cont">

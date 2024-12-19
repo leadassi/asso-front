@@ -1,43 +1,107 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaTimes } from "react-icons/fa";
 
-const Verification = ({ email, nom }) => {
+const Verification = () => {
   const [code, setCode] = useState(''); 
   const [message, setMessage] = useState(''); 
   const [error, setError] = useState('');
-  const navigate = useNavigate(); 
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const email = sessionStorage.getItem('email'); 
+
+  if (!email) {
+    return <p>Aucun email trouvé. Retournez à la page d'inscription.</p>;
+  }
 
   const handleClose = () => {
     navigate("/connection"); 
   };
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); 
-
+  const fetchCsrfToken = async () => {
     try {
-      const response = await axios.post('http://localhost:9091/Utilisateurs/verification', {
-        email,
-        code,
+      const username = 'user'; // Remplacez par votre nom d'utilisateur
+      const password = 'password123'; // Remplacez par votre mot de passe
+      const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
+  
+      const response = await fetch('http://localhost:9091/Utilisateurs/csrf-token', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: authHeader, // Inclure l'authentification basique
+        },
+        credentials: 'include', // Inclure les cookies (sessions)
       });
-      console.log(response.data);
-      // Gérer la réponse en cas de succès
-      setMessage('Compte activé avec succès ! Vous pouvez maintenant vous connecter.');
-      setError('');
-
-      setTimeout(() => {
-        navigate('/connection');
-      }, 2000);
-    } catch (err) {
-      // Gérer les erreurs en cas de problème
-      setError(
-        err.response?.data?.message || 'Une erreur est survenue. Veuillez réessayer.'
-      );
-      setMessage('');
+  
+      if (!response.ok) {
+        throw new Error(`Erreur lors de la récupération du jeton CSRF : ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      if (data.token) {
+        return data.token.replace(/"/g, ''); // Renvoie le token CSRF
+      }
+      throw new Error('Jeton CSRF non trouvé dans la réponse.');
+    } catch (error) {
+      console.error('Erreur lors de la récupération du jeton CSRF :', error);
+      throw error;
     }
   };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      setLoading(true); // Indicateur de chargement
+  
+      const csrfToken = await fetchCsrfToken();
+  
+      const username = 'user'; // Nom d'utilisateur pour l'authentification basique
+      const password = 'password123'; // Mot de passe pour l'authentification basique
+      const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
+      
+      // Requête de vérification avec les paramètres dans les en-têtes
+      
+      const response = await fetch(`http://localhost:9091/Utilisateurs/verification?email=${encodeURIComponent(email)}&code=${encodeURIComponent(code)}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': csrfToken, // Token CSRF
+          Authorization: authHeader, // Authentification basique
+          
+        },
+        credentials: 'include', // Inclure les cookies (sessions)
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Compte activé avec succès :', data);
+  
+        // Message de succès
+        setMessage('Compte activé avec succès ! Vous pouvez maintenant vous connecter.');
+        setError('');
+  
+        // Rediriger après un court délai
+        setTimeout(() => {
+          navigate('/connection');
+        }, 2000);
+      } else {
+        // Gestion des erreurs côté serveur
+        const errorData = await response.json();
+        console.error('Erreur lors de la vérification :', errorData);
+        setError(errorData.message || 'Une erreur est survenue. Veuillez réessayer.');
+        setMessage('');
+      }
+    } catch (error) {
+      console.error('Erreur réseau ou serveur :', error);
+      setError('Erreur réseau ou serveur. Veuillez réessayer.');
+      setMessage('');
+    } finally {
+      setLoading(false); // Fin de l'indicateur de chargement
+    }
+  };
+  
 
   return (
     <div className='cont'>
@@ -77,7 +141,7 @@ const Verification = ({ email, nom }) => {
           />
         </div>
         <br/>
-        <button type="submit" className="btn  w-100" style={{ backgroundColor: '#D97706' }} onMouseEnter={(e) => (e.target.style.backgroundColor = '#b45309')} onMouseLeave={(e) => (e.target.style.backgroundColor = '#D97706')}>
+        <button type="submit" className="btn  w-100" style={{ backgroundColor: '#D97706' }} onMouseEnter={(e) => (e.target.style.backgroundColor = '#b45309')} onMouseLeave={(e) => (e.target.style.backgroundColor = '#D97706')} disabled={loading}>
           Vérifier
         </button>
       </form>
