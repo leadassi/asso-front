@@ -15,7 +15,7 @@ const Accueil = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
-  const [isCoursesModalOpen, setIsCoursesModalOpen] = useState(false);
+  /*const [isCoursesModalOpen, setIsCoursesModalOpen] = useState(false);*/
   const [favorites, setFavorites] = useState([]);
 
   const navigate = useNavigate();
@@ -29,20 +29,21 @@ const Accueil = () => {
   }, [images.length]);
 
   const galleryImages = [
-    { name: "Veste", src: `${process.env.PUBLIC_URL}/image/1.jpeg`, rating: 4, price: 15000, description: "Une veste élégante et confortable, parfaite pour les occasions formelles ou décontractées." },
-    { name: "Chemise", src: `${process.env.PUBLIC_URL}/image/3.jpeg`, rating: 5, price: 9999, description: "Chemise en coton de haute qualité, idéale pour les journées de travail ou les sorties." },
-    { name: "Tshirt", src: `${process.env.PUBLIC_URL}/image/10.jpeg`, rating: 3, price: 11000, description: "Un t-shirt décontracté pour un confort optimal, parfait pour l'été." },
-    { name: "Manteau", src: `${process.env.PUBLIC_URL}/image/6.jpg`, rating: 2, price: 4000, description: "Manteau idéal pour l'hiver vous maintient au chaud et protège contre le froid." },
-    { name: "Sac", src: `${process.env.PUBLIC_URL}/image/3.jpg`, rating: 4, price: 5000, description: "Sac élégant et spacieux pour transporter vos essentiels avec style." },
-    { name: "Tricot", src: `${process.env.PUBLIC_URL}/image/a3.png`, rating: 4, price: 5000, description: "Tricot doux et chaud, parfait pour les journées fraîches." },
-    { name: "Bonnet", src: `${process.env.PUBLIC_URL}/image/4.jpg`, rating: 4, price: 1000, description: "Un bonnet confortable et élégant pour compléter votre tenue d'hiver." },
-    { name: "Talon", src: `${process.env.PUBLIC_URL}/image/w1.png`, rating: 4, price: 7000, description: "Chaussures à talons élégantes pour des occasions spéciales." },
-    { name: "Sandale", src: `${process.env.PUBLIC_URL}/image/w2.png`, rating: 3, price: 4000, description: "Sandales légères et confortables pour l'été." },
-    { name: "Parfum", src: `${process.env.PUBLIC_URL}/image/c.jpg`, rating: 4, price: 4000, description: "Parfum raffiné pour une touche de sophistication au quotidien." },
-    { name: "Chapeau", src: `${process.env.PUBLIC_URL}/image/p.jpg`, rating: 4, price: 4000, description: "Un chapeau traditionnel unique pour les amateurs de culture." },
-    { name: "Chaussures", src: `${process.env.PUBLIC_URL}/image/slider0.jpg`, rating: 3, price: 7000, description: "Meilleur choix pour vos sorties." },
-  ];
-  const products = [
+    { id: 1, name: "Veste", src: `${process.env.PUBLIC_URL}/image/1.jpeg`, rating: 4, price: 15000, description: "Une veste élégante et confortable, parfaite pour les occasions formelles ou décontractées." },
+    { id: 2, name: "Chemise", src: `${process.env.PUBLIC_URL}/image/3.jpeg`, rating: 5, price: 9999, description: "Chemise en coton de haute qualité, idéale pour les journées de travail ou les sorties." },
+    { id: 3, name: "Tshirt", src: `${process.env.PUBLIC_URL}/image/10.jpeg`, rating: 3, price: 11000, description: "Un t-shirt décontracté pour un confort optimal, parfait pour l'été." },
+    { id: 4, name: "sac", src: `${process.env.PUBLIC_URL}/image/6.jpeg`, rating: 2, price: 4000, description: "Manteau idéal pour l'hiver vous maintient au chaud et protège contre le froid." },
+    { id: 5, name: "Sac", src: `${process.env.PUBLIC_URL}/image/3.jpg`, rating: 4, price: 5000, description: "Sac élégant et spacieux pour transporter vos essentiels avec style." },
+    { id: 6, name: "Tricot", src: `${process.env.PUBLIC_URL}/image/a3.png`, rating: 4, price: 5000, description: "Tricot doux et chaud, parfait pour les journées fraîches." },
+    { id: 7, name: "Bonnet", src: `${process.env.PUBLIC_URL}/image/4.jpg`, rating: 4, price: 1000, description: "Un bonnet confortable et élégant pour compléter votre tenue d'hiver." },
+    { id: 8, name: "Talon", src: `${process.env.PUBLIC_URL}/image/w1.png`, rating: 4, price: 7000, description: "Chaussures à talons élégantes pour des occasions spéciales." },
+    { id: 9, name: "Sandale", src: `${process.env.PUBLIC_URL}/image/w2.png`, rating: 3, price: 4000, description: "Sandales légères et confortables pour l'été." },
+    { id: 10, name: "Parfum", src: `${process.env.PUBLIC_URL}/image/c.jpg`, rating: 4, price: 4000, description: "Parfum raffiné pour une touche de sophistication au quotidien." },
+    { id: 11, name: "Chapeau", src: `${process.env.PUBLIC_URL}/image/p.jpg`, rating: 4, price: 4000, description: "Un chapeau traditionnel unique pour les amateurs de culture." },
+    { id: 12, name: "Chaussures", src: `${process.env.PUBLIC_URL}/image/slider0.jpg`, rating: 3, price: 7000, description: "Meilleur choix pour vos sorties." },
+]
+
+  /*const products = [
     { name: "ON PREPARE NOEL", src: `${process.env.PUBLIC_URL}/images/i.png`},
     { name: "IDÉE DE CADEAUX", src: `${process.env.PUBLIC_URL}/images/p.png`},
     { name: "JOUETS DE NOEL", src: `${process.env.PUBLIC_URL}/images/j.png` },
@@ -54,7 +55,7 @@ const Accueil = () => {
     { name: "Obtenir de l'aide", src: `${process.env.PUBLIC_URL}/images/y.svg` },
     { name: "Services Livraisons", src: `${process.env.PUBLIC_URL}/images/serv-1.png` },
     { name: "Consulter la FAQ", src: `${process.env.PUBLIC_URL}/images/i.svg` },
-  ];
+  ];*/
   const openModal = (imageSrc) => {
     setModalImage(imageSrc);
     setIsModalOpen(true);
@@ -72,39 +73,40 @@ const Accueil = () => {
   const prevImage = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
-  const openCoursesModal = () => {
+  /*const openCoursesModal = () => {
     setIsCoursesModalOpen(true);
-  };
+  };*/
 
-  const closeCoursesModal = () => {
+  /*const closeCoursesModal = () => {
     setIsCoursesModalOpen(false);
-  }
-  const toggleFavorite = (index) => {
+  }*/
+  const toggleFavorite = (id) => {
     setFavorites((prevFavorites) => {
-      if (prevFavorites.includes(index)) {
-        return prevFavorites.filter((favIndex) => favIndex !== index); // Supprime des favoris
+      if (prevFavorites.includes(id)) {
+        return prevFavorites.filter((favId) => favId !== id); // Supprime des favoris
       }
-      return [...prevFavorites, index]; // Ajoute aux favoris
+      return [...prevFavorites, id]; // Ajoute aux favoris
     });
   };
+  
   return (
     <div className="accueil-page">
       <Navbar />
       <div className="spacer"></div>
 
       <div className="carousel-container">
-  <div className="carousel-center">
-    {/* Carrousel */}
-    <div className="carousel-3d">
-      <div className="carousel-item">
-        <img
-          src={images[currentIndex]}
-          alt={`Carrousel ${currentIndex + 1}`}
-          className="carousel-image main-image"
-        />
-      </div>
-    </div>
-  </div>
+        <div className="carousel-center">
+          {/* Carrousel */}
+          <div className="carousel-3d">
+            <div className="carousel-item">
+              <img
+                src={images[currentIndex]}
+                alt={`Carrousel ${currentIndex + 1}`}
+                className="carousel-image main-image"
+              />
+            </div>
+          </div>
+        </div>
 
   {/* Navigation */}
   <button className="carousel-prev" onClick={prevImage}>
@@ -208,14 +210,15 @@ const Accueil = () => {
                 })
               }
             ></button>
-             <button
-                    className="icon-button fas fa-heart"
-                    title="Add to Favorites"
-                    onClick={() => toggleFavorite(index)} // Gère l'ajout/suppression des favoris
-                    style={{
-                      color: favorites.includes(index) ? "red" : "black", // Cœur rouge si favori
-                    }}
-                  ></button>
+              <button
+                className="icon-button fas fa-heart"
+                title="Add to Favorites"
+                onClick={() => toggleFavorite(image.id)}
+                style={{
+                  color: favorites.includes(image.id) ? "red" : "black",
+                }}>
+              </button>
+
             <button
               className="icon-button fas fa-eye"
               title="View Image"

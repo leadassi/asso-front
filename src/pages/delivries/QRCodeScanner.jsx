@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import jsQR from "jsqr";
-import "./QRCodeScanner.css"; // Importation du fichier CSS
+import { Link } from "react-router-dom"; // Importation de Link pour la navigation
+import "./QRCodeScanner.css";
 
 const QRCodeScanner = () => {
   const videoRef = useRef(null);
@@ -8,7 +9,6 @@ const QRCodeScanner = () => {
 
   const handleStartScan = async () => {
     try {
-      // Demande l'accès à la caméra
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: "environment" },
       });
@@ -37,7 +37,7 @@ const QRCodeScanner = () => {
 
         if (code) {
           setResult(`QR Code détecté : ${code.data}`);
-          return; // QR code détecté, on arrête le scan
+          return;
         } else {
           setResult("Aucun QR Code détecté.");
         }
@@ -50,24 +50,36 @@ const QRCodeScanner = () => {
   };
 
   useEffect(() => {
-    const videoElement = videoRef.current; // Copie locale de la référence
+    const videoElement = videoRef.current;
     return () => {
       if (videoElement && videoElement.srcObject) {
         const tracks = videoElement.srcObject.getTracks();
         tracks.forEach((track) => track.stop());
       }
     };
-  }, []); // Pas de dépendances à ajouter ici
+  }, []);
 
   return (
-    <div className="scanner-page">
-      <div className="scanner-container">
-        <h2>Simulateur de Scanner QR Code</h2>
-        <video ref={videoRef} className="scanner" autoPlay></video>
-        <button id="start-scan" onClick={handleStartScan}>
-          Commencer le scan
-        </button>
-        <p id="result">{result}</p>
+    <div className="containner-page">
+      {/* Première page */}
+      <div className="scanner-page">
+        <div className="scanner-header">
+          {/* Bouton retour avec icône */}
+          <Link to="/profil" className="return-button">
+            <i className="fas fa-arrow-left"></i> Retour
+          </Link>
+          <h1>Votre Scanner de QR_Code</h1>
+        </div>
+        <div className="divider"></div>
+
+        {/* Deuxième page */}
+        <div className="scanner-container">
+          <video ref={videoRef} className="scanner" autoPlay></video>
+          <button id="start-scan" onClick={handleStartScan}>
+            Commencer le scan
+          </button>
+          <p id="result">{result}</p>
+        </div>
       </div>
     </div>
   );

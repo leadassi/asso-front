@@ -67,7 +67,7 @@
   padding: 10px;
   border-radius: 8px;
   text-align: center;
-  width: 200px;
+  width: 100px;
 }
 
 .product-card img {
@@ -87,24 +87,24 @@
 /*plus*/
 /* Styles globaux pour les produits */
 .products-container {
-  padding: 30px 5%;
-  background-color: rgba(177, 177, 216, 0.747);
+  padding: 30px 1%;
+  background-color: #ffff;
   backdrop-filter: blur(90px); /* Effet de flou */
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 1rem;
   justify-content: space-between; /* Espacement uniforme */
 }
 
 .product-card {
+  flex: 1 1 calc(20% - 1rem);
+  max-width: 25%;
   border: 0.1rem solid rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
-  background: #f9f9f9;
-  flex: 1 1 calc(23% - 1rem); /* 4 cartes par ligne */
-  max-width: 23%;
+  background: #ffff;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -114,10 +114,13 @@
 }
 
 .product-card img {
-  width: 13rem;
-  margin-bottom: 1rem;
-  position: relative; /* Ajoute la position relative */
-  z-index: 1; /* Place l'image au-dessus des icônes */
+  height: 8rem;
+  width: auto;
+  margin: 1rem auto;
+  display: block;
+  filter: drop-shadow(0 0.5rem 1rem rgba(0, 0, 0, 0.1));
+  filter: blur(0.01px); /* Applique un flou */
+  z-index: -1; /* Place en arrière-plan */
 }
 
 .product-card:hover img {

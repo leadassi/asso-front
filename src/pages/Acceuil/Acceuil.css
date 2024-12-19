@@ -139,42 +139,8 @@
 }
 
 /* Carrousel */
-.carousel-container {
-  width: 100%;
-  position: relative;
-  overflow: hidden; /* Masque les images qui débordent du conteneur */
-}
 
-.carousel-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 400px;
-  position: relative;
-}
 
-.carousel-3d {
-  display: flex;
-  transition: transform 0.5s ease-in-out; /* Animation de rotation */
-}
-
-.carousel-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%; /* Prend toute la largeur du conteneur */
-  height: 100%; /* Prend toute la hauteur du conteneur */
-  flex-shrink: 0; /* Empêche l'élément de rétrécir */
-  transform-origin: center; /* Centre la rotation */
-}
-
-.carousel-image {
-  width: 100%; /* Remplie la largeur du conteneur */
-  height: auto; /* Garde les proportions de l'image */
-  object-fit: cover; /* Remplir sans déformation */
-  max-height: 100%; /* Empêche l'image de dépasser la hauteur */
-  border-radius: 10px; /* Optionnel : Bords arrondis pour l'image */
-}
 
 /* Boutons de navigation */
 .carousel-prev,

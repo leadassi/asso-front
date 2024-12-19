@@ -1,7 +1,7 @@
 const data = [
     {
       img: `${process.env.PUBLIC_URL}/chapeau/1.jpg`,
-      title: 'Chapeau Classique 1',
+      title: 'Chapeau Classique',
       rating: 2,
       price: '100',
       description: 'Ce chapeau classique est parfait pour un look élégant en toute saison. Il est conçu avec un tissu de qualité pour assurer confort et style.',
@@ -9,7 +9,7 @@ const data = [
     },
     {
       img: `${process.env.PUBLIC_URL}/chapeau/2.jpg`,
-      title: 'Chapeau de Soleil 2',
+      title: 'Chapeau de Soleil',
       rating: 4,
       price: '80',
       description: 'Un chapeau de soleil léger, idéal pour les journées en extérieur. Il offre une protection optimale contre les rayons du soleil.',
