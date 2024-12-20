@@ -19,13 +19,13 @@ import Cosmetics from "./pages/Acceuil/Cosmetics";
 import Clothing from "./pages/Acceuil/Dresses";
 import Aliments from "./pages/Acceuil/Aliments";
 import Description from "./pages/Description/Description";
-import Api from "./pages/Acceuil/categories/App.jsx"
+import Api from "./pages/Acceuil/categories/App.jsx";
+
 function App() {
   const orders = [
     { id: 1, description: 'Commande 1', date: '2024-11-28' },
     { id: 2, description: 'Commande 2', date: '2024-11-27' },
     { id: 3, description: 'Commande 3', date: '2024-11-26' },
-    // Ajoutez plus de commandes ici
   ];
 
   const [cartItems, setCartItems] = useState([]);
@@ -36,29 +36,37 @@ function App() {
 
   return (
     <Router>
-      <MainLayout>
-        <Routes>
-          
-          <Route path="/cart" element={<Cart cartItems={cartItems} onRemoveFromCart={handleRemoveFromCart} />} />
-          <Route path="/àproposdenous" element={<AboutUs />} />
-          <Route path="/profil" element={<Profile />} />
-          <Route path="/connection" element={<LoginUser />} />
-          <Route path="/inscription" element={<Register />} />
-          <Route path="/reconnection" element={<Reconnection />} />
-          <Route path="/reinscription" element={<Reregister />} />
-          <Route path="/verification" element={<Verification email="utilisateur@example.com" nom="Utilisateur" />}/>
-          <Route path="/form_fournisseur" element={<LoginSupplier />} />
-          <Route path="/historique" element={<Historique orders={orders} />} />
-          <Route path="/cosmetics" element={<Cosmetics />} />
-          <Route path="/Clothing" element={<Clothing />} />
-          <Route path="/aliments" element={<Aliments />} />
-          <Route path="/description" element={<Description />} />
-          <Route path="/scanner" element={<QRCodeScanner />} />
-          <Route path="/map" element={<MapWithItinerary />} />
-          <Route path="/Acceuil" element={<Acceuil />} />
-          <Route path="/jes" element={<Api/>} />
-        </Routes>
-      </MainLayout>
+      <Routes>
+        {/* Route pour la page d'accueil sans le MainLayout */}
+        <Route path="/Acceuil" element={<Acceuil />} />
+        <Route path="/cosmetics" element={<Cosmetics />} />
+        <Route path="/Clothing" element={<Clothing />} />
+        <Route path="/aliments" element={<Aliments />} />
+        {/* Regroupement des routes avec MainLayout */}
+        <Route
+          path="/*"
+          element={
+            <MainLayout>
+              <Routes>
+                <Route path="/cart" element={<Cart cartItems={cartItems} onRemoveFromCart={handleRemoveFromCart} />} />
+                <Route path="/àproposdenous" element={<AboutUs />} />
+                <Route path="/profil" element={<Profile />} />
+                <Route path="/connection" element={<LoginUser />} />
+                <Route path="/inscription" element={<Register />} />
+                <Route path="/reconnection" element={<Reconnection />} />
+                <Route path="/reinscription" element={<Reregister />} />
+                <Route path="/verification" element={<Verification email="utilisateur@example.com" nom="Utilisateur" />} />
+                <Route path="/form_fournisseur" element={<LoginSupplier />} />
+                <Route path="/historique" element={<Historique orders={orders} />} />
+                <Route path="/description" element={<Description />} />
+                <Route path="/scanner" element={<QRCodeScanner />} />
+                <Route path="/map" element={<MapWithItinerary />} />
+                <Route path="/jes" element={<Api />} />
+              </Routes>
+            </MainLayout>
+          }
+        />
+      </Routes>
     </Router>
   );
 }

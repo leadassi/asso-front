@@ -81,7 +81,7 @@ const Verification = () => {
         // Message de succès
         setMessage('Compte activé avec succès ! Vous pouvez maintenant vous connecter.');
         setError('');
-  
+        sessionStorage.removeItem("utilisateur");
         // Rediriger après un court délai
         setTimeout(() => {
           navigate('/connection');
