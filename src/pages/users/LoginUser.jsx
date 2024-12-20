@@ -17,7 +17,7 @@ const LoginUser = () => {
 
   const fetchCsrfToken = async () => {
     try {
-      const response = await fetch('http://192.168.88.222:8067/Utilisateurs/csrf-token', {
+      const response = await fetch('http://localhost:9091/Utilisateurs/csrf-token', {
         method: 'GET',
         credentials: 'include', // Inclut les informations de session (cookies)
         headers: {
@@ -62,7 +62,7 @@ const LoginUser = () => {
       const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
 
       // Effectuer la requête POST pour la connexion
-      const response = await fetch('http://192.168.88.222:8067/Utilisateurs/connexion', {
+      const response = await fetch('http://localhost:9091/Utilisateurs/connexion', {
         method: 'POST',
         headers: {
           Authorization: authHeader,
@@ -86,7 +86,7 @@ const LoginUser = () => {
       sessionStorage.setItem('utilisateurPrenom', JSON.stringify(data.prenom));
 
       // Rediriger l'utilisateur vers la page d'accueil
-      navigate('/'); // Modifier selon la route de votre page profil
+      navigate(-1); // Modifier selon la route de votre page profil
     } catch (err) {
       console.error('Erreur de connexion:', err);
       setError(err.message || 'Une erreur est survenue.');
