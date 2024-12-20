@@ -19,6 +19,7 @@ import Cosmetics from "./pages/Acceuil/Cosmetics";
 import Clothing from "./pages/Acceuil/Dresses";
 import Aliments from "./pages/Acceuil/Aliments";
 import Description from "./pages/Description/Description";
+import Api from "./pages/Acceuil/categories/App.jsx"
 function App() {
   const orders = [
     { id: 1, description: 'Commande 1', date: '2024-11-28' },
@@ -55,6 +56,7 @@ function App() {
           <Route path="/scanner" element={<QRCodeScanner />} />
           <Route path="/map" element={<MapWithItinerary />} />
           <Route path="/Acceuil" element={<Acceuil />} />
+          <Route path="/jes" element={<Api/>} />
         </Routes>
       </MainLayout>
     </Router>

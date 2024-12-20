@@ -22,10 +22,10 @@ const NavbarCategories = () => {
   return (
     <nav className="navbar-categories">
       <div className="navbar-container">
-        {/* Logo remplaçant AssoShop */}
-        
+        {/* Logo */}
+        <div className="logo-container" onClick={() => navigate("/acceuil")}>
           <img src={logo} alt="Logo" className="navbar-logo" />
-        
+        </div>
 
         {/* Navigation Links */}
         <ul className="nav-links">
@@ -84,20 +84,33 @@ const NavbarCategories = () => {
 
         {/* Icônes de navigation */}
         <div className="icon-container-1">
-          <i className="icon-button-1 fas fa-home" onClick={() => navigate("/acceuil")} title="Accueil"></i>
-          <i className="icon-button-1 fas fa-shopping-cart" onClick={() => navigate("/cart")} title="Panier"></i>
-          <i className="icon-button-1 fas fa-user" onClick={() => navigate("/profil")} title="Profil"></i>
+          <i
+            className="icon-button-1 fas fa-home"
+            onClick={() => navigate("/acceuil")}
+            title="Accueil"
+          ></i>
+          <i
+            className="icon-button-1 fas fa-shopping-cart"
+            onClick={() => navigate("/cart")}
+            title="Panier"
+          ></i>
+          <i
+            className="icon-button-1 fas fa-user"
+            onClick={() => navigate("/profil")}
+            title="Profil"
+          ></i>
         </div>
-      </div>
 
-      {/* Menu Icon */}
+        {/* Menu Icon */}
+        {/* Menu Icon */}
       <div className="menu-icon" onClick={toggleMenu}>
         <i className={`bx ${menuOpen ? "bx-x" : "bx-menu"}`}></i>
+      </div>
       </div>
 
       {/* Dropdown Menu */}
       {menuOpen && (
-        <div className="dropdown-menu">
+        <div className={`dropdown ${menuOpen ? "show" : ""}`}>
           <button onClick={() => navigate("/homme")} className="dropdown-item">
             Homme
           </button>

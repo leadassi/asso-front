@@ -5,8 +5,17 @@ import logo from "./logoappli.jpg";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [category, setCategory] = useState("null");
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log("Search Query:", searchQuery);
+    console.log("Selected Category:", category);
+    // Logique de recherche ou appel API peut être ajouté ici
+  };
 
   return (
     <nav className="navbar">
@@ -27,21 +36,28 @@ const Navbar = () => {
         </div>
 
         {/* Barre de recherche */}
-        <form className="search-form">
+        <form className="search-form" onSubmit={handleSearch}>
           <input
             type="search"
             name="search"
             placeholder="Search"
             required
             className="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
           <div className="search-category-container">
-            <select id="category" name="category" className="search-category">
+            <select
+              id="category"
+              name="category"
+              className="search-category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
               <option value="null">All categories</option>
               <option value="Clothing">Clothing</option>
               <option value="aliments">Aliments</option>
               <option value="cosmetics">Cosmetics</option>
-              <option value="cosmetics">Favories</option>
             </select>
           </div>
           <button type="submit" className="search-button">
@@ -75,43 +91,41 @@ const Navbar = () => {
       </div>
 
       {/* Menu déroulant structuré */}
-      {menuOpen && (
-        <div className="dropdown-menu">
-          {/* Bloc 1: Accueil */}
-          <div className="dropdown-section welcome-section">
-            <div className="welcome-title">
-              <i className="icon-button-1 bx bxs-user-circle"></i>
-              <span>Bonjour</span>
-            </div>
-          </div>
-          <hr className="dropdown-separator" />
-
-          {/* Bloc 2: Tendances */}
-          <div className="dropdown-section">
-            <h3 className="dropdown-title">Tendances</h3>
-            <ul className="dropdown-list">
-              <li>Meilleures ventes</li>
-              <li>Dernières Nouveautés</li>
-              <li>Baromètre des ventes</li>
-            </ul>
-          </div>
-          <hr className="dropdown-separator" />
-
-          {/* Bloc 3: Aide et paramètres */}
-          <div className="dropdown-section">
-            <h3 className="dropdown-title">Aide et paramètres</h3>
-            <ul className="dropdown-list">
-              <li>Votre compte</li>
-              <li>Français</li>
-              <li>
-                <i className="icon-button-1 bx bxs-map"></i>Cameroun
-              </li>
-              <li>Service client</li>
-              <li>Se connecter</li>
-            </ul>
+      <div className={`dropdown-menu ${menuOpen ? "show" : ""}`}>
+        {/* Bloc 1: Accueil */}
+        <div className="dropdown-section welcome-section">
+          <div className="welcome-title">
+            <i className="icon-button-1 bx bxs-user-circle"></i>
+            <span>Bonjour</span>
           </div>
         </div>
-      )}
+        <hr className="dropdown-separator" />
+
+        {/* Bloc 2: Tendances */}
+        <div className="dropdown-section">
+          <h3 className="dropdown-title">Tendances</h3>
+          <ul className="dropdown-list">
+            <li>Meilleures ventes</li>
+            <li>Dernières Nouveautés</li>
+            <li>Baromètre des ventes</li>
+          </ul>
+        </div>
+        <hr className="dropdown-separator" />
+
+        {/* Bloc 3: Aide et paramètres */}
+        <div className="dropdown-section">
+          <h3 className="dropdown-title">Aide et paramètres</h3>
+          <ul className="dropdown-list">
+            <li>Votre compte</li>
+            <li>Français</li>
+            <li>
+              <i className="icon-button-1 bx bxs-map"></i>Cameroun
+            </li>
+            <li>Service client</li>
+            <li>Se connecter</li>
+          </ul>
+        </div>
+      </div>
     </nav>
   );
 };

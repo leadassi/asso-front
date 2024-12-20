@@ -138,7 +138,6 @@ const Accueil = () => {
         &#10095;
       </button>
     </div>
-  );
 
 
 
