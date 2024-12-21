@@ -20,6 +20,7 @@ import Clothing from "./pages/Acceuil/Dresses";
 import Aliments from "./pages/Acceuil/Aliments";
 import Description from "./pages/Description/Description";
 import Api from "./pages/Acceuil/categories/App.jsx";
+import FAQ from "./pages/Acceuil/FAQ.jsx";
 
 function App() {
   const orders = [
@@ -62,6 +63,7 @@ function App() {
                 <Route path="/scanner" element={<QRCodeScanner />} />
                 <Route path="/map" element={<MapWithItinerary />} />
                 <Route path="/jes" element={<Api />} />
+                <Route path="/faq" element={<FAQ />} />
               </Routes>
             </MainLayout>
           }

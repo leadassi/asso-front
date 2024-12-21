@@ -3,12 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./Description.css";
 import fleche from './fleche.png'
 
-const Description = ({ onAddToCart }) => {
+const Description = ({ productId, userId, srEndpoint }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const productId=1;
-  utilisateurId=1;
-  const quantite = 1;
+
+  const [quantite, setQuantite] = useState(0);
   const [options, setOptions] = useState([]);
   const [couleurs, setCouleurs] = useState([]);
   const [optionChoisie, setOptionChoisie] = useState("");
@@ -23,12 +22,12 @@ const Description = ({ onAddToCart }) => {
 
   useEffect(() => {
     // Appel pour récupérer la catégorie et sous-catégorie depuis le microservice produit
-    fetch(`http://192.168.88.28:8080/produitService/getProduit/${productId}`)
+    fetch(`http://localhost:8080/produits/${productId}`)
       .then((response) => response.json())
       .then((data) => {
-        setCategorie(data.category);
-        setSousCategorie(data.subCategory);
-        chargerOptions(data.category, data.subCategory); // Charger les options en fonction de la catégorie
+        setCategorie(data.categorie);
+        setSousCategorie(data.sousCategorie);
+        chargerOptions(data.categorie, data.sousCategorie); // Charger les options en fonction de la catégorie
       })
       .catch((error) => console.error("Erreur lors de la récupération du produit :", error));
   }, [productId]);
@@ -52,14 +51,14 @@ const Description = ({ onAddToCart }) => {
 
   
     // Fonction pour charger les options dynamiques
-    const chargerOptions = (category, subCategory) => {
-      if (category === "Vêtements" && subCategory === "Chaussures") {
+    const chargerOptions = (categorie, sousCategorie) => {
+      if (categorie === "Vêtements" && sousCategorie === "Chaussures") {
         setOptions(["Pointure 36", "Pointure 37", "Pointure 38", "Pointure 39", "Pointure 40"]);
         setCouleurs(["Noir", "Blanc", "Rouge", "Bleu"]);
-      } else if (category === "Vêtements" && subCategory === "Sac") {
+      } else if (categorie === "Vêtements" && sousCategorie === "Sac") {
         setOptions(["5L", "10L", "15L", "20L"]);
         setCouleurs(["Noir", "Gris", "Beige", "Bleu"]);
-      } else if (category === "alimentaire" && subCategory === "homme") {
+      } else if (categorie === "Alimentation" && sousCategorie === "Épices") {
         setOptions(["50g", "100g", "200g", "500g"]);
         setCouleurs([]);
       } else {
@@ -69,26 +68,25 @@ const Description = ({ onAddToCart }) => {
     };
   
     // Gérer la soumission (exemple d'appel à un microservice pour finaliser l'achat)
-    /*const handleAcheter = () => {
+    const handleAcheter = () => {
       const produit = {
         productId,
         quantite,
         optionChoisie,
         couleurChoisie,
       };
+      navigate("/connection");
+      // Récupération du panier actuel dans SessionStorage
       const panier = JSON.parse(sessionStorage.getItem("panier")) || [];
-
   
       // Ajout du produit au panier
       panier.push(produit);
   
       // Mise à jour du SessionStorage
       sessionStorage.setItem("panier", JSON.stringify(panier));
-
+  
       console.log("Produit ajouté au panier !");
-
-      navigate("/accueil");
-    };*/
+    };
 
 
   
@@ -98,29 +96,28 @@ const Description = ({ onAddToCart }) => {
       // Construire le corps de la requête
       const body = {
         productId: productId,
-        userId: utilisateurId,
+        userId: userId,
         rating: selectedRating,
       };
   
       try {
         // Appeler l'endpoint du microservice avec fetch
-        const response = await fetch(`http://192.168.88.32:8082/recommandations/saverecommandation`, {
+        const response = await fetch(`http://192.168.88.220:8067/recommandations/saverecommandation`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          
+          credentials: 'include',
           body: JSON.stringify(body),
         });
   
         if (response.ok) {
-          navigate("/connection")
           const result = await response.json();
           console.log("Vote enregistré avec succès :", result);
-          console.log("Votre vote a été enregistré avec succès !");
+          alert("Votre vote a été enregistré avec succès !");
         } else {
           console.error("Erreur lors de l'enregistrement du vote :", response.statusText);
-          console.log("Une erreur est survenue lors de l'enregistrement de votre vote.");
+          alert("Une erreur est survenue lors de l'enregistrement de votre vote.");
         }
       } catch (error) {
         console.error("Erreur réseau :", error);
@@ -177,6 +174,16 @@ const Description = ({ onAddToCart }) => {
       <p className="mb-3 text-warning-emphasis">Catégorie : {categorie}</p>
       <p className="mb-3 text-warning-emphasis">Sous-catégorie : {sousCategorie}</p>
 
+      <div>
+        <label className="mb-3 text-warning-emphasis">Quantité :</label>
+        <input
+          type="number"
+          min="1"
+          value={quantite}
+          onChange={(e) => setQuantite(parseInt(e.target.value))}
+        />
+      </div>
+
       {options.length > 0 && (
         <div>
           <label>Options :</label>
@@ -211,7 +218,7 @@ const Description = ({ onAddToCart }) => {
         </div>
       )}
     
-    <button className="bout" onClick={() => onAddToCart(product) } disabled={isBoutonDisabled} style={{boxShadow:"initial", marginTop:"15px"}}>Ajouter au panier</button>
+    <button className="bout" onClick={handleAcheter} disabled={isBoutonDisabled} style={{boxShadow:"initial", marginTop:"15px"}}>Acheter</button>
   </div>
 
   {/* Section droite (image) */}

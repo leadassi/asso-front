@@ -1,6 +1,6 @@
 const data = [
   {
-    img: 'https://m.media-amazon.com/images/I/6125yAfsJKL._AC_UX575_.jpg',
+    img: 'https://drive.usercontent.google.com/download?id=1JEVhea0fy4CBMMhZq7OrXvsCKLMIwJCu&export=view',
     title: 'Nike Air Monarch IV',
     rating: 5,
     price: '200',
