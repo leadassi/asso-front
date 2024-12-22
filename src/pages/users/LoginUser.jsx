@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
@@ -14,6 +15,15 @@ const LoginUser = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Fonction pour afficher temporairement le mot de passe
+  const handleTogglePassword = () => {
+    setShowPassword(true);
+    setTimeout(() => {
+      setShowPassword(false);
+    }, 1000); // 1 seconde pour afficher le mot de passe
+  };
 
   const fetchCsrfToken = async () => {
     try {
@@ -122,7 +132,7 @@ const LoginUser = () => {
           <div className="mb-4 text-warning-emphasis">
             <label htmlFor="mot_passe" className="form-label">Mot de passe :</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               className="form-control border border-warning-subtle bg-warning-subtle"
               id="mot_passe"
               name="mot_passe"
@@ -131,6 +141,19 @@ const LoginUser = () => {
               required
               placeholder="Entrez votre mot de passe"
             />
+            <span
+          onClick={handleTogglePassword}
+          style={{
+            position: "absolute",
+            right: "35px",
+            top: "54%",
+            transform: "translateY(50%)",
+            cursor: "pointer",
+            color: "#ffc107",
+          }}
+        >
+          {showPassword ? <FaEye /> : <FaEyeSlash />}
+        </span>
           </div>
 
         

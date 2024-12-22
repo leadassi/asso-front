@@ -7,10 +7,11 @@
   position: relative;
   overflow: hidden;
   margin-top: 80px;
+  padding-left: 14%;
 }
 
 
-.left-section {
+.left-section1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,18 +20,18 @@
   z-index: 1; 
 }
 
-.left-section h1 {
+.left-section1 h1 {
   font-size: 3rem;
   font-weight: bolder;
   margin-bottom: 20px;
 }
 
-.left-section p {
+.left-section1 p {
   font-size: 1.2rem;
   margin-bottom: 30px;
 }
 
-.left-section button {
+.left-section1 button {
   padding: 10px 20px;
   background-color: #D97706;
   color: white;
@@ -41,18 +42,18 @@
   
 }
 
-.left-section button:hover {
+.left-section1 button:hover {
   background-color: #b45309;
 }
 
 /* Section de droite (image) */
-.right-section {
+.right-section1 {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.right-section img {
+.right-section1 img {
   width: 80%; 
   max-width: 400px; 
   object-fit: cover; 
@@ -60,7 +61,7 @@
 }
 
 
-.background-image-contain {
+.background-image-contain1 {
   position: absolute;
   top: 0;
   left: 0;
@@ -72,19 +73,19 @@
   z-index: -1; 
 }
 
-.background-imag {
+.background-imag1 {
   width: 100%;
   height: 100%;
   object-fit: cover;
   z-index: -1;
 }
 
-.left-section .bout{
+.left-section1 .bout{
   box-shadow: 5px 5px 10px rgba(148, 69, 16, 0.3);
   transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 
-.left-section .bout:hover {
+.left-section1 .bout:hover {
   box-shadow: 10px 10px 20px rgba(180, 89, 47, 0.4); /* Ombre plus grande */
   transform: translateY(-2px); /* Déplace légèrement le bouton vers le haut */
 }

@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from "react";
+import React, {useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Description.css";
 import fleche from './fleche.png'
@@ -126,15 +126,15 @@ const Description = ({ onAddToCart }) => {
     };
 
   return (
-      <div className="container">
+      <div className="container1">
   <button
     style={{
       borderRadius: "50%",
       mixBlendMode: "multiply",
       maxWidth: "40px",
       position: "absolute",
-      top: "20px",
-      left: "20px",
+      top: "5%",
+      left: "5%",
       zIndex: 2, // S'assurer que le bouton est au-dessus du fond
     }}
     onClick={() => navigate(-1)}
@@ -143,7 +143,7 @@ const Description = ({ onAddToCart }) => {
   </button>
 
   {/* Section gauche (texte) */}
-  <div className="left-section">
+  <div className="left-section1">
   <h3 className="mb-3 text-warning-emphasis">{name}</h3>
     <h1 className="mb-5 text-warning-emphasis">DESCRIPTION</h1>
     <br/>
@@ -220,15 +220,15 @@ const Description = ({ onAddToCart }) => {
     
     <button className="bout" onClick={handleAcheter} disabled={isBoutonDisabled} style={{boxShadow:"initial", marginTop:"15px"}}>Acheter</button>
   </div>*/}
-  <button className="bout" onClick={()=> onAddToCart()} style={{boxShadow:"initial", marginTop:"15px"}}>Acheter</button>
+  <button className="bout" onClick={()=> onAddToCart()} style={{boxShadow:"initial", marginTop:"15px"}}>Ajouter au panier</button>
   </div>
 
   {/* Section droite (image) */}
-  <div className="right-section" style={{borderRadius: "50%", mixBlendMode: 'multiply' }}>
+  <div className="right-section1" style={{borderRadius: "50%", mixBlendMode: 'multiply' }}>
     <img src={imageSrc} alt={name} />
   </div>
-  <div class="background-image-contain">
-        <img src={imageSrc} alt="" class="background-imag"/>
+  <div class="background-image-contain1">
+        <img src={imageSrc} alt="" class="background-imag1"/>
       </div>
 </div>
 

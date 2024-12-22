@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../../App.js";
 
 const Reregister = () => {
@@ -14,6 +15,16 @@ const Reregister = () => {
 
   const handleClose = () => {
     navigate("/connection"); 
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Fonction pour afficher temporairement le mot de passe
+  const handleTogglePassword = () => {
+    setShowPassword(true);
+    setTimeout(() => {
+      setShowPassword(false);
+    }, 1000); // 1 seconde pour afficher le mot de passe
   };
 
   const fetchCsrfToken = async () => {
@@ -135,7 +146,7 @@ const Reregister = () => {
         <div className="form-group text-warning-emphasis">
           <label htmlFor="nouveauMotDePasse">Nouveau mot de passe :</label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             className="form-control border border-warning-subtle bg-warning-subtle"
             id="nouveauMotDePasse"
             name="nouveauMotDePasse"
@@ -144,6 +155,19 @@ const Reregister = () => {
             onChange={(e) => setNouveauMotDePasse(e.target.value)}
             required
           />
+          <span
+          onClick={handleTogglePassword}
+          style={{
+            position: "absolute",
+            right: "10px",
+            top: "50%",
+            transform: "translateY(50%)",
+            cursor: "pointer",
+            color: "#ffc107",
+          }}
+        >
+          {showPassword ? <FaEye /> : <FaEyeSlash />}
+        </span>
         </div>
         <br/>
         <div className="form-group text-warning-emphasis">

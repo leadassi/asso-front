@@ -147,8 +147,8 @@ const Register = () => {
   
 
   return (
-    <div className="cont" style={{marginTop:"50px", marginBottom:"150px"}}>
-    <div className="container d-flex justify-content-center align-items-center vh-100" >
+    <div className="cont">
+    <div className="container d-flex justify-content-center align-items-center " style={{marginTop:"30%"}}>
       <div className="card shadow-lg p-4 w-100" style={{ maxWidth: '600px' }}>
       <div>
         <button onClick={() => navigate(-1)}>
@@ -191,17 +191,17 @@ const Register = () => {
 
           <div className="form-group mt-3 text-warning-emphasis">
             <label>Sexe</label>
-            <div>
-              <input
+            <div className="d-flex align-items-center form-check form-check-inline">
+              <input 
                 type="radio"
                 name="sexe"
                 value="masculin"
                 id="masculin"
                 onChange={handleInputChange}
                 required
-              />&nbsp;&nbsp;
-              <label htmlFor="masculin">Masculin</label>
-            &emsp; &emsp;
+              />
+              <label style={{marginRight:"0.1rem", display:"flex"}} htmlFor="masculin">Masculin</label>
+            
               <input
                 type="radio"
                 name="sexe"
@@ -209,7 +209,7 @@ const Register = () => {
                 id="feminin"
                 onChange={handleInputChange}
                 required
-              />&nbsp;&nbsp;
+              />
               <label htmlFor="feminin">Féminin</label>
             </div>
           </div>

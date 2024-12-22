@@ -9,7 +9,7 @@ import img from "./img.jpeg"
 function AboutUs() {
   return (
     <div>
-      <div className='titre' style={{textAlign:'center'}}>
+      <div className='titre mt-20' style={{textAlign:'center'}}>
       <h1 className='text-warning-emphasis' style={{fontSize:'4rem', fontWeight:"bold"}}>ASSO</h1>
       <h6 style={{color:'darkgray'}}>Vente des vetements, cosmétiques et aliments</h6>
       </div>
