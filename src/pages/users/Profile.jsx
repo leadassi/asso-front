@@ -251,7 +251,7 @@ const Profile = () => {
         />&emsp;&emsp;
         <FaShoppingCart 
           className="icon" 
-          onClick={() => navigate("/panier")} 
+          onClick={() => navigate("/cart")} 
         />
       </div>
       <br/>

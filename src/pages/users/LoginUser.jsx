@@ -17,7 +17,7 @@ const LoginUser = () => {
 
   const fetchCsrfToken = async () => {
     try {
-      const response = await fetch('http://192.168.88.28:8067/Utilisateurs/csrf-token', {
+      const response = await fetch('http://localhost:9091/Utilisateurs/csrf-token', {
         method: 'GET',
         credentials: 'include', // Inclut les informations de session (cookies)
         headers: {
@@ -62,7 +62,7 @@ const LoginUser = () => {
       const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
 
       // Effectuer la requête POST pour la connexion
-      const response = await fetch('http://192.168.88.28:8067/Utilisateurs/connexion', {
+      const response = await fetch('http://localhost:9091/Utilisateurs/connexion', {
         method: 'POST',
         headers: {
           Authorization: authHeader,

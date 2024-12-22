@@ -25,7 +25,20 @@
 body {
   color: rgb(var(--foreground-rgb));
   background: white;
+  transition: background-color 0.3s, color 0.3s;
 }
+
+
+body.light {
+  background-color: white;
+  color: black;
+}
+
+body.dark {
+  background-color: #706c6c;
+  color: white;
+}
+
 
 @layer utilities {
   .text-balance {

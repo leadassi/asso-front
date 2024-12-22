@@ -49,14 +49,14 @@ const Accueil = () => {
     { name: "IDÉE DE CADEAUX", src: `${process.env.PUBLIC_URL}/images/p.png`},
     { name: "JOUETS DE NOEL", src: `${process.env.PUBLIC_URL}/images/j.png` },
     { name: "STYLES VESTIMENTAIRES", src: `${process.env.PUBLIC_URL}/images/o.png` },
-  ];
+  ];*/
 
   const helpOptions = [
     { name: "Trouver un magasin",src: `${process.env.PUBLIC_URL}/images/t.svg` },
     { name: "Obtenir de l'aide", src: `${process.env.PUBLIC_URL}/images/y.svg` },
     { name: "Services Livraisons", src: `${process.env.PUBLIC_URL}/images/serv-1.png` },
     { name: "Consulter la FAQ", src: `${process.env.PUBLIC_URL}/images/i.svg` },
-  ];*/
+  ];
   const openModal = (imageSrc) => {
     setModalImage(imageSrc);
     setIsModalOpen(true);
@@ -285,7 +285,7 @@ const Accueil = () => {
 
 
 
-      {/* Section Catégories 
+      {/*Section Catégories 
             
       <div className="four-card-container">
         {products.map((image, index) => (
@@ -302,24 +302,30 @@ const Accueil = () => {
               />
             </div>
           </div>
-        ))}*/}
+        ))*/}
       
 
-                    {/* Bloc d'aide en ligne 
-        </div>
-        <div className="help-container-inline">
-          {helpOptions.map((image, index) => (
-            <div className="help-item" key={index}>
-              <img 
-                src={image.src} 
-                alt={image.name} 
-                className="help-icon" 
-              />
-              <span>{image.name}</span>
-            </div>
-          ))}
-        </div>*/}
+                   
+            
+      <div className="acceuil-container">
 
+            <div className="help-container-inline">
+                {helpOptions.map((image, index) => (
+                    <div
+                        className="help-item"
+                        key={index}
+                        onClick={() => image.name === "Consulter la FAQ" && navigate('/faq')} // Navigation conditionnelle
+                    >
+                        <img
+                            src={image.src}
+                            alt={image.name}
+                            className="help-icon"
+                        />
+                        <span>{image.name}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
 
 
 

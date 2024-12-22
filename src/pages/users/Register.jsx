@@ -147,7 +147,7 @@ const Register = () => {
   
 
   return (
-    <div className="cont" style={{marginTop:"150px", marginBottom:"150px"}}>
+    <div className="cont" style={{marginTop:"50px", marginBottom:"150px"}}>
     <div className="container d-flex justify-content-center align-items-center vh-100" >
       <div className="card shadow-lg p-4 w-100" style={{ maxWidth: '600px' }}>
       <div>

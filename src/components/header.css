@@ -54,7 +54,7 @@
   }
   
   .icon-button-11:hover {
-    color: #007bff;
+    color: #74613f;
   }
   
   .fas1 {
@@ -63,7 +63,7 @@
   /* Menu Icon */
   /* Dropdown Menu Container */
   .dropdown-menu1 {
-    border: 2px solid blue; /* Bordure bleue */
+    border: 2px solid rgb(218, 141, 40); /* Bordure bleue */
     border-radius: 8px; /* Coins arrondis (optionnel) */
     padding: 16px; /* Espacement intérieur */
     background: rgba(14, 6, 6, 0.651); /* Transparence */
@@ -85,7 +85,7 @@
   
   /* Section Accueil avec Bonjour */
   .welcome-section {
-    background-color: #36638d; /* Gris sombre au lieu de noir pur */
+    background-color: rgb(99, 116, 122); /* Gris sombre au lieu de noir pur */
     color: #fff;
     padding: 15px;
     display: flex;

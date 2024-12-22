@@ -27,53 +27,91 @@ function ValidationCart({ cartItems, userId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!formData.email || !formData.name || !formData.paymentPreference) {
       setError("Veuillez remplir tous les champs.");
       return;
     }
-
+  
     if (!formData.confirmation) {
       setError("Veuillez confirmer vos informations avant de soumettre.");
       return;
     }
-
+  
     setError('');
     setLoading(true);
-
+  
+    // Calcul du prix total
+    const prixTotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  
+    // Préparation des données du panier
     const panier = {
       idUtilisateur: userId,
-      prixTotal: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+      prixTotal: prixTotal,
+      contenances: [],
     };
-
-    const commande = {
-      idUtilisateur: userId,
-      montantLivraison: 5.0,
-      prixTotal: panier.prixTotal + 5.0,
-      statutCommande: 'VALIDÉE',
-    };
-
-    const contenances = cartItems.map((item) => ({
-      idProduit: item.id,
-      quantite: item.quantity,
-    }));
-
-    const requestBody = {
-      commande,
-      panier,
-      contenances,
-    };
-
+  
     try {
-      const response = await axios.post('/api/commandes/create', requestBody);
-
-      if (response.status === 200) {
+      // 1. Envoyer le panier
+      const panierResponse = await axios.post('http://192.168.93.234:8081/commande/panier/validerPanier', panier, {
+        headers: { "Content-Type": "application/json" },
+      });
+  
+      if (panierResponse.status !== 201) {
+        throw new Error("Erreur lors de la création du panier.");
+      }
+  
+      const panierId = panierResponse.data; // ID du panier retourné par le backend
+      console.log("Panier créé avec l'ID :", panierId);
+  
+      // 2. Préparation des contenances
+      const contenances = cartItems.map((item) => ({
+        idProduit: item.id,
+        quantite: item.quantity,
+        idPanier: panierId, // Associer les contenances au panier
+      }));
+  
+      // 3. Envoyer les contenances
+      const contenancesResponse = await axios.post('http://192.168.93.234:8081/commande/contenances/enregistrer', contenances, {
+        headers: { "Content-Type": "application/json" },
+      });
+  
+      if (contenancesResponse.status !== 201) {
+        throw new Error("Erreur lors de l'ajout des contenances.");
+      }
+  
+      console.log("Contenances ajoutées :", contenancesResponse.data);
+  
+      // 4. Préparation et envoi de la commande
+      const commande = {
+        idUtilisateur: userId,
+        idPanier: panierId, // Associer la commande au panier
+        montantLivraison: 5.0,
+        prixTotal: prixTotal + 5.0,
+        statutCommande: 'NULL',
+        date: new Date().toISOString(),
+      };
+  
+      const commandeResponse = await axios.post('http://192.168.93.234:8081/commande/validercmd', commande, {
+        headers: { "Content-Type": "application/json" },
+      });
+  
+      if (commandeResponse.status === 201) {
+        const { idCommande } = commandeResponse.data;
+        console.log("Commande validée. ID de commande :", idCommande);
+  
+        // Stocker l'ID de la commande dans sessionStorage
+        sessionStorage.setItem('idCommande', idCommande);
+        sessionStorage.setItem('idPanier', panierId);
+  
         setSuccess("Commande validée avec succès !");
         setTimeout(() => navigate('/orders'), 3000);
+      } else {
+        throw new Error(`Erreur HTTP: ${commandeResponse.status}`);
       }
     } catch (err) {
-      console.error("Erreur lors de la validation de la commande :", err);
-      setError("Impossible de valider la commande. Veuillez réessayer.");
+      console.error("Erreur lors du traitement :", err);
+      setError("Impossible de compléter l'opération. Veuillez réessayer.");
     } finally {
       setLoading(false);
     }
@@ -88,8 +126,8 @@ function ValidationCart({ cartItems, userId }) {
         <div
           className="card shadow-lg p-4 w-100"
           style={{
-            maxWidth: '350px', // Réduction de la largeur
-            minHeight: '400px', // Réduction de la hauteur
+            maxWidth: '350px',
+            minHeight: '400px',
           }}
         >
           <div>
@@ -127,20 +165,36 @@ function ValidationCart({ cartItems, userId }) {
               />
             </div>
 
-            <div className="mb-3 text-warning-emphasis">
-              <label htmlFor="paymentPreference" className="form-label">Préférence de paiement :</label>
-              <select
-                id="paymentPreference"
-                name="paymentPreference"
-                className="form-select border border-warning-subtle bg-warning-subtle"
-                value={formData.paymentPreference}
-                onChange={handleChange}
-                required
+            {/* Ajout des boutons pour les moyens de paiement */}
+            <div className="d-flex justify-content-between">
+              <button
+                type="button"
+                id="checkoutBtn1"
+                className="btn"
+                style={{
+                  backgroundColor: '#D97706',
+                  width: '48%',
+                }}
+                onMouseEnter={(e) => (e.target.style.backgroundColor = '#b45309')}
+                onMouseLeave={(e) => (e.target.style.backgroundColor = '#D97706')}
+                onClick={() => setFormData((prev) => ({ ...prev, paymentPreference: 'avant' }))}
               >
-                <option value="">-- Sélectionnez une option --</option>
-                <option value="avant">Avant la livraison</option>
-                <option value="apres">Après la livraison</option>
-              </select>
+                Paiement avant livraison
+              </button>
+              <button
+                type="button"
+                id="checkoutBtn2"
+                className="btn"
+                style={{
+                  backgroundColor: '#D97706',
+                  width: '48%',
+                }}
+                onMouseEnter={(e) => (e.target.style.backgroundColor = '#b45309')}
+                onMouseLeave={(e) => (e.target.style.backgroundColor = '#D97706')}
+                onClick={() => setFormData((prev) => ({ ...prev, paymentPreference: 'apres' }))}
+              >
+                Paiement après livraison
+              </button>
             </div>
 
             <div className="mb-3 form-check">
@@ -180,8 +234,8 @@ function ValidationCart({ cartItems, userId }) {
         style={{
           backgroundColor: '#f8f9fa',
           fontSize: '14px',
-          marginTop: '-20px', // Réduction de l'espace
-          height: '50px', // Réduction de la hauteur du footer
+          marginTop: '-20px',
+          height: '50px',
         }}
       >
         <a
@@ -190,7 +244,7 @@ function ValidationCart({ cartItems, userId }) {
             textDecoration: 'underline',
             color: '#000',
           }}
-          onMouseEnter={(e) => (e.target.style.color = '#D4AF37')} // Couleur dorée au survol
+          onMouseEnter={(e) => (e.target.style.color = '#D4AF37')}
           onMouseLeave={(e) => (e.target.style.color = '#000')}
         >
           About Us
