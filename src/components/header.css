@@ -73,3 +73,156 @@ body {
   color: #666;
   margin-top: 5px;
 }
+  
+  .icon-container-11 {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espacement entre les icônes */
+  }
+  
+  .icon-button-11 {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  .icon-button-11:hover {
+    color: #74613f;
+  }
+  
+  .fas1 {
+    color: black;
+  }
+  /* Menu Icon */
+  /* Dropdown Menu Container */
+  .dropdown-menu1 {
+    border: 2px solid rgb(218, 141, 40); /* Bordure bleue */
+    border-radius: 8px; /* Coins arrondis (optionnel) */
+    padding: 16px; /* Espacement intérieur */
+    background: rgba(14, 6, 6, 0.651); /* Transparence */
+    backdrop-filter: blur(10px); /* Flou pour l'effet de transparence */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre pour un effet de profondeur */
+    transition: all 0.3s ease; /* Transition fluide pour les modifications de style */
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background: rgba(56, 56, 56, 0.9);
+    border-radius: 5px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+  }
+  
+  .dropdown-menu1:hover {
+    border-color: rgb(67, 131, 156); /* Bordure plus foncée au survol (optionnel) */
+  }
+  
+  
+  /* Section Accueil avec Bonjour */
+  .welcome-section {
+    background-color: rgb(99, 116, 122); /* Gris sombre au lieu de noir pur */
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  
+  .welcome-section .icon-button-1 {
+    margin-right: 10px;
+    font-size: 18px;
+    font-weight: 20px ;
+    color: #ffcc00; /* Jaune doux pour l'icône */
+  }
+  
+  .welcome-title {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  /* Titre des sections */
+  .dropdown-title {
+    color:rgba(0, 0, 0, 0.582); /* Gris foncé pour le titre */
+    font-weight: bold;
+    margin: 10px 15px;
+    font-size: 15px;
+  }
+  
+  /* Liste des sous-titres */
+  .dropdown-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 15px;
+  }
+  
+  .dropdown-list li {
+    margin-bottom: 10px;
+    color:#fff; /* Gris moyen pour une meilleure lisibilité */
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  
+  .dropdown-list li:hover {
+    color: #ff6600; /* Couleur d'accentuation au survol */
+    cursor: pointer;
+  }
+  
+  /* Séparateur fin */
+  .dropdown-separator {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 10px 0;
+  }
+  
+  /* Ajustement des paddings et espacements */
+  .dropdown-section {
+    padding: 5px 0;
+  }
+  
+  
+  /* Conteneur pour l'icône Service Client */
+  .service-client-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 15px; /* Espacement entre le logo et l'icône */
+  }
+  
+  .service-client-icon {
+    width: 50px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+  }
+  
+  .service-client-icon:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+  }
+  
+  /* Cadre du texte au survol */
+  .service-client-tooltip {
+    position: absolute;
+    bottom: -30px; /* Ajustez selon la taille de l'icône */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  }
+  
+  /* Afficher le cadre au survol */
+  .service-client-container:hover .service-client-tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+  

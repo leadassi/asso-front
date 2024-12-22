@@ -3,24 +3,24 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./Description.css";
 import fleche from './fleche.png'
 
-const Description = ({ productId, userId, srEndpoint }) => {
+const Description = ({ onAddToCart }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [quantite, setQuantite] = useState(0);
+  /*const [quantite, setQuantite] = useState(0);
   const [options, setOptions] = useState([]);
   const [couleurs, setCouleurs] = useState([]);
   const [optionChoisie, setOptionChoisie] = useState("");
   const [couleurChoisie, setCouleurChoisie] = useState(""); 
   const [categorie, setCategorie] = useState("");
   const [sousCategorie, setSousCategorie] = useState("");
-  const [isBoutonDisabled, setIsBoutonDisabled] = useState(true);
+  const [isBoutonDisabled, setIsBoutonDisabled] = useState(true);*/
 
   const [rating, setRating] = useState(0); // État local pour la note sélectionnée
   const [hover, setHover] = useState(0); // État pour gérer le survol
+  const utilisateurId = sessionStorage.getItem("utilisateurId");
 
-
-  useEffect(() => {
+  /*useEffect(() => {
     // Appel pour récupérer la catégorie et sous-catégorie depuis le microservice produit
     fetch(`http://localhost:8080/produits/${productId}`)
       .then((response) => response.json())
@@ -36,9 +36,9 @@ const Description = ({ productId, userId, srEndpoint }) => {
   useEffect(() => {
     // Désactiver le bouton si la quantité n'est pas définie
     setIsBoutonDisabled(quantite <= 0 || !optionChoisie || !couleurChoisie);
-  }, [quantite, optionChoisie, couleurChoisie]);
+  }, [quantite, optionChoisie, couleurChoisie]);*/
   
-    const { imageSrc, name, price, description } = location.state || {};
+    const { productId, imageSrc, name, price, description } = location.state || {};
 
     if (!imageSrc || !name || !price || !description) {
       return (
@@ -51,7 +51,7 @@ const Description = ({ productId, userId, srEndpoint }) => {
 
   
     // Fonction pour charger les options dynamiques
-    const chargerOptions = (categorie, sousCategorie) => {
+    /*const chargerOptions = (categorie, sousCategorie) => {
       if (categorie === "Vêtements" && sousCategorie === "Chaussures") {
         setOptions(["Pointure 36", "Pointure 37", "Pointure 38", "Pointure 39", "Pointure 40"]);
         setCouleurs(["Noir", "Blanc", "Rouge", "Bleu"]);
@@ -87,7 +87,7 @@ const Description = ({ productId, userId, srEndpoint }) => {
   
       console.log("Produit ajouté au panier !");
     };
-
+*/
 
   
     const handleRating = async (selectedRating) => {
@@ -96,7 +96,7 @@ const Description = ({ productId, userId, srEndpoint }) => {
       // Construire le corps de la requête
       const body = {
         productId: productId,
-        userId: userId,
+        userId: utilisateurId,
         rating: selectedRating,
       };
   
@@ -171,7 +171,7 @@ const Description = ({ productId, userId, srEndpoint }) => {
       </span><br/><br/>
             </div>
 
-      <p className="mb-3 text-warning-emphasis">Catégorie : {categorie}</p>
+    {/* <p className="mb-3 text-warning-emphasis">Catégorie : {categorie}</p>
       <p className="mb-3 text-warning-emphasis">Sous-catégorie : {sousCategorie}</p>
 
       <div>
@@ -219,6 +219,8 @@ const Description = ({ productId, userId, srEndpoint }) => {
       )}
     
     <button className="bout" onClick={handleAcheter} disabled={isBoutonDisabled} style={{boxShadow:"initial", marginTop:"15px"}}>Acheter</button>
+  </div>*/}
+  <button className="bout" onClick={()=> onAddToCart()} style={{boxShadow:"initial", marginTop:"15px"}}>Acheter</button>
   </div>
 
   {/* Section droite (image) */}

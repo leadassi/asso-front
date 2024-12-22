@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./header.css";
 import logo from "./logoappli.jpg";
+import { useTheme } from "../ThemeContext";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -9,6 +10,11 @@ const Header = () => {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
+  const { isDarkMode, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    document.body.className = isDarkMode ? "dark" : "light";
+  }, [isDarkMode]);
  
 
   return (
@@ -28,7 +34,6 @@ const Header = () => {
           </Link>
           <div className="service-client-tooltip">Service Client</div>
         </div>
-
 
         {/* Icônes de navigation */}
         <div className="icon-container-1">
@@ -83,6 +88,11 @@ const Header = () => {
           <ul className="dropdown-list">
             <li>Votre compte</li>
             <li>Français</li>
+            <li>
+            <button onClick={toggleTheme}>
+        {isDarkMode ? "Switch to Light Mode" : "Switch to Gray Mode"}
+      </button>
+            </li>
             <li>
               <i className="icon-button-1 bx bxs-map"></i>Cameroun
             </li>
