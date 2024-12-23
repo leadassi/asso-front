@@ -23,11 +23,6 @@ import Api from "./pages/Acceuil/categories/App.jsx";
 import FAQ from "./pages/Acceuil/FAQ.jsx";
 
 function App() {
-  const orders = [
-    { id: 1, description: 'Commande 1', date: '2024-11-28' },
-    { id: 2, description: 'Commande 2', date: '2024-11-27' },
-    { id: 3, description: 'Commande 3', date: '2024-11-26' },
-  ];
 
   const [cartItems, setCartItems] = useState([]);
 
@@ -58,7 +53,7 @@ function App() {
                 <Route path="/reinscription" element={<Reregister />} />
                 <Route path="/verification" element={<Verification email="utilisateur@example.com" nom="Utilisateur" />} />
                 <Route path="/form_fournisseur" element={<LoginSupplier />} />
-                <Route path="/historique" element={<Historique orders={orders} />} />
+                <Route path="/historique" element={<Historique/>} />
                 <Route path="/description" element={<Description />} />
                 <Route path="/scanner" element={<QRCodeScanner />} />
                 <Route path="/map" element={<MapWithItinerary />} />

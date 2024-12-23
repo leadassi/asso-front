@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import logo from "./logoappli.jpg";
+import { useTheme } from "../../ThemeContext";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,11 +11,86 @@ const Navbar = () => {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
+  const { isDarkMode, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    document.body.className = isDarkMode ? "dark" : "light";
+  }, [isDarkMode]);
+
   const handleSearch = (e) => {
     e.preventDefault();
     console.log("Search Query:", searchQuery);
     console.log("Selected Category:", category);
     // Logique de recherche ou appel API peut être ajouté ici
+  };
+
+  const navigate = useNavigate();
+
+  const fetchCsrfToken = async () => {
+    try {
+      const response = await fetch('http://localhost:9091/Utilisateurs/csrf-token', {
+        method: 'GET',
+        credentials: 'include', // Inclut les informations de session (cookies)
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erreur lors de la récupération du jeton CSRF : ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Réponse du jeton CSRF:', data);
+
+      if (data.token) {
+        return data.token.replace(/"/g, ''); // Renvoie le jeton CSRF récupéré
+      }
+
+      throw new Error('Jeton CSRF non trouvé dans la réponse.');
+    } catch (err) {
+      console.error('Erreur lors de la récupération du jeton CSRF :', err);
+      throw err;
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const csrfToken = await fetchCsrfToken();
+  
+      // Ajouter l'en-tête Authorization avec Basic Auth
+      const username = 'user'; // Nom d'utilisateur Basic Auth
+      const password = 'password123'; // Mot de passe Basic Auth
+      const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
+
+
+      const response = await fetch("http://localhost:9091/Utilisateurs/deconnexion", {
+        method: "POST", // Ou 'GET' selon votre backend
+        credentials: "include", // Inclure les cookies pour la session, si nécessaire
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": csrfToken, // Inclure le token CSRF
+          Authorization: authHeader
+        },
+        
+      });
+  
+      if (response.ok) {
+        // Déconnexion réussie : rediriger l'utilisateur ou afficher un message
+        alert("Déconnexion réussie !");
+        sessionStorage.removeItem("utilisateurId");
+        sessionStorage.removeItem("utilisateurPrenom");
+        sessionStorage.removeItem("utilisateurNom");
+        navigate("/"); // Redirection vers la page de connexion
+      } else {
+        // Gérer les erreurs de déconnexion
+        const errorData = await response.json();
+        alert(`Erreur : ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion :", error);
+      alert("Une erreur est survenue. Veuillez réessayer.");
+    }
   };
 
   return (
@@ -103,11 +179,10 @@ const Navbar = () => {
 
         {/* Bloc 2: Tendances */}
         <div className="dropdown-section">
-          <h3 className="dropdown-title">Tendances</h3>
+          <h3 className="dropdown-title">Mes Produits</h3>
           <ul className="dropdown-list">
-            <li>Meilleures ventes</li>
+            <li>Mes Favoris</li>
             <li>Dernières Nouveautés</li>
-            <li>Baromètre des ventes</li>
           </ul>
         </div>
         <hr className="dropdown-separator" />
@@ -116,13 +191,24 @@ const Navbar = () => {
         <div className="dropdown-section">
           <h3 className="dropdown-title">Aide et paramètres</h3>
           <ul className="dropdown-list">
-            <li>Votre compte</li>
+            <li><Link
+            to="/profil"
+          >Votre compte</Link></li>
             <li>Français</li>
+            <li>
+            <button onClick={toggleTheme}>
+        {isDarkMode ? "Switch to Light Mode" : "Switch to Gray Mode"}
+      </button>
+            </li>
             <li>
               <i className="icon-button-1 bx bxs-map"></i>Cameroun
             </li>
-            <li>Service client</li>
-            <li>Se connecter</li>
+            <li><Link to="/service-client" className="service-client-link">Service client</Link></li>
+            <li><Link
+            to="/connection"
+          >Se connecter</Link></li>
+          <li onClick={handleLogout}>
+          Se déconnecter</li>
           </ul>
         </div>
       </div>

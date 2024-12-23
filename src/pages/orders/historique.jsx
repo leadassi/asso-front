@@ -1,29 +1,47 @@
 import React,{useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
-import axios from "axios";
+
 
 
 
 const Historique = () => {
     
-    const [orders, setOrders] = useState([]);
+  const [commandes, setCommandes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("/api/orders") 
-      .then((response) => {
-        setOrders(response.data);
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la récupération des commandes :", error);
-      });
-  }, []);
+    const fetchCommandes = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/orders")
+        if (!response.ok) {
+          throw new Error("Erreur lors de la récupération des commandes");
+        }
+
+        const data = await response.json();
+        setCommandes(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }};
+
+      fetchCommandes();
+    }, []);
+
+    if (loading) {
+      return <p>Chargement des commandes...</p>;
+    }
+  
+    if (error) {
+      return <p>Erreur : {error}</p>;
+    }
 
   return (
-    <div className="container mt-4">
-      {/* Bouton Retour */}
+    <div className="container" style={{marginTop:"30%"}}>
+      {/*<div className="card shadow-lg p-4 w-100" style={{ maxWidth: '500px', marginTop:'50px' }}>*/}
       <button className=" mb-3" onClick={() => navigate(-1)}>
         <FaArrowLeft /> 
       </button>
@@ -46,40 +64,32 @@ const Historique = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.length > 0 ? (
-              orders.map((order) => (
-                <tr key={order.id}>
-                  <td>{order.id}</td>
-                  <td>{new Date(order.date).toLocaleDateString()}</td>
-                  <td>{order.totalPrice.toFixed(2)} €</td>
-                  <td>{order.paymentMethod}</td>
+          {commandes.map((commande) => (
+          <tr key={commande.id}>
+            <td>{commande.id}</td>
+            <td>{new Date(commande.date).toLocaleDateString()}</td>
+            <td>{commande.totalPrice.toFixed(2)} €</td>
+            <td>{commande.paymentMethod}</td>
                   <td>
                     <span
                       className={`badge ${
-                        order.status === "Livré"
+                        commande.status === "Livré"
                           ? "bg-success"
-                          : order.status === "En cours"
+                          : commande.status === "En cours"
                           ? "bg-warning text-dark"
                           : "bg-danger"
                       }`}
                     >
-                      {order.status}
+                      {commande.status}
                     </span>
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5" className="text-center">
-                  Aucune commande trouvée.
-                </td>
-              </tr>
-            )}
+              ))}
           </tbody>
         </table>
       </div>
+      </div>
     
-    </div>
   );
 };
 
