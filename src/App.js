@@ -21,13 +21,10 @@ import Aliments from "./pages/Acceuil/Aliments";
 import Description from "./pages/Description/Description";
 import Api from "./pages/Acceuil/categories/App.jsx";
 import FAQ from "./pages/Acceuil/FAQ.jsx";
-<<<<<<< HEAD
 import Details from './pages/Itineraires/Details.jsx';
 import Services from './pages/Acceuil/categories/Livraison.jsx';
 import MesFavoris from './pages/Acceuil/Favories.jsx';
-=======
 import ServiceClient from './pages/Acceuil/Service-client.jsx';
->>>>>>> asso-10
 
 function App() {
 
