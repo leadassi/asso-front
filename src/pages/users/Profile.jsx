@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./userprofile.css";
-import { FaPen, FaPlus, FaQrcode, FaShoppingCart } from "react-icons/fa";
+import { FaHeart, FaPen, FaPlus, FaQrcode } from "react-icons/fa";
 import defaultAvatar from "./avatar1.avif";
 import avatar1 from './avatar1.avif';
 import avatar2 from './avatar2.avif';
@@ -249,9 +249,9 @@ const Profile = () => {
           className="icon" 
           onClick={() => navigate("/scanner")} 
         />&emsp;&emsp;
-        <FaShoppingCart 
+        <FaHeart
           className="icon" 
-          onClick={() => navigate("/cart")} 
+          onClick={() => navigate("/mesfavoris")} 
         />
       </div>
       <br/>
