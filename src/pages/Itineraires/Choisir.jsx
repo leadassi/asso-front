@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./choisir.css";
 
-const CommandePage = () => {
+const Page = () => {
   const [notification, setNotification] = useState(null);
   const navigate = useNavigate();
 
@@ -39,4 +39,4 @@ const CommandePage = () => {
   );
 };
 
-export default CommandePage;
+export default Page;

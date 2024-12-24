@@ -26,9 +26,13 @@ import Services from './pages/Acceuil/categories/Livraison.jsx';
 import MesFavoris from './pages/Acceuil/Favories.jsx';
 <<<<<<< HEAD
 import CommandePage from './pages/Itineraires/Choisir.jsx';
+<<<<<<< HEAD
 =======
 import ServiceClient from './pages/Acceuil/Service-client.jsx';
 >>>>>>> 2508f368efcac7d0d5867a60e0bb095a6a47e153
+=======
+import ServiceClient from './pages/Acceuil/Service-client.jsx';
+>>>>>>> asso2
 
 function App() {
 
@@ -71,6 +75,10 @@ function App() {
                 <Route path="/Services" element={<Services />} />
                 <Route path="/mesfavoris" element={<MesFavoris />} />
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                <Route path="/service-client" element={<ServiceClient />} />
+>>>>>>> asso2
                 <Route path="/commande" element={<CommandePage />} />
 =======
                 <Route path="/service-client" element={<ServiceClient />} />
