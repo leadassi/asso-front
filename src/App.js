@@ -23,6 +23,7 @@ import Api from "./pages/Acceuil/categories/App.jsx";
 import FAQ from "./pages/Acceuil/FAQ.jsx";
 import Details from './pages/Itineraires/Details.jsx';
 import Services from './pages/Acceuil/categories/Livraison.jsx';
+import MesFavoris from './pages/Acceuil/Favories.jsx';
 
 function App() {
 
@@ -63,6 +64,7 @@ function App() {
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/Adresse" element={<Details />} />
                 <Route path="/Services" element={<Services />} />
+                <Route path="/mesfavoris" element={<MesFavoris />} />
               </Routes>
             </MainLayout>
           }

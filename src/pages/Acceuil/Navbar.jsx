@@ -25,6 +25,9 @@ const Navbar = () => {
   };
 
   const navigate = useNavigate();
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
 
   const fetchCsrfToken = async () => {
     try {
@@ -181,7 +184,8 @@ const Navbar = () => {
         <div className="dropdown-section">
           <h3 className="dropdown-title">Mes Produits</h3>
           <ul className="dropdown-list">
-            <li>Mes Favoris</li>
+            {/* Modification ici : on ajoute l'appel à handleNavigation */}
+            <li onClick={() => handleNavigation('/mesfavoris')}>Mes Favoris</li>
             <li>Dernières Nouveautés</li>
           </ul>
         </div>

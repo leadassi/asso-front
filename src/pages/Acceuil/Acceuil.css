@@ -75,12 +75,12 @@
 /* Éléments de la barre de navigation */
 
 .navbar-categories-i {
-  width: 90vw; /* Largeur du cadre */
+  width: 95vw; /* Largeur du cadre */
   margin: 20px auto; /* Centre la barre */
   display: grid; /* Utilisation de la grille */
   grid-template-columns: repeat(4, 1fr); /* Trois colonnes de largeur égale */
   grid-template-rows: auto auto; /* Deux lignes auto-adaptables */
-  gap: 10px; /* Espacement entre les éléments */
+  gap: 6px; /* Espacement entre les éléments */
   border-radius: 10px; /* Bords arrondis */
   background: linear-gradient(to left,#D97706,#b45309);
   backdrop-filter: blur(10px); /* Effet flouté */
@@ -88,6 +88,16 @@
   text-align: center; /* Centre le texte */
 }
 
+.nav-item-1 {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color:black; /* Couleur du texte */
+  cursor: pointer;
+  transition: color 0.3s ease;
+  margin-left: 0px;
+  margin-right: 100px;
+}
 .nav-item {
   font-size: 18px;
   font-weight: bold;
@@ -110,11 +120,15 @@
 .cosmetics {
   grid-column: 3; /* "COSMETICS" occupe la troisième colonne de la première ligne */
 }
+.accessoires {
+  grid-column: 5; /* "ACCESSORIES" occupe la deuxième colonne de la première ligne */
+}
 
 .aliments {
   grid-column: 2; /* "ALIMENTS" occupe la deuxième colonne de la deuxième ligne */
   grid-row: 1; /* Placement sur la deuxième ligne */
 }
+
 
 /* Effet au survol */
 .nav-item:hover {

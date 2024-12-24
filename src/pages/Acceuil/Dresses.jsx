@@ -84,8 +84,6 @@ const Clothing = () => {
           "Chaussures",
           "Sacs",
           "Chapeaux", // Ajout de Chapeaux ici
-          "Electronics",
-          "Cultures Camerounaises",
         ].map((item) => (
           <button
             key={item}

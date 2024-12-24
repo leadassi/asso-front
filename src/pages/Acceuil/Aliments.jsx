@@ -17,11 +17,10 @@ const Aliments = () => {
       {/* Navigation des catégories */}
       <div className="category-nav">
         {[
-          "Produits Laitiers",
-          "Agro Aliementaires",
-          "Séréale",
-          "Produits Vrivrier", 
-          "Cultures Camerounaises",
+          "Legumes",
+          "Fruits",
+          "Fecculents",
+          "Boissons", 
         ].map((item) => (
           <button
             key={item}

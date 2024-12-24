@@ -1,14 +1,14 @@
+// Accueil.jsx
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./Acceuil.css";
 import "./Products.css";
 import '../../index.css';
-import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
-
+import { FaFacebook, FaTwitter, FaInstagram ,FaGithub, FaLinkedin  } from 'react-icons/fa';
 
 const Accueil = () => {
-  const imageCount = 10;
+  const imageCount = 12; // Corrigé pour correspondre à galleryImages
   const images = Array.from(
     { length: imageCount },
     (_, i) => `${process.env.PUBLIC_URL}/images/${i + 1}.jpeg`
@@ -44,21 +44,15 @@ const Accueil = () => {
     { id: 10, name: "Parfum", src: `${process.env.PUBLIC_URL}/image/c.jpg`, rating: 4, price: 4000, description: "Parfum raffiné pour une touche de sophistication au quotidien." },
     { id: 11, name: "Chapeau", src: `${process.env.PUBLIC_URL}/image/p.jpg`, rating: 4, price: 4000, description: "Un chapeau traditionnel unique pour les amateurs de culture." },
     { id: 12, name: "Chaussures", src: `${process.env.PUBLIC_URL}/image/slider0.jpg`, rating: 3, price: 7000, description: "Meilleur choix pour vos sorties." },
-]
-
-  /*const products = [
-    { name: "ON PREPARE NOEL", src: `${process.env.PUBLIC_URL}/images/i.png`},
-    { name: "IDÉE DE CADEAUX", src: `${process.env.PUBLIC_URL}/images/p.png`},
-    { name: "JOUETS DE NOEL", src: `${process.env.PUBLIC_URL}/images/j.png` },
-    { name: "STYLES VESTIMENTAIRES", src: `${process.env.PUBLIC_URL}/images/o.png` },
-  ];*/
+  ];
 
   const helpOptions = [
-    { name: "Trouver un magasin",src: `${process.env.PUBLIC_URL}/images/t.svg` },
+    { name: "Trouver un magasin", src: `${process.env.PUBLIC_URL}/images/t.svg` },
     { name: "Obtenir de l'aide", src: `${process.env.PUBLIC_URL}/images/y.svg` },
     { name: "Services Livraisons", src: `${process.env.PUBLIC_URL}/images/serv-1.png` },
     { name: "Consulter la FAQ", src: `${process.env.PUBLIC_URL}/images/i.svg` },
   ];
+
   const openModal = (imageSrc) => {
     setModalImage(imageSrc);
     setIsModalOpen(true);
@@ -76,23 +70,45 @@ const Accueil = () => {
   const prevImage = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
+
   const openCoursesModal = () => {
     setIsCoursesModalOpen(true);
   };
 
   const closeCoursesModal = () => {
     setIsCoursesModalOpen(false);
-  }
-  const toggleFavorite = (id) => {
+  };
+
+  // Fonction pour gérer les favoris avec stockage local
+  const toggleFavorite = (product) => {
     setFavorites((prevFavorites) => {
-      if (prevFavorites.includes(id)) {
-        return prevFavorites.filter((favId) => favId !== id); // Supprime des favoris
+      const isFavorite = prevFavorites.some((fav) => fav.id === product.id);
+
+      if (isFavorite) {
+        // Retirer le produit des favoris
+        const updatedFavorites = prevFavorites.filter((fav) => fav.id !== product.id);
+        localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+        console.log(`Retiré des favoris: ${product.name} (ID: ${product.id})`);
+        return updatedFavorites;
+      } else {
+        // Ajouter le produit aux favoris
+        const updatedFavorites = [...prevFavorites, product];
+        localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+        console.log(`Ajouté aux favoris: ${product.name} (ID: ${product.id})`);
+        return updatedFavorites;
       }
-      return [...prevFavorites, id]; // Ajoute aux favoris
     });
   };
 
+  // Charger les favoris depuis le localStorage au chargement de la page
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    setFavorites(storedFavorites);
+    console.log("Favoris chargés depuis localStorage:", storedFavorites);
+  }, []);
+
   const currentImage = galleryImages[currentIndex] || {};
+
   // Fonction pour gérer le clic sur l'image
   const handleImageClick = (image) => {
     // Naviguer vers la page /description en envoyant l'état avec les informations de l'image
@@ -106,78 +122,77 @@ const Accueil = () => {
       }
     });
   };
+
   /*details*/
   const handleCardClick = () => {
     navigate("/Adresse"); // Redirige vers la page "Details"
   };
-  
+
   return (
     <div className="accueil-page">
       <Navbar />
       <div className="spacer"></div>
 
       <div className="carousel-container">
-      {/* Images floutées en arrière-plan */}
-      <div className="carousel-background">
-        {Array(9)
-          .fill(currentImage.src)
-          .map((src, index) => (
-            <img key={index} src={src} alt={`Background ${index}`} className="blurred-image" />
-          ))}
+        {/* Images floutées en arrière-plan */}
+        <div className="carousel-background">
+          {Array(9)
+            .fill(currentImage.src)
+            .map((src, index) => (
+              <img key={index} src={src} alt={`Background ${index}`} className="blurred-image" />
+            ))}
+        </div>
+
+        {/* Image principale */}
+        <div className="carousel-center">
+          <img
+            src={currentImage.src}
+            alt={currentImage.name}
+            className="carousel-image"
+            onClick={() => handleImageClick(currentImage)} // Lorsqu'on clique sur l'image, on passe les infos à la page de description
+          />
+        </div>
+
+        {/* Navigation */}
+        <button className="carousel-prev" onClick={prevImage}>
+          &#10094;
+        </button>
+        <button className="carousel-next" onClick={nextImage}>
+          &#10095;
+        </button>
       </div>
-
-      {/* Image principale */}
-      <div className="carousel-center">
-        <img
-          src={currentImage.src}
-          alt={currentImage.name}
-          className="carousel-image"
-          onClick={() => handleImageClick(currentImage)} // Lorsqu'on clique sur l'image, on passe les infos à la page de description
-        />
-      </div>
-
-      {/* Navigation */}
-      <button className="carousel-prev" onClick={prevImage}>
-        &#10094;
-      </button>
-      <button className="carousel-next" onClick={nextImage}>
-        &#10095;
-      </button>
-    </div>
-
-
-
 
       {/* Navigation des catégories */}
       <div className="navbar-categories-i">
-        <Link to="/" className="nav-item all">All</Link>
-        <Link to="/cosmetics" className="nav-item cosmetics">Cosmetics</Link>
-        <Link to="/Clothing" className="nav-item dresses">Clothing</Link>
-        <Link to="/aliments" className="nav-item aliments">Aliments</Link>
+        <Link to="/" className="nav-item-1 all">All</Link>
+        <Link to="/cosmetics" className="nav-item-1 cosmetics">Cosmetiques</Link>
+        <Link to="/Clothing" className="nav-item-1 dresses">Vestimentaires</Link>
+        <Link to="/aliments" className="nav-item-1 aliments">Aliments</Link>
+        <Link to="/accessoires" className="nav-item-1 accessoires">Accessores</Link>
       </div>
 
-
-             <section className="product-cards">
-          <div className="white-card">
-            <div className="text-container">
-              <h3>Courses du quotidien</h3>
-              <p>Retrait en drive ou livrées chez vous en 1h</p>
-              <button className="blue-button-1" onClick={openCoursesModal}>Faire mes courses</button>
-            </div>
-            <img src={`${process.env.PUBLIC_URL}/images/5.gif`} alt="Courses gif" className="card-gif" />
+      {/* Product Cards */}
+      <section className="product-cards">
+        <div className="white-card">
+          <div className="text-container">
+            <h3>Courses du quotidien</h3>
+            <p>Retrait en drive ou livrées chez vous en 1h</p>
+            <button className="blue-button-1" onClick={openCoursesModal}>Faire mes courses</button>
           </div>
+          <img src={`${process.env.PUBLIC_URL}/images/5.gif`} alt="Courses gif" className="card-gif" />
+        </div>
 
-          <div className="white-card">
-            <div className="text-container">
-              <h3>Maison & loisirs</h3>
-              <p>Retrait magasin gratuit, livraison gratuite dès 50000 d’achat</p>
-              <button className="blue-button">Découvrir</button>
-            </div>
-            <img src={`${process.env.PUBLIC_URL}/images/1.gif`} alt="Maison gif" className="card-gif" />
+        <div className="white-card">
+          <div className="text-container">
+            <h3>Maison & loisirs</h3>
+            <p>Retrait magasin gratuit, livraison gratuite dès 50000 d’achat</p>
+            <button className="blue-button">Découvrir</button>
           </div>
-        </section>
+          <img src={`${process.env.PUBLIC_URL}/images/1.gif`} alt="Maison gif" className="card-gif" />
+        </div>
+      </section>
 
-
+      {/* Courses Modal */}
       {isCoursesModalOpen && (
         <div className="modal-1" onClick={closeCoursesModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -210,135 +225,105 @@ const Accueil = () => {
         </div>
       )}
 
-
-      
-
-      
-
-<section className="products" id="products">
-  <h1 className="heading">
-    <span>Nos Produits</span>
-  </h1>
-  <div className="carousel-products-container">
-    <div className="carousel-products">
-      {galleryImages
-        .slice(currentPage * 8, currentPage * 8 + 8) // 8 images par page
-        .map((image, index) => (
-          <div className="box" key={index}>
-            <div className="icons">
-              <button
-                className="icon-button fas fa-plus"
-                title="View Details"
-                onClick={() =>
-                  navigate('/description', {
-                    state: {
-                      imageSrc: image.src,
-                      name: image.name,
-                      price: image.price,
-                      rating: image.rating,
-                      description: image.description,
-                    },
-                  })
-                }
-              ></button>
-              <button
-                className="icon-button fas fa-heart"
-                title="Add to Favorites"
-                onClick={() => toggleFavorite(image.id)}
-                style={{
-                  color: favorites.includes(image.id) ? 'red' : 'black',
-                }}
-              ></button>
-              <button
-                className="icon-button fas fa-eye"
-                title="View Image"
-                onClick={() => openModal(image.src)}
-              ></button>
-            </div>
-            <img src={image.src} alt={image.name} />
-            <div className="content">
-              <h3>{image.name}</h3>
-              <div className="price">{image.price} FCFA</div>
-              <div className="stars">
-                {[...Array(5)].map((_, i) => (
-                  <i
-                    key={i}
-                    className={`fa-star ${
-                      i < image.rating ? 'fas' : 'far'
-                    }`}
-                  ></i>
-                ))}
-              </div>
-            </div>
+      {/* Products Section */}
+      <section className="products" id="products">
+        <h1 className="heading">
+          <span>Nos Produits</span>
+        </h1>
+        <div className="carousel-products-container">
+          <div className="carousel-products">
+            {galleryImages
+              .slice(currentPage * 8, currentPage * 8 + 8) // 8 images par page
+              .map((image, index) => (
+                <div className="box" key={image.id}>
+                  <div className="icons">
+                    <button
+                      className="icon-button fas fa-plus"
+                      title="View Details"
+                      onClick={() =>
+                        navigate('/description', {
+                          state: {
+                            imageSrc: image.src,
+                            name: image.name,
+                            price: image.price,
+                            rating: image.rating,
+                            description: image.description,
+                          },
+                        })
+                      }
+                    ></button>
+                    <button
+                      className="icon-button fas fa-heart"
+                      title="Add to Favorites"
+                      onClick={() => toggleFavorite(image)} // Passer l'objet produit complet
+                      style={{
+                        color: favorites.some((fav) => fav.id === image.id) ? 'red' : 'black',
+                      }}
+                    ></button>
+                    <button
+                      className="icon-button fas fa-eye"
+                      title="View Image"
+                      onClick={() => openModal(image.src)}
+                    ></button>
+                  </div>
+                  <img src={image.src} alt={image.name} />
+                  <div className="content">
+                    <h3>{image.name}</h3>
+                    <div className="price">{image.price} FCFA</div>
+                    <div className="stars">
+                      {[...Array(5)].map((_, i) => (
+                        <i
+                          key={i}
+                          className={`fa-star ${
+                            i < image.rating ? 'fas' : 'far'
+                          }`}
+                        ></i>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
           </div>
-        ))}
-    </div>
-  </div>
-
-  {/* Pagination */}
-  <div className="carousel-bar">
-    {Array.from(
-      { length: Math.ceil(galleryImages.length / 8) },
-      (_, i) => (
-        <div
-          key={i}
-          className={`carousel-dot ${currentPage === i ? 'active' : ''}`}
-          onClick={() => setCurrentPage(i)}
-        >
-          {i + 1}
         </div>
-      )
-    )}
-  </div>
-</section>
 
+        {/* Pagination */}
+        <div className="carousel-bar">
+          {Array.from(
+            { length: Math.ceil(galleryImages.length / 8) },
+            (_, i) => (
+              <div
+                key={i}
+                className={`carousel-dot ${currentPage === i ? 'active' : ''}`}
+                onClick={() => setCurrentPage(i)}
+              >
+                {i + 1}
+              </div>
+            )
+          )}
+        </div>
+      </section>
 
-
-      {/*Section Catégories 
-            
-      <div className="four-card-container">
-        {products.map((image, index) => (
-          <div className="card" key={index}>
-            <div className="card-header">
-              {image.name}
-            </div>
-            <div className="card-body">
+      {/* Help Section */}
+      <div className="acceuil-container">
+        <div className="help-container-inline">
+          {helpOptions.map((image, index) => (
+            <div
+              className="help-item"
+              key={index}
+              onClick={() => image.name === "Consulter la FAQ" && navigate('/faq')} // Navigation conditionnelle
+            >
               <img
                 src={image.src}
                 alt={image.name}
-                onClick={() => openModal(image.src)}
-                style={{ cursor: "pointer" }}
+                className="help-icon"
               />
+              <span>{image.name}</span>
             </div>
-          </div>
-        ))*/}
-      
-
-                   
-            
-      <div className="acceuil-container">
-
-            <div className="help-container-inline">
-                {helpOptions.map((image, index) => (
-                    <div
-                        className="help-item"
-                        key={index}
-                        onClick={() => image.name === "Consulter la FAQ" && navigate('/faq')} // Navigation conditionnelle
-                    >
-                        <img
-                            src={image.src}
-                            alt={image.name}
-                            className="help-icon"
-                        />
-                        <span>{image.name}</span>
-                    </div>
-                ))}
-            </div>
+          ))}
         </div>
+      </div>
 
-
-
-      {/* Modal */}
+      {/* Image Modal */}
       {isModalOpen && modalImage && (
         <div className="modal" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -348,54 +333,74 @@ const Accueil = () => {
         </div>
       )}
 
-<footer className="footer py-3" style={{ backgroundColor: 'rgba(0, 0, 0, 0)', borderTop: '1px solid #ddd' }}>
-      <div className="container text-center">
-        <Link
-          to="/àproposdenous"
-          className="text-decoration-none text-muted mb-2 d-block about-link"
-        >
-          About Us
-        </Link>
-
-        <div className="social-links d-flex justify-content-center mb-2">
-          {/* Lien vers Facebook */}
-          <a
-            href="https://facebook.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="me-3 text-decoration-none"
-            style={{ color: '#4267B2' }}
+      {/* Footer */}
+      <footer className="footer py-3" style={{ backgroundColor: 'rgba(0, 0, 0, 0)', borderTop: '1px solid #ddd' }}>
+        <div className="container text-center">
+          <Link
+            to="/àproposdenous"
+            className="text-decoration-none text-muted mb-2 d-block about-link"
           >
-            <FaFacebook size={24} />
-          </a>
+            About Us
+          </Link>
 
-          {/* Lien vers Twitter */}
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="me-3 text-decoration-none"
-            style={{ color: '#1DA1F2' }}
-          >
-            <FaTwitter size={24} />
-          </a>
+          <div className="social-links d-flex justify-content-center mb-2">
+            {/* Lien vers Facebook */}
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="me-3 text-decoration-none"
+              style={{ color: '#4267B2' }}
+            >
+              <FaFacebook size={24} />
+            </a>
 
-          {/* Lien vers Instagram */}
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-decoration-none"
-            style={{ color: '#E4405F' }}
-          >
-            <FaInstagram size={24} />
-          </a>
+            {/* Lien vers Twitter */}
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="me-3 text-decoration-none"
+              style={{ color: '#1DA1F2' }}
+            >
+              <FaTwitter size={24} />
+            </a>
+
+            {/* Lien vers Instagram */}
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-decoration-none"
+              style={{ color: '#E4405F' }}
+            >
+              <FaInstagram size={24} />
+            </a>
+            {/*liens vers github*/}
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mx-2 text-decoration-none"
+              style={{ color: '#333' }}
+            >
+              <FaGithub size={24} />
+            </a>
+            {/*Pour linkedin */}
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mx-2 text-decoration-none"
+              style={{ color: '#0077B5' }}
+            >
+              <FaLinkedin size={24} />
+            </a>
+          </div>
+
+          <p className="text-muted small mb-0">© 2024 Mon Application. Tous droits réservés.</p>
         </div>
-
-        <p className="text-muted small mb-0">© 2024 Mon Application. Tous droits réservés.</p>
-      </div>
-    </footer>
-
+      </footer>
     </div>
   );
 };

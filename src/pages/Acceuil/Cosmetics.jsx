@@ -1,5 +1,5 @@
 // pages/Acceuil/Cosmetics.jsx
-import React from "react";
+import React, { useState } from "react";
 import NavbarCategories from "./NavbarCategories";
 import { Link } from "react-router-dom";
 import "./Cosmetics.css";
@@ -7,9 +7,26 @@ import '../../index.css';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 
 const Cosmetics = () => {
+  const [category, setCategory] = useState("Agro_Alimentaires");
   return (
     <div className="cosmetics-page">
       <NavbarCategories />
+      {/* Navigation des catégories */}
+      <div className="category-nav">
+        {[
+          "Visage",
+          "Corps",
+          "Cheveux", 
+        ].map((item) => (
+          <button
+            key={item}
+            className={`category-btn ${category === item ? "active" : ""}`}
+            onClick={() => setCategory(item)}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
       <h1>Cosmetics</h1>
       <p>Contenu de la page Cosmetics...</p>
       <footer className="footer py-3" style={{ backgroundColor: 'rgba(0, 0, 0, 0)', borderTop: '1px solid #ddd' }}>

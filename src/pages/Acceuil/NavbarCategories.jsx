@@ -39,19 +39,25 @@ const NavbarCategories = () => {
             onClick={() => navigate("/cosmetics")}
             className={`nav-item ${isActive("/cosmetics") ? "active" : ""}`}
           >
-            <span>Cosmetics</span>
+            <span>Cosmetiques</span>
           </li>
           <li
             onClick={() => navigate("/Clothing")}
             className={`nav-item ${isActive("/Clothing") ? "active" : ""}`}
           >
-            <span>Clothing</span>
+            <span>Vestimentaires</span>
           </li>
           <li
             onClick={() => navigate("/aliments")}
             className={`nav-item ${isActive("/aliments") ? "active" : ""}`}
           >
             <span>Aliments</span>
+          </li>
+          <li
+            onClick={() => navigate("/accessoirees")}
+            className={`nav-item ${isActive("/accessoires") ? "active" : ""}`}
+          >
+            <span>Accessoires</span>
           </li>
         </ul>
 
@@ -101,7 +107,6 @@ const NavbarCategories = () => {
           ></i>
         </div>
 
-        {/* Menu Icon */}
         {/* Menu Icon */}
       <div className="menu-icon" onClick={toggleMenu}>
         <i className={`bx ${menuOpen ? "bx-x" : "bx-menu"}`}></i>
