@@ -75,6 +75,7 @@ body {
 }
   
   .icon-container-11 {
+    margin-left: 1000px;
     display: flex;
     align-items: center;
     gap: 20px; /* Espacement entre les icônes */
@@ -90,7 +91,7 @@ body {
   }
   
   .icon-button-11:hover {
-    color: #74613f;
+    color:#007BFF;
   }
   
   .fas1 {
@@ -185,20 +186,20 @@ body {
   
   
   /* Conteneur pour l'icône Service Client */
-  .service-client-container {
+  .service-client-container-11 {
     position: relative;
     display: inline-block;
-    margin-left: 15px; /* Espacement entre le logo et l'icône */
+    margin-left: 10px; /* Espacement entre le logo et l'icône */
   }
   
-  .service-client-icon {
-    width: 50px;
+  .service-client-icon-1 {
+    width: 9000px;
     height: auto;
     cursor: pointer;
     transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
   }
   
-  .service-client-icon:hover {
+  .service-client-icon-11:hover {
     transform: scale(1.1);
     filter: brightness(1.2);
   }
@@ -206,7 +207,7 @@ body {
   /* Cadre du texte au survol */
   .service-client-tooltip {
     position: absolute;
-    bottom: -30px; /* Ajustez selon la taille de l'icône */
+    bottom: -300px; /* Ajustez selon la taille de l'icône */
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.8);
@@ -221,7 +222,7 @@ body {
   }
   
   /* Afficher le cadre au survol */
-  .service-client-container:hover .service-client-tooltip {
+  .service-client-container-11:hover .service-client-tooltip {
     opacity: 1;
     visibility: visible;
   }

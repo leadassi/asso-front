@@ -17,7 +17,7 @@ const Accueil = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
-  /*const [isCoursesModalOpen, setIsCoursesModalOpen] = useState(false);*/
+  const [isCoursesModalOpen, setIsCoursesModalOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
   // État pour la page actuelle
   const [currentPage, setCurrentPage] = useState(0);
@@ -76,13 +76,13 @@ const Accueil = () => {
   const prevImage = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
-  /*const openCoursesModal = () => {
+  const openCoursesModal = () => {
     setIsCoursesModalOpen(true);
-  };*/
+  };
 
-  /*const closeCoursesModal = () => {
+  const closeCoursesModal = () => {
     setIsCoursesModalOpen(false);
-  }*/
+  }
   const toggleFavorite = (id) => {
     setFavorites((prevFavorites) => {
       if (prevFavorites.includes(id)) {
@@ -105,6 +105,10 @@ const Accueil = () => {
         description: image.description,
       }
     });
+  };
+  /*details*/
+  const handleCardClick = () => {
+    navigate("/Adresse"); // Redirige vers la page "Details"
   };
   
   return (
@@ -153,7 +157,7 @@ const Accueil = () => {
       </div>
 
 
-             {/* <section className="product-cards">
+             <section className="product-cards">
           <div className="white-card">
             <div className="text-container">
               <h3>Courses du quotidien</h3>
@@ -193,15 +197,18 @@ const Accueil = () => {
                 <img src={`${process.env.PUBLIC_URL}/images/4.svg`} alt="Livraison express" />
                 <p className="blue-text">Livraison express</p>
               </div>
-              <div className="service-card">
-                <img src={`${process.env.PUBLIC_URL}/images/2.jpg`} alt="Test mon adresse" />
+              <div className="service-card" onClick={handleCardClick}>
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/2.jpg`}
+                  alt="Test mon adresse"
+                />
                 <p className="blue-text">Test mon adresse</p>
               </div>
               <div className="modal-footer"></div>
             </div>
           </div>
         </div>
-      )}*/}
+      )}
 
 
       

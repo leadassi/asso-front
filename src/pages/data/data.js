@@ -1,6 +1,6 @@
 const data = [
   {
-    img: 'https://drive.usercontent.google.com/download?id=1JEVhea0fy4CBMMhZq7OrXvsCKLMIwJCu&export=view',
+    img: 'https://github.com/DOSSIVIL/IMAGES/blob/main/Aliment/avocat.jpeg?raw=true',
     title: 'Nike Air Monarch IV',
     rating: 5,
     price: '200',
@@ -11,7 +11,7 @@ const data = [
     category: 'baskets',
   },
   {
-    img: 'https://m.media-amazon.com/images/I/519MRhRKGFL._AC_UX575_.jpg',
+    img: 'https://m.media-amazon.com/images/I/519MRhRKGFL._AC_UX595_.jpg',
     title: 'Nike Air Vapormax Plus',
     rating: 4,
     price: '200',

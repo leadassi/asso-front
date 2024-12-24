@@ -93,32 +93,32 @@ const Header = () => {
         <img src={logo} alt="Logo" className="navbar-logo" />
 
         {/* Icône Service Client */}
-        <div className="service-client-container">
+        <div className="service-client-container-11">
           <Link to="/service-client" className="service-client-link">
             <img
               src={`${process.env.PUBLIC_URL}/serv-4.png`}
               alt="Service Client"
-              className="service-client-icon"
+              className="service-client-icon-11"
             />
           </Link>
           <div className="service-client-tooltip">Service Client</div>
         </div>
 
         {/* Icônes de navigation */}
-        <div className="icon-container-1">
+        <div className="icon-container-11">
           <Link
             to="/Acceuil"
-            className="icon-button-1 fas fa-home"
+            className="icon-button-11 fas fa-home"
             title="Accueil"
           ></Link>
           <Link
             to="/cart"
-            className="icon-button-1 fas fa-shopping-cart"
+            className="icon-button-11 fas fa-shopping-cart"
             title="Panier"
           ></Link>
           <Link
             to="/profil"
-            className="icon-button-1 fas fa-user"
+            className="icon-button-11 fas fa-user"
             title="Profil"
           ></Link>
         </div>

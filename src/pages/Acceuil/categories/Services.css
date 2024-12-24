@@ -1,0 +1,47 @@
+/* Services.css */
+.services-container {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .delivery-location {
+    margin-bottom: 30px;
+  }
+  
+  .map {
+    width: 100%;
+    height: 400px; /* Assurez-vous que la carte ait une hauteur définie */
+    border: 1px solid #ddd;
+  }
+  
+  .our-deliverers {
+    margin-bottom: 30px;
+  }
+  
+  .deliverers-container {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .deliverer img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .your-order form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .your-order button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
