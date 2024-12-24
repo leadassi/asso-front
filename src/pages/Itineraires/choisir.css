@@ -1,0 +1,118 @@
+/* choisir.css */  
+  .commande-page {
+    margin-top: 100px;
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  .buttons-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+  }
+  
+  .animated-button {
+    padding: 15px 30px;
+    font-size: 1rem;
+    color: white;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .animated-button.livrer {
+    background-color: #2196f3;
+  }
+  
+  .animated-button.recuperer {
+    background-color: #f44336;
+  }
+  
+  .animated-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .animated-button:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease-in-out;
+    z-index: 0;
+  }
+  
+  .animated-button:hover:before {
+    width: 100%;
+  }
+  
+  .animated-button:focus {
+    outline: none;
+  }
+  
+  /* Notification */
+  .notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #444;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.5s, fadeOut 0.5s 59.5s;
+    font-size: 1.2rem;
+    text-align: center;
+    z-index: 10;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -60%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+    to {
+      opacity: 0;
+      transform: translate(-50%, -40%);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .buttons-container {
+      flex-direction: column;
+    }
+  
+    .notification {
+      width: 90%;
+    }
+  }
+  

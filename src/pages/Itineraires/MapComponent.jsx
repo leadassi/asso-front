@@ -6,6 +6,7 @@ const MapComponent = ({ currentPosition, routes }) => {
   const mapContainerRef = useRef(null); // Référence à l'élément DOM de la carte
   const mapInstance = useRef(null); // Référence pour l'instance de la carte Leaflet
   const distanceRef = useRef(null); // Référence à l'élément affichant la distance
+  const priceRef = useRef(null); // Référence à l'élément affichant le prix
 
   const tomtomApiKey = "wntKCJUiXq0MM1325AV79nZHxio0FMHI"; // Clé API TomTom
 
@@ -80,9 +81,19 @@ const MapComponent = ({ currentPosition, routes }) => {
       mapInstance.current.fitBounds(routeLayer.getBounds());
 
       // Afficher la distance si disponible
-      const totalDistance = routes[0].properties?.distance || null;
+      const totalDistance = routes[0].properties?.distance || null; // Distance en mètres
       if (totalDistance && distanceRef.current) {
-        distanceRef.current.textContent = `Distance : ${(totalDistance / 1000).toFixed(2)} km`;
+        const distanceInKm = totalDistance / 1000; // Conversion en kilomètres
+        const price = distanceInKm * 300 * 2; // Calcul du prix (300 unités par km * 2)
+
+        // Afficher la distance et le prix
+        distanceRef.current.textContent = `Distance : ${distanceInKm.toFixed(2)} km`;
+        if (priceRef.current) {
+          priceRef.current.textContent = `Prix estimé : ${price.toFixed(2)} unités`;
+        }
+
+        // Stocker le prix dans le Local Storage
+        localStorage.setItem("prixLivraison", price.toFixed(2));
       }
     }
   }, [currentPosition, routes]); // Réexécuter l'effet si les dépendances changent
@@ -112,6 +123,16 @@ const MapComponent = ({ currentPosition, routes }) => {
           fontSize: "18px",
           fontWeight: "bold",
           color: "red",
+        }}
+      ></div>
+      <div
+        id="price"
+        ref={priceRef}
+        style={{
+          marginTop: "5px",
+          fontSize: "16px",
+          fontWeight: "bold",
+          color: "blue",
         }}
       ></div>
     </div>
