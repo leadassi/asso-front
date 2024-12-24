@@ -38,7 +38,7 @@ const LoginSupplier = () => {
 
   return (
     <div className="cont">
-    <div className="container d-flex justify-content-center align-items-center vh-100">
+    <div className="container mt-6 d-flex justify-content-center align-items-center vh-100">
       <div className="card shadow-lg p-4 w-100" style={{ maxWidth: '500px' }}>
     <div style={{ margin: "50px auto", maxWidth: "500px" }}>
     <div>

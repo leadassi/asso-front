@@ -191,6 +191,9 @@ const Navbar = () => {
         <div className="dropdown-section">
           <h3 className="dropdown-title">Aide et paramètres</h3>
           <ul className="dropdown-list">
+          <li><Link
+            to="/form_fournisseur"
+          >Voulez vous vendre?</Link></li>
             <li><Link
             to="/profil"
           >Votre compte</Link></li>
