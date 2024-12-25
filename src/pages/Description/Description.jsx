@@ -40,6 +40,14 @@ const Description = ({ onAddToCart }) => {
   
     const { productId, imageSrc, name, price, description } = location.state || {};
 
+    const product =useState({
+      id:productId,
+      name:name,
+      description:description,
+      price:price
+    });
+
+
     if (!imageSrc || !name || !price || !description) {
       return (
         <div className="error-page">
@@ -220,7 +228,7 @@ const Description = ({ onAddToCart }) => {
     
     <button className="bout" onClick={handleAcheter} disabled={isBoutonDisabled} style={{boxShadow:"initial", marginTop:"15px"}}>Acheter</button>
   </div>*/}
-  <button className="bout" onClick={()=> onAddToCart()} style={{boxShadow:"initial", marginTop:"15px"}}>Ajouter au panier</button>
+  <button className="bout" onClick={()=> onAddToCart(product)} style={{boxShadow:"initial", marginTop:"15px"}}>Ajouter au panier</button>
   </div>
 
   {/* Section droite (image) */}

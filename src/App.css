@@ -36,8 +36,52 @@ body.light {
 
 body.dark {
   background-color: #706c6c;
-  color: white;
+  color: rgb(121, 73, 12);
 }
+
+.card {
+  background-color: #f8f9fa; /* Couleur blanche par défaut */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.card.light {
+  background-color: #f8f9fa; /* Couleur blanche par défaut */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.card.dark {
+  background-color: #333; /* Gris foncé pour le mode sombre */
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.background-image-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 20vh;
+  margin-left: 20%;
+  margin-right: 40%;
+  background-size: cover;
+  background-image: url(../src/pages/users/fontprofile.jpg);
+  background-position: center;
+  background-color: #706c6c;
+  transition: filter 0.3s ease-in-out; /* Transition fluide */
+}
+
+/* Mode normal */
+.background-image-container.light {
+  filter: none; /* Aucune transformation */
+}
+
+/* Mode gris */
+.background-image-container.dark {
+  filter: grayscale(100%); /* Appliquer l'effet de gris */
+}
+
 
 
 @layer utilities {

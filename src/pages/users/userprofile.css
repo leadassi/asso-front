@@ -37,7 +37,7 @@
     background-size: cover;
     background-image: url(fontprofile.jpg);
     background-position: center;
-    
+    background-color: #706c6c;
   }
   
   .background-image {
@@ -117,8 +117,8 @@
   }
 
   .background-image-container {
-    position: fixed; /* Occupe tout l'écran */
-    top:12%;
+    position: absolute; /* Occupe tout l'écran */
+    top:0;
     left: 0;
     width: 100%; /* Largeur totale */
     height: 17vh; /* Hauteur totale */
