@@ -10,6 +10,7 @@ function Footer() {
         <Link
           to="/àproposdenous"
           className="text-decoration-none text-muted mb-2 d-block about-link"
+          style={{fontSize:"18px"}}
         >
           About Us
         </Link>

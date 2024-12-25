@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
 import Cart from './pages/orders/Cart';
 import AboutUs from './pages/products/AboutUs';
@@ -30,6 +30,11 @@ function App() {
 
   const [cartItems, setCartItems] = useState([]);
 
+  // Fonction pour ajouter un produit au panier
+  const handleAddToCart = (product) => {
+    setCartItems([...cartItems, product]);
+  };
+
   const handleRemoveFromCart = (productId) => {
     setCartItems(cartItems.filter((item) => item.id !== productId));
   };
@@ -37,6 +42,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/asso-front" element={<Navigate to="/Acceuil" replace />} />
         {/* Route pour la page d'accueil sans le MainLayout */}
         <Route path="/Acceuil" element={<Acceuil />} />
         <Route path="/cosmetics" element={<Cosmetics />} />
@@ -49,6 +55,7 @@ function App() {
             <MainLayout>
               <Routes>
                 <Route path="/cart" element={<Cart cartItems={cartItems} onRemoveFromCart={handleRemoveFromCart} />} />
+                <Route path="/description" element={<Description onAddToCart={handleAddToCart} />} />
                 <Route path="/àproposdenous" element={<AboutUs />} />
                 <Route path="/profil" element={<Profile />} />
                 <Route path="/connection" element={<LoginUser />} />
@@ -58,7 +65,7 @@ function App() {
                 <Route path="/verification" element={<Verification email="utilisateur@example.com" nom="Utilisateur" />} />
                 <Route path="/form_fournisseur" element={<LoginSupplier />} />
                 <Route path="/historique" element={<Historique/>} />
-                <Route path="/description" element={<Description />} />
+               <Route path="/description" element={<Description />} />
                 <Route path="/scanner" element={<QRCodeScanner />} />
                 <Route path="/map" element={<MapWithItinerary />} />
                 <Route path="/jes" element={<Api />} />
