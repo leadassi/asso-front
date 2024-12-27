@@ -310,7 +310,7 @@
   margin-bottom: 20px; /* Espacement entre la description et le bouton */
 }
 .blue-button {
-  background-color: #007bff;
+  background-color: #D97706;
   color: #ffffff;
   border: none;
   padding: 20px 15px; /* Réduit légèrement la taille du bouton */
@@ -323,12 +323,12 @@
 }
 
 .blue-button:hover {
-  background-color: #0056b3;
+  background-color:#b45309;
 }
 
 
 .blue-button-1 {
-  background-color: #007bff;
+  background-color:#D97706;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
@@ -339,7 +339,7 @@
 }
 
 .blue-button-1:hover {
-  background-color: #0056b3;
+  background-color: #b45309;
 }
 
 

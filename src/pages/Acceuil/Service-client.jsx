@@ -18,7 +18,7 @@ const ServiceClient = () => {
 
     // Envoyer le formulaire via EmailJS
     emailjs
-      .sendForm(
+      .sendForm(                                                                                   
         "service_newdj2x", 
         "template_y2chjsx",  
         form.current, 

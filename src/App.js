@@ -26,6 +26,7 @@ import Services from './pages/Acceuil/categories/Livraison.jsx';
 import MesFavoris from './pages/Acceuil/Favories.jsx';
 import ServiceClient from './pages/Acceuil/Service-client.jsx';
 import Page from './pages/Itineraires/Choisir.jsx';
+import DiscoverPage from "./pages/Acceuil/Nouvostés.jsx"
 
 function App() {
 
@@ -76,11 +77,12 @@ function App() {
                 <Route path="/mesfavoris" element={<MesFavoris />} />
                 <Route path="/choisir" element={<Page />} />
                 <Route path="/service-client" element={<ServiceClient />} />
+                <Route path="/nouvostés " element={<DiscoverPage />} />
               </Routes>
             </MainLayout>
           }
         />
-      </Routes>
+      </Routes> 
     </Router>
   );
 }

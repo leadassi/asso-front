@@ -7,6 +7,7 @@ import "./Products.css";
 import '../../index.css';
 import { FaFacebook, FaTwitter, FaInstagram ,FaGithub, FaLinkedin  } from 'react-icons/fa';
 
+
 const Accueil = () => {
   const imageCount = 12; // Corrigé pour correspondre à galleryImages
   const images = Array.from(
@@ -77,6 +78,9 @@ const Accueil = () => {
 
   const closeCoursesModal = () => {
     setIsCoursesModalOpen(false);
+  };
+  const handleDiscoverClick = () => {
+    navigate("/nouvostés");
   };
 
   // Fonction pour gérer les favoris avec stockage local
@@ -184,9 +188,10 @@ const Accueil = () => {
 
         <div className="white-card">
           <div className="text-container">
-            <h3>Maison & loisirs</h3>
-            <p>Retrait magasin gratuit, livraison gratuite dès 50000 d’achat</p>
-            <button className="blue-button">Découvrir</button>
+          <h3>Nos Nouveautés</h3>
+          <p>Découvrez les meilleurs articles et tendances du moment à prix réduits.</p>
+          <button className="blue-button" onClick={handleDiscoverClick}>
+            Découvrir</button>
           </div>
           <img src={`${process.env.PUBLIC_URL}/images/1.gif`} alt="Maison gif" className="card-gif" />
         </div>
