@@ -76,7 +76,7 @@ const Header = () => {
         sessionStorage.removeItem("utilisateurId");
         sessionStorage.removeItem("utilisateurPrenom");
         sessionStorage.removeItem("utilisateurNom");
-        navigate("/"); // Redirection vers la page de connexion
+        navigate("/Accueil"); // Redirection vers la page de connexion
       } else {
         // Gérer les erreurs de déconnexion
         const errorData = await response.json();
