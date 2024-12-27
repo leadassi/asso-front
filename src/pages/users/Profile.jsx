@@ -96,8 +96,9 @@ const Profile = () => {
       .catch((error) => console.error("Erreur lors du chargement des données utilisateur :", error));
 
     // Charger l'historique des commandes en temps réel
-    fetch("http://localhost:8080/orders/user/1") // URL de l'API des commandes
-      .then(response => setOrders(response.data))
+    fetch(`http://192.168.88.161:8081/commande/utilisateur/${utilisateurId}`) // URL de l'API des commandes
+      .then((response) => response.json())
+      .then((data) => setOrders(data))
       .catch(error => console.error("Erreur lors du chargement des commandes :", error));
 
     
@@ -309,7 +310,7 @@ const Profile = () => {
         </div>
       )}
 
-      <div class="background-image-container">
+      <div class="background-image-container" style={{color:"blue"}}>
         <img src="fontprofile.jpg" alt="" class="background-image"/>
       </div>
       <br/>
@@ -366,7 +367,7 @@ const Profile = () => {
           {orders.length > 0 ? (
             orders.slice(0, 5).map(order => ( 
               <div className="order-item" key={order.id}>
-                Commande {order.id}: {order.description}
+                Commande {order.id}: {order.prixTotal.toFixed(2)} FCFA, {order.paymentMethod}, {new Date(order.date).toLocaleDateString()}
               </div>
             ))
           ) : (

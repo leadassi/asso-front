@@ -195,12 +195,8 @@ const Navbar = () => {
         <div className="dropdown-section">
           <h3 className="dropdown-title">Aide et paramètres</h3>
           <ul className="dropdown-list">
-          <li><Link
-            to="/form_fournisseur"
-          >Voulez vous vendre?</Link></li>
-            <li><Link
-            to="/profil"
-          >Votre compte</Link></li>
+          <li onClick={() => handleNavigation("/form_fournisseur")}>Voulez vous vendre?</li>
+            <li onClick={() => handleNavigation("/profil")}>Votre compte</li>
             <li>Français</li>
             <li>
             <button onClick={toggleTheme}>
@@ -210,10 +206,8 @@ const Navbar = () => {
             <li>
               <i className="icon-button-1 bx bxs-map"></i>Cameroun
             </li>
-            <li><Link to="/service-client" className="service-client-link">Service client</Link></li>
-            <li><Link
-            to="/connection"
-          >Se connecter</Link></li>
+            <li onClick={() => handleNavigation("/service-client")}>Service client</li>
+            <li onClick={() => handleNavigation("/connection")}>Se connecter</li>
           <li onClick={handleLogout}>
           Se déconnecter</li>
           </ul>

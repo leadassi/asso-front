@@ -51,10 +51,13 @@ const ServiceClient = () => {
           <div
             style={{
               color: "#664d03",
-              
+              transform: "translateY(50%)",
               fontSize: "30px",
               left: "1000px",
               position: "absolute",
+            display: "flex",
+            flexDirection: "column", 
+            justifyContent: "center",
             }}
           >
             <p>AVEZ VOUS RENCONTRÉ DES PRÉOCCUPATIONS LORS DE L'UTILISATION DE L'APPLICATION ?</p>
