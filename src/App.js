@@ -25,6 +25,7 @@ import Details from './pages/Itineraires/Details.jsx';
 import Services from './pages/Acceuil/categories/Livraison.jsx';
 import MesFavoris from './pages/Acceuil/Favories.jsx';
 import ServiceClient from './pages/Acceuil/Service-client.jsx';
+import Page from './pages/Itineraires/Choisir.jsx';
 
 function App() {
 
@@ -66,7 +67,7 @@ function App() {
                 <Route path="/Adresse" element={<Details />} />
                 <Route path="/Services" element={<Services />} />
                 <Route path="/mesfavoris" element={<MesFavoris />} />
-                
+                <Route path="/choisir" element={<Page />} />
                 <Route path="/service-client" element={<ServiceClient />} />
               </Routes>
             </MainLayout>

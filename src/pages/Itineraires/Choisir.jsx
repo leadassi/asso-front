@@ -8,7 +8,7 @@ const Page = () => {
 
   const handleLivrer = () => {
     setNotification("Un livreur sera assigné à votre commande.");
-    hideNotificationAfterDelay("livraisons"); // Redirige vers la page Livraisons
+    hideNotificationAfterDelay("map"); // Redirige vers la page Livraisons
   };
 
   const handleRecuperer = () => {
