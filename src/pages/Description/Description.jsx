@@ -7,8 +7,8 @@ const Description = ({ onAddToCart }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  /*const [quantite, setQuantite] = useState(0);
-  const [options, setOptions] = useState([]);
+  
+  /*const [options, setOptions] = useState([]);
   const [couleurs, setCouleurs] = useState([]);
   const [optionChoisie, setOptionChoisie] = useState("");
   const [couleurChoisie, setCouleurChoisie] = useState(""); 
@@ -29,50 +29,31 @@ const Description = ({ onAddToCart }) => {
 
   /*useEffect(() => {
     // Appel pour récupérer la catégorie et sous-catégorie depuis le microservice produit
-    fetch(`http://192.168.107.239:8080/produits/${productId}`)
+    fetch(`http://192.168.107.239:8080/produits/${product.id}`)
       .then((response) => response.json())
       .then((data) => {
-        setCategorie(data.categorie);
-        setSousCategorie(data.sousCategorie);
-        chargerOptions(data.categorie, data.sousCategorie); // Charger les options en fonction de la catégorie
+        setCategorie(data.category);
+        setSousCategorie(data.subCategory);
+        chargerOptions(data.category, data.subCategory); // Charger les options en fonction de la catégorie
       })
       .catch((error) => console.error("Erreur lors de la récupération du produit :", error));
-  }, [productId]);
+  }, [product.id]);
 
 
   useEffect(() => {
     // Désactiver le bouton si la quantité n'est pas définie
-    setIsBoutonDisabled(quantite <= 0 || !optionChoisie || !couleurChoisie);
-  }, [quantite, optionChoisie, couleurChoisie]);*/
+    setIsBoutonDisabled(!optionChoisie || !couleurChoisie);
+  }, [optionChoisie, couleurChoisie]);
 
- //const{id} = useParams();
-      //const product= products.find(p)=>  p.id === parseInt(id));
+ 
 
       if(!product) return <p className="mb-3 text-warning-emphasis">produit non trouvé</p>
   
-    /*const { id, imageSrc, name, price, description } = location.state || {};
-
-      const product ={
-      id:id,
-      name:name,
-      description:description,
-      price:price
-    };
-
-
-    if (!imageSrc || !name || !price || !description) {
-      return (
-        <div className="error-page">
-          <p>Error: Missing product data</p>
-          <button className="go-back-button" onClick={() => navigate(-1)}>Go Back</button>
-        </div>
-      );
-    } */
 
   
     // Fonction pour charger les options dynamiques
-    /*const chargerOptions = (categorie, sousCategorie) => {
-      if (categorie === "Vêtements" && sousCategorie === "Chaussures") {
+    const chargerOptions = (categorie, sousCategorie) => {
+      if (categorie === "Vetements" && sousCategorie === "Chaussures") {
         setOptions(["Pointure 36", "Pointure 37", "Pointure 38", "Pointure 39", "Pointure 40"]);
         setCouleurs(["Noir", "Blanc", "Rouge", "Bleu"]);
       } else if (categorie === "Vêtements" && sousCategorie === "Sac") {
@@ -81,33 +62,15 @@ const Description = ({ onAddToCart }) => {
       } else if (categorie === "Alimentation" && sousCategorie === "Épices") {
         setOptions(["50g", "100g", "200g", "500g"]);
         setCouleurs([]);
+      } else if (categorie === "Alimentaire" && sousCategorie === "Feculents") {
+        setOptions(["50g", "100g", "200g", "500g"]);
+        setCouleurs([]);
       } else {
         setOptions([]);
         setCouleurs([]);
       }
-    };
-  
-    // Gérer la soumission (exemple d'appel à un microservice pour finaliser l'achat)
-    const handleAcheter = () => {
-      const produit = {
-        productId,
-        quantite,
-        optionChoisie,
-        couleurChoisie,
-      };
-      navigate("/connection");
-      // Récupération du panier actuel dans SessionStorage
-      const panier = JSON.parse(sessionStorage.getItem("panier")) || [];
-  
-      // Ajout du produit au panier
-      panier.push(produit);
-  
-      // Mise à jour du SessionStorage
-      sessionStorage.setItem("panier", JSON.stringify(panier));
-  
-      console.log("Produit ajouté au panier !");
-    };
-*/
+    };*/
+
 
   
     const handleRating = async (selectedRating) => {
@@ -194,15 +157,6 @@ const Description = ({ onAddToCart }) => {
     {/* <p className="mb-3 text-warning-emphasis">Catégorie : {categorie}</p>
       <p className="mb-3 text-warning-emphasis">Sous-catégorie : {sousCategorie}</p>
 
-      <div>
-        <label className="mb-3 text-warning-emphasis">Quantité :</label>
-        <input
-          type="number"
-          min="1"
-          value={quantite}
-          onChange={(e) => setQuantite(parseInt(e.target.value))}
-        />
-      </div>
 
       {options.length > 0 && (
         <div>
@@ -238,11 +192,11 @@ const Description = ({ onAddToCart }) => {
         </div>
       )}
     
-    <button className="bout" onClick={handleAcheter} disabled={isBoutonDisabled} style={{boxShadow:"initial", marginTop:"15px"}}>Acheter</button>
+  <button className="bout" onClick={()=> onAddToCart(product)} disabled={isBoutonDisabled} style={{boxShadow:"initial", marginTop:"15px"}}>Ajouter au panier</button>
   </div>*/}
-  <button className="bout" onClick={()=> onAddToCart(product)} style={{boxShadow:"initial", marginTop:"15px"}}>Ajouter au panier</button>
-  </div>
 
+<button className="bout" onClick={()=> onAddToCart(product)} style={{boxShadow:"initial", marginTop:"15px"}}>Ajouter au panier</button>
+</div>
   {/* Section droite (image) */}
   <div className="right-section1" style={{borderRadius: "50%", mixBlendMode: 'multiply' }}>
     <img src={product.imageUrl} alt={product.name} />
