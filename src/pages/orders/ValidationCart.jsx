@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -35,8 +35,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function ValidationCart() {
   const navigate = useNavigate();
-  const { state } = useLocation(); 
-  const cartItems = state?.cartItems || [];
+  
+  const cartItems = localStorage.getItem("cartItems");
   const [formData, setFormData] = useState({
     email: '',
     name: '',
