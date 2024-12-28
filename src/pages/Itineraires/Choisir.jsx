@@ -20,7 +20,7 @@ const Page = () => {
     setTimeout(() => {
       setNotification(null);
       navigate(`/${path}`); // Redirection vers la page spécifiée
-    }, 10000); // Cache la notification après 10 secondes
+    }, 2000); // Cache la notification après 10 secondes
   };
 
   return (
