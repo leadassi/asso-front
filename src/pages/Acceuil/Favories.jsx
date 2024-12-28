@@ -49,7 +49,7 @@ const MesFavoris = () => {
                       onClick={() =>
                         navigate('/description', {
                           state: {
-                            imageSrc: image.src,
+                            imageSrc: image.imageUrl,
                             name: image.name,
                             price: image.price,
                             rating: image.rating,
@@ -69,7 +69,7 @@ const MesFavoris = () => {
                     <button
                       className="icon-button fas fa-eye"
                       title="Voir l'image"
-                      onClick={() => window.open(image.src, '_blank')}
+                      onClick={() => window.open(image.imageUrl, '_blank')}
                     ></button>
                   </div>
                   <img src={image.src} alt={image.name} />

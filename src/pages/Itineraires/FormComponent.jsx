@@ -15,7 +15,7 @@ const FormComponent = ({ onSubmit, depart, setDepart }) => {
       <h2>Planifiez votre itinéraire</h2>
       <form onKeyDown={handleKeyDown}>
         <div className="form-group">
-          <label htmlFor="depart">Point de départ :</label>
+          <label htmlFor="depart">Votre lieu de livraison :</label>
           <input
             id="depart"
             type="text"
