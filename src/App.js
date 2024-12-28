@@ -30,37 +30,58 @@ import DiscoverPage from "./pages/Acceuil/Nouvostés.jsx";
 import Fruits from "./pages/Acceuil/categories/Fruits.jsx";
 import QRCodeGenerator from "./pages/Generateur/QRCodeGenerator.jsx";
 import QRCodeDisplay from './pages/Generateur/liste.jsx';
+import ValidationCart from './pages/orders/ValidationCart.jsx';
 
 function App() {
 
   // Définir des produits par défaut
-  const defaultProducts = [
+  /*const defaultProducts = [
     { id: 1, name: "Cosmetic Set", price: 25, quantity: 1, description: "A set of organic cosmetic products" },
     { id: 2, name: "Clothing - Dress", price: 50, quantity: 1, description: "A beautiful evening dress" },
     { id: 3, name: "Apple - Fruit", price: 1, quantity: 1, description: "Fresh and juicy apple" },
     { id: 4, name: "Chocolate Bar", price: 2, quantity: 1, description: "Delicious milk chocolate" }
-  ];
+  ];*/
 
   // Initialiser l'état avec des produits par défaut
-  const [cartItems, setCartItems] = useState(defaultProducts);
+  const [cartItems, setCartItems] = useState([]);
 
   // Fonction pour ajouter un produit au panier
   const handleAddToCart = (product) => {
-    setCartItems(prevItems => {
-      const existingItem = prevItems.find(item => item.id === product.id);
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item.id === product.id);
       if (existingItem) {
-        return prevItems.map(item =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        return prevItems.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
         );
       }
       return [...prevItems, { ...product, quantity: 1 }];
     });
   };
 
-  // Fonction pour supprimer un produit du panier
-  const handleRemoveFromCart = (productId) => {
-    setCartItems(cartItems.filter((item) => item.id !== productId));
+  const handleAddQuantity = (productId) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
   };
+
+  const handleSubtractQuantity = (productId) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === productId && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
+  };
+
+  const handleRemoveFromCart = (productId) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId));
+  };
+
 
   // Fonction pour réduire la quantité d'un produit dans le panier
   const handleDecreaseQuantity = (productId) => {
@@ -87,7 +108,7 @@ function App() {
           element={
             <MainLayout>
               <Routes>
-                <Route path="/cart" element={<Cart cartItems={cartItems} onRemoveFromCart={handleRemoveFromCart} onDecreaseQuantity={handleDecreaseQuantity} />} />
+                <Route path="/cart" element={<Cart cartItems={cartItems} onAddQuantity={handleAddQuantity} onSubtractQuantity={handleSubtractQuantity} onRemoveFromCart={handleRemoveFromCart} onDecreaseQuantity={handleDecreaseQuantity} />} />
                 <Route path="/description" element={<Description onAddToCart={handleAddToCart} />} />
                 <Route path="/àproposdenous" element={<AboutUs />} />
                 <Route path="/profil" element={<Profile />} />
@@ -110,6 +131,7 @@ function App() {
                 <Route path="/nouvostés " element={<DiscoverPage />} />
                 <Route path="/generateur" element={<QRCodeGenerator />} />
                 <Route path="/liste" element={<QRCodeDisplay />} />
+                <Route path="/ValidationCart" element={<ValidationCart />} />
               </Routes>
             </MainLayout>
           }

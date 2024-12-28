@@ -90,11 +90,13 @@ const LoginUser = () => {
       const data = await response.json();
       console.log('Connexion réussie:', data);
       
-      
+      // Sauvegarder les informations utilisateur dans le localStorage
       sessionStorage.setItem('utilisateurId', JSON.stringify(data.id));
       sessionStorage.setItem('utilisateurNom', JSON.stringify(data.nom));
       sessionStorage.setItem('utilisateurPrenom', JSON.stringify(data.prenom));
-      navigate(-1);
+
+      // Rediriger l'utilisateur vers la page d'accueil
+      navigate(-1); // Modifier selon la route de votre page profil
     } catch (err) {
       console.error('Erreur de connexion:', err);
       setError(err.message || 'Une erreur est survenue.');

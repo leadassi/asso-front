@@ -12,7 +12,7 @@ module.exports = function (app) {
   app.use(
     '/Utilisateurs', // Proxy pour les requêtes vers le service utilisateur
     createProxyMiddleware({
-      target: 'http://192.168.76.193:9091',
+      target: 'http://192.168.107.239:8067',
       changeOrigin: true,
     })
   );
