@@ -96,7 +96,7 @@ const Profile = () => {
       .catch((error) => console.error("Erreur lors du chargement des données utilisateur :", error));
 
     // Charger l'historique des commandes en temps réel
-    fetch(`http://192.168.88.161:8081/commande/utilisateur/${utilisateurId}`) // URL de l'API des commandes
+    fetch(`http://192.168.107.234:8081/commande/utilisateur/${utilisateurId}`) // URL de l'API des commandes
       .then((response) => response.json())
       .then((data) => setOrders(data))
       .catch(error => console.error("Erreur lors du chargement des commandes :", error));
@@ -188,7 +188,7 @@ const Profile = () => {
         sessionStorage.removeItem("utilisateurId");
         sessionStorage.removeItem("utilisateurPrenom");
         sessionStorage.removeItem("utilisateurNom");
-        navigate("/"); // Redirection vers la page de connexion
+        navigate("/Accueil"); // Redirection vers la page de connexion
       } else {
         // Gérer les erreurs de déconnexion
         const errorData = await response.json();
@@ -367,7 +367,7 @@ const Profile = () => {
           {orders.length > 0 ? (
             orders.slice(0, 5).map(order => ( 
               <div className="order-item" key={order.id}>
-                Commande {order.id}: {order.prixTotal.toFixed(2)} FCFA, {order.paymentMethod}, {new Date(order.date).toLocaleDateString()}
+                Commande {order.idCommande}: Prix"{order.prixTotal.toFixed(2)} FCFA", Statut"{order.statutCommande}", Date"{new Date(order.date).toLocaleDateString()}"
               </div>
             ))
           ) : (

@@ -4,15 +4,15 @@ module.exports = function (app) {
   app.use(
     '/commande', // Proxy pour les requêtes vers le service commande
     createProxyMiddleware({
-      target: 'http://localhost:8081',
+      target: 'http://192.168.88.107:8081',
       changeOrigin: true,
     })
   );
 
   app.use(
-    '/utilisateur', // Proxy pour les requêtes vers le service utilisateur
+    '/Utilisateurs', // Proxy pour les requêtes vers le service utilisateur
     createProxyMiddleware({
-      target: 'http://localhost:8082',
+      target: 'http://192.168.76.193:9091',
       changeOrigin: true,
     })
   );

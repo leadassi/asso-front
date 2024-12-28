@@ -23,7 +23,7 @@ const Historique = () => {
 
     const fetchCommandes = async () => {
       try {
-        const response = await fetch(`http://192.168.88.161:8081/commande/utilisateur/${utilisateurId}`);
+        const response = await fetch(`http://192.168.107.234:8081/commande/utilisateur/${utilisateurId}`);
         if (!response.ok) {
           const errorText = await response.text();
           throw new Error(`Erreur ${response.status} : ${errorText}`);
@@ -62,30 +62,30 @@ const Historique = () => {
               <th>Date</th>
               <th>Prix Total</th>
               <th>Montant Livraison</th>
-              <th>Paiement</th>
               <th>Statut</th>
             </tr>
           </thead>
           <tbody>
             {commandes.length > 0 ? (
               commandes.map((commande) => (
-                <tr key={commande.id}>
-                  <td>{commande.id}</td>
+                <tr key={commande.idCommande}>
+                  <td>{commande.idCommande}</td>
                   <td>{new Date(commande.date).toLocaleDateString()}</td>
                   <td>{commande.prixTotal.toFixed(2)} FCFA</td>
-                  <td>{commande.montantLivraison.toFixed(2)} frcs</td>
-                  <td>{commande.paymentMethod}</td>
+                  <td>{commande.montant_livraison.toFixed(2)} FCFA</td>
                   <td>
                     <span
                       className={`badge ${
-                        commande.status === "Livré"
+                        commande.statutCommande === "DELIVERED"
                           ? "bg-success"
-                          : commande.status === "En cours"
+                          : commande.statutCommande === "ACCEPTED"
+                          ? "bg-success"
+                          : commande.statutCommande === "INPROGRESS"
                           ? "bg-warning text-dark"
                           : "bg-danger"
                       }`}
                     >
-                      {commande.status}
+                      {commande.statutCommande}
                     </span>
                   </td>
                 </tr>
