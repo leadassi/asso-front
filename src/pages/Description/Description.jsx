@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, {useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Description.css";
 import fleche from './fleche.png'
@@ -8,13 +8,13 @@ const Description = ({ onAddToCart }) => {
   const navigate = useNavigate();
 
   
-  /*const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState([]);
   const [couleurs, setCouleurs] = useState([]);
   const [optionChoisie, setOptionChoisie] = useState("");
   const [couleurChoisie, setCouleurChoisie] = useState(""); 
   const [categorie, setCategorie] = useState("");
   const [sousCategorie, setSousCategorie] = useState("");
-  const [isBoutonDisabled, setIsBoutonDisabled] = useState(true);*/
+  const [isBoutonDisabled, setIsBoutonDisabled] = useState(true);
 
   const [rating, setRating] = useState(0); // État local pour la note sélectionnée
   const [hover, setHover] = useState(0); // État pour gérer le survol
@@ -27,9 +27,9 @@ const Description = ({ onAddToCart }) => {
 
   const { product } = location.state || {}; 
 
-  /*useEffect(() => {
+  useEffect(() => {
     // Appel pour récupérer la catégorie et sous-catégorie depuis le microservice produit
-    fetch(`http://192.168.107.239:8080/produits/${product.id}`)
+    fetch(`http://192.168.17.239:8080/produitService/getProduit/${product.id}`)
       .then((response) => response.json())
       .then((data) => {
         setCategorie(data.category);
@@ -59,17 +59,20 @@ const Description = ({ onAddToCart }) => {
       } else if (categorie === "Vêtements" && sousCategorie === "Sac") {
         setOptions(["5L", "10L", "15L", "20L"]);
         setCouleurs(["Noir", "Gris", "Beige", "Bleu"]);
+      } else if (categorie === "alimentaire" && sousCategorie === "legumes") {
+        setOptions(["5L", "10L", "15L", "20L"]);
+        setCouleurs(["rouge"]);
       } else if (categorie === "Alimentation" && sousCategorie === "Épices") {
         setOptions(["50g", "100g", "200g", "500g"]);
-        setCouleurs([]);
+        setCouleurs(["null"]);
       } else if (categorie === "Alimentaire" && sousCategorie === "Feculents") {
         setOptions(["50g", "100g", "200g", "500g"]);
-        setCouleurs([]);
+        setCouleurs(["null"]);
       } else {
         setOptions([]);
         setCouleurs([]);
       }
-    };*/
+    };
 
 
   
@@ -90,7 +93,7 @@ const Description = ({ onAddToCart }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: 'include',
+          //credentials: 'include',
           body: JSON.stringify(body),
         });
   
@@ -154,7 +157,7 @@ const Description = ({ onAddToCart }) => {
       </span><br/><br/>
             </div>
 
-    {/* <p className="mb-3 text-warning-emphasis">Catégorie : {categorie}</p>
+    <p className="mb-3 text-warning-emphasis">Catégorie : {categorie}</p>
       <p className="mb-3 text-warning-emphasis">Sous-catégorie : {sousCategorie}</p>
 
 
@@ -190,13 +193,9 @@ const Description = ({ onAddToCart }) => {
             ))}
           </select>
         </div>
-      )}
-    
+      )}    
   <button className="bout" onClick={()=> onAddToCart(product)} disabled={isBoutonDisabled} style={{boxShadow:"initial", marginTop:"15px"}}>Ajouter au panier</button>
-  </div>*/}
-
-<button className="bout" onClick={()=> onAddToCart(product)} style={{boxShadow:"initial", marginTop:"15px"}}>Ajouter au panier</button>
-</div>
+  </div>
   {/* Section droite (image) */}
   <div className="right-section1" style={{borderRadius: "50%", mixBlendMode: 'multiply' }}>
     <img src={product.imageUrl} alt={product.name} />
