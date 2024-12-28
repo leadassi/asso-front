@@ -54,7 +54,7 @@ const NavbarCategories = () => {
             <span>Aliments</span>
           </li>
           <li
-            onClick={() => navigate("/accessoirees")}
+            onClick={() => navigate("/accessoires")}
             className={`nav-item ${isActive("/accessoires") ? "active" : ""}`}
           >
             <span>Accessoires</span>
