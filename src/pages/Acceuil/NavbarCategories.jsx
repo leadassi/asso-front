@@ -78,7 +78,7 @@ const NavbarCategories = () => {
               defaultValue="null"
             >
               <option value="null">All categories</option>
-              <option value="Clothing">Clothing</option>
+              <option value="Clothing">Clothes</option>
               <option value="aliments">Aliments</option>
               <option value="cosmetics">Cosmetics</option>
             </select>

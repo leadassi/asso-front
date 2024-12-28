@@ -1,41 +1,25 @@
+// pages/Acceuil/Accessoires.jsx
 import React, { useState } from "react";
 import NavbarCategories from "./NavbarCategories";
-import { Link, /*useNavigate*/ } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Aliments.css";
 import "../../index.css";
-import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
-import Fruits from "./categories/Fruits";
-import Legumes from "./categories/Legumes";
-import Feculents from "./categories/Feculents";
-import Boissons from "./categories/Boissons";
+import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+/*import Sac from "./categories/Sac";
+import Habit from "./categories/Habit";*/
 
-const Aliments = () => {
-  const [category, setCategory] = useState("Fruits");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalImage, setModalImage] = useState(null);
-  //const navigate = useNavigate();
-
- /* const openModal = (src) => {
-    setModalImage(src);
-    setIsModalOpen(true);
-  };*/
-
-  const closeModal = () => {
-    setModalImage(null);
-    setIsModalOpen(false);
-  };
+const Accessoires = () => {
+  const [category, setCategory] = useState("Sac");
 
   return (
-    <div className="aliments-page">
+    <div className="accessoires-page">
       <NavbarCategories />
-
+      
       {/* Navigation des catégories */}
       <div className="category-nav">
         {[
-          "Legumes",
-          "Fruits",
-          "Feculents",
-          "Boissons",
+          "Sac",
+          "Habit",
         ].map((item) => (
           <button
             key={item}
@@ -47,24 +31,9 @@ const Aliments = () => {
         ))}
       </div>
 
-      {/* Affichage des produits */}
-      {category === "Fruits" && <Fruits />} {/* Dynamically render Fruits component based on selected category */}
-      {category === "Legumes" && <Legumes />} {/* Dynamically render Legumes component based on selected category */}
-      {category === "Feculents" && <Feculents/>}
-      {category === "Boissons" && <Boissons/>}
-      {/* Modal */}
-      {isModalOpen && modalImage && (
-        <div className="modal open" onClick={closeModal}>
-          <div className="modal-content">
-            <button className="close-button" onClick={closeModal}>
-              &times;
-            </button>
-            <img src={modalImage} alt="Zoom" />
-          </div>
-        </div>
-      )}
+      {/*{category === "Sac" && <Sac />}
+      {category === "Habit" && <Habit />*/}
 
-      {/* Footer */}
       <footer className="footer py-3" style={{ backgroundColor: 'rgba(0, 0, 0, 0)', borderTop: '1px solid #ddd' }}>
         <div className="container text-center">
           <Link
@@ -75,32 +44,35 @@ const Aliments = () => {
           </Link>
 
           <div className="social-links d-flex justify-content-center mb-2">
+            {/* Lien vers Facebook */}
             <a
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
               className="me-3 text-decoration-none"
-              style={{ color: '#4267B2' }}
+              style={{ color: "#4267B2" }}
             >
               <FaFacebook size={24} />
             </a>
 
+            {/* Lien vers Twitter */}
             <a
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
               className="me-3 text-decoration-none"
-              style={{ color: '#1DA1F2' }}
+              style={{ color: "#1DA1F2" }}
             >
               <FaTwitter size={24} />
             </a>
 
+            {/* Lien vers Instagram */}
             <a
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-decoration-none"
-              style={{ color: '#E4405F' }}
+              style={{ color: "#E4405F" }}
             >
               <FaInstagram size={24} />
             </a>
@@ -113,4 +85,4 @@ const Aliments = () => {
   );
 };
 
-export default Aliments;
+export default Accessoires;

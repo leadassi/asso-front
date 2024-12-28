@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import "./Cosmetics.css";
 import '../../index.css';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import Corps from "./categories/Corps";
+import Cheveux from "./categories/Cheveux";
+import Visage from "./categories/Visage";
 
 const Cosmetics = () => {
   const [category, setCategory] = useState("Agro_Alimentaires");
@@ -27,8 +30,9 @@ const Cosmetics = () => {
           </button>
         ))}
       </div>
-      <h1>Cosmetics</h1>
-      <p>Contenu de la page Cosmetics...</p>
+      {category === "Corps" && <Corps />}
+      {category === "Cheveux" && <Cheveux />}
+      {category === "Visage" && <Visage />}
       <footer className="footer py-3" style={{ backgroundColor: 'rgba(0, 0, 0, 0)', borderTop: '1px solid #ddd' }}>
       <div className="container text-center">
         <Link

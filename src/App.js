@@ -31,6 +31,7 @@ import Fruits from "./pages/Acceuil/categories/Fruits.jsx";
 import QRCodeGenerator from "./pages/Generateur/QRCodeGenerator.jsx";
 import QRCodeDisplay from './pages/Generateur/liste.jsx';
 import ValidationCart from './pages/orders/ValidationCart.jsx';
+import Accessoires from './pages/Acceuil/Acessoires.jsx';
 
 function App() {
 
@@ -132,6 +133,7 @@ function App() {
                 <Route path="/generateur" element={<QRCodeGenerator />} />
                 <Route path="/liste" element={<QRCodeDisplay />} />
                 <Route path="/ValidationCart" element={<ValidationCart />} />
+                <Route path="/accessoires" element={<Accessoires />} />
               </Routes>
             </MainLayout>
           }
