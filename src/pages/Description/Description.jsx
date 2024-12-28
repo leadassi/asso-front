@@ -24,6 +24,9 @@ const Description = ({ onAddToCart }) => {
     
   }
 
+
+  const { product } = location.state || {}; 
+
   /*useEffect(() => {
     // Appel pour récupérer la catégorie et sous-catégorie depuis le microservice produit
     fetch(`http://192.168.107.239:8080/produits/${productId}`)
@@ -42,12 +45,14 @@ const Description = ({ onAddToCart }) => {
     setIsBoutonDisabled(quantite <= 0 || !optionChoisie || !couleurChoisie);
   }, [quantite, optionChoisie, couleurChoisie]);*/
 
-  /* const{id} = useParams();
-      const product= produi*/
-  
-    const { id, imageSrc, name, price, description } = location.state || {};
+ //const{id} = useParams();
+      //const product= products.find(p)=>  p.id === parseInt(id));
 
-    const product ={
+      if(!product) return <p className="mb-3 text-warning-emphasis">produit non trouvé</p>
+  
+    /*const { id, imageSrc, name, price, description } = location.state || {};
+
+      const product ={
       id:id,
       name:name,
       description:description,
@@ -62,7 +67,7 @@ const Description = ({ onAddToCart }) => {
           <button className="go-back-button" onClick={() => navigate(-1)}>Go Back</button>
         </div>
       );
-    }
+    } */
 
   
     // Fonction pour charger les options dynamiques
@@ -110,7 +115,7 @@ const Description = ({ onAddToCart }) => {
   
       // Construire le corps de la requête
       const body = {
-        productId: id,
+        productId: product.id,
         userId: utilisateurId,
         rating: selectedRating,
       };
@@ -240,10 +245,10 @@ const Description = ({ onAddToCart }) => {
 
   {/* Section droite (image) */}
   <div className="right-section1" style={{borderRadius: "50%", mixBlendMode: 'multiply' }}>
-    <img src={imageSrc} alt={name} />
+    <img src={product.imageUrl} alt={product.name} />
   </div>
   <div class="background-image-contain1">
-        <img src={imageSrc} alt="" class="background-imag1"/>
+        <img src={product.imageUrl} alt="" class="background-imag1"/>
       </div>
 </div>
 

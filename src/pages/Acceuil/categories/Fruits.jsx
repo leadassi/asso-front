@@ -224,6 +224,7 @@ const Fruits = () => {
         </h1>
         <div className="carousel-products-container">
           <div className="carousel-products">
+<<<<<<< HEAD
             {paginatedProducts.map((product) => (
               <div className="box" key={product.title || product.id}> {/* Utilisation de title ou id comme clé */}
                 <div className="icons">
@@ -266,6 +267,53 @@ const Fruits = () => {
                         className={`fa-star ${i < product.rating ? 'fas' : 'far'}`}
                       ></i>
                     ))}
+=======
+            {produitsAffiches
+              .slice(currentPage * 8, currentPage * 8 + 8) // 8 images par page
+              .map((product, index) => (
+                <div className="box" key={product.id}>
+                  <div className="icons">
+                    <button
+                      className="icon-button fas fa-plus"
+                      title="Voir les détails"
+                      onClick={() =>
+                        navigate('/description', {
+                          state: { product }
+                        })
+                      }
+                    ></button>
+                    <button
+                      className="icon-button fas fa-heart"
+                      title="Ajouter aux favoris"
+                      onClick={() => toggleFavorite(product)}
+                      style={{
+                        color: favorites.some((fav) => fav.id === product.id) ? 'red' : 'black',
+                      }}
+                    ></button>
+                    <button
+                      className="icon-button fas fa-eye"
+                      title="Voir l'image"
+                      onClick={() => openModal(product.imageUrl)}
+                    ></button>
+                  </div>
+                  <img
+                    src={product.imageUrl || "placeholder.jpeg"}
+                    alt={product.name || "Produit"}
+                  />
+                  <div className="content">
+                    <h3>{product.name}</h3>
+                    <div className="price">{product.price} FCFA</div>
+                    <div className="stars">
+                      {[...Array(5)].map((_, i) => (
+                        <i
+                          key={i}
+                          className={`fa-star ${
+                            i < product.rating ? 'fas' : 'far'
+                          }`}
+                        ></i>
+                      ))}
+                    </div>
+>>>>>>> e52e7acf1279305815cc8446abd768da2bce85e6
                   </div>
                 </div>
               </div>
