@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 
-const FormComponent = ({ onSubmit, depart, setDepart, arrivee, setArrivee }) => {
+const FormComponent = ({ onSubmit, depart, setDepart }) => {
   // Fonction pour gérer la soumission via la touche "Entrée"
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -22,17 +22,6 @@ const FormComponent = ({ onSubmit, depart, setDepart, arrivee, setArrivee }) => 
             value={depart}
             onChange={(e) => setDepart(e.target.value)}
             placeholder="Entrez votre point de départ"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="arrivee">Point d'arrivée :</label>
-          <input
-            id="arrivee"
-            type="text"
-            value={arrivee}
-            onChange={(e) => setArrivee(e.target.value)}
-            placeholder="Entrez votre destination"
             required
           />
         </div>

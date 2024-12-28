@@ -376,3 +376,37 @@
   border: 2px solid #000;
 }
 
+/*pagination*/
+/* Pagination */
+.carousel-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.carousel-dot {
+  width: 30px;
+  height: 30px;
+  margin: 0 5px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.carousel-dot.active {
+  background-color: #ff7f50; /* Couleur active (ex: corail) */
+  transform: scale(1.2); /* Agrandir le point actif */
+}
+
+.carousel-dot:hover {
+  background-color: #ff6347; /* Couleur au survol */
+  transform: scale(1.1); /* Légère agrandissement au survol */
+}
+
+.carousel-dot:focus {
+  outline: none; /* Supprimer la bordure de focus par défaut */
+}

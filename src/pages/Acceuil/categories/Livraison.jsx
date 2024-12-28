@@ -103,25 +103,7 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Section Votre Commande */}
-      <section className="your-order">
-        <h2>Votre Commande</h2>
-        <form className="order-form">
-          <label>
-            Nom du produit :
-            <input type="text" placeholder="Entrez le nom du produit" />
-          </label>
-          <label>
-            Quantité :
-            <input type="number" placeholder="Entrez la quantité" />
-          </label>
-          <label>
-            Adresse de livraison :
-            <input type="text" placeholder="Entrez votre adresse" />
-          </label>
-          <button type="submit">Passer la commande</button>
-        </form>
-      </section>
+      
     </div>
   );
 };

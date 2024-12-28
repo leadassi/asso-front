@@ -26,37 +26,68 @@ import Services from './pages/Acceuil/categories/Livraison.jsx';
 import MesFavoris from './pages/Acceuil/Favories.jsx';
 import ServiceClient from './pages/Acceuil/Service-client.jsx';
 import Page from './pages/Itineraires/Choisir.jsx';
-import DiscoverPage from "./pages/Acceuil/Nouvostés.jsx"
+import DiscoverPage from "./pages/Acceuil/Nouvostés.jsx";
+import Fruits from "./pages/Acceuil/categories/Fruits.jsx";
+import QRCodeGenerator from "./pages/Generateur/QRCodeGenerator.jsx";
+import QRCodeDisplay from './pages/Generateur/liste.jsx';
 
 function App() {
 
-  const [cartItems, setCartItems] = useState([]);
+  // Définir des produits par défaut
+  const defaultProducts = [
+    { id: 1, name: "Cosmetic Set", price: 25, quantity: 1, description: "A set of organic cosmetic products" },
+    { id: 2, name: "Clothing - Dress", price: 50, quantity: 1, description: "A beautiful evening dress" },
+    { id: 3, name: "Apple - Fruit", price: 1, quantity: 1, description: "Fresh and juicy apple" },
+    { id: 4, name: "Chocolate Bar", price: 2, quantity: 1, description: "Delicious milk chocolate" }
+  ];
+
+  // Initialiser l'état avec des produits par défaut
+  const [cartItems, setCartItems] = useState(defaultProducts);
 
   // Fonction pour ajouter un produit au panier
   const handleAddToCart = (product) => {
-    setCartItems([...cartItems, product]);
+    setCartItems(prevItems => {
+      const existingItem = prevItems.find(item => item.id === product.id);
+      if (existingItem) {
+        return prevItems.map(item =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+      return [...prevItems, { ...product, quantity: 1 }];
+    });
   };
 
+  // Fonction pour supprimer un produit du panier
   const handleRemoveFromCart = (productId) => {
     setCartItems(cartItems.filter((item) => item.id !== productId));
+  };
+
+  // Fonction pour réduire la quantité d'un produit dans le panier
+  const handleDecreaseQuantity = (productId) => {
+    setCartItems(cartItems.map(item =>
+      item.id === productId && item.quantity > 1
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+    ));
   };
 
   return (
     <Router>
       <Routes>
         <Route path="/asso-front" element={<Navigate to="/Acceuil" replace />} />
-        {/* Route pour la page d'accueil sans le MainLayout */}
         <Route path="/Acceuil" element={<Acceuil />} />
         <Route path="/cosmetics" element={<Cosmetics />} />
         <Route path="/Clothing" element={<Clothing />} />
         <Route path="/aliments" element={<Aliments />} />
+        <Route path="/fruits" element={<Fruits />} />
+
         {/* Regroupement des routes avec MainLayout */}
         <Route
           path="/*"
           element={
             <MainLayout>
               <Routes>
-                <Route path="/cart" element={<Cart cartItems={cartItems} onRemoveFromCart={handleRemoveFromCart} />} />
+                <Route path="/cart" element={<Cart cartItems={cartItems} onRemoveFromCart={handleRemoveFromCart} onDecreaseQuantity={handleDecreaseQuantity} />} />
                 <Route path="/description" element={<Description onAddToCart={handleAddToCart} />} />
                 <Route path="/àproposdenous" element={<AboutUs />} />
                 <Route path="/profil" element={<Profile />} />
@@ -66,8 +97,7 @@ function App() {
                 <Route path="/reinscription" element={<Reregister />} />
                 <Route path="/verification" element={<Verification email="utilisateur@example.com" nom="Utilisateur" />} />
                 <Route path="/form_fournisseur" element={<LoginSupplier />} />
-                <Route path="/historique" element={<Historique/>} />
-               <Route path="/description" element={<Description />} />
+                <Route path="/historique" element={<Historique />} />
                 <Route path="/scanner" element={<QRCodeScanner />} />
                 <Route path="/map" element={<MapWithItinerary />} />
                 <Route path="/jes" element={<Api />} />
@@ -78,11 +108,13 @@ function App() {
                 <Route path="/choisir" element={<Page />} />
                 <Route path="/service-client" element={<ServiceClient />} />
                 <Route path="/nouvostés " element={<DiscoverPage />} />
+                <Route path="/generateur" element={<QRCodeGenerator />} />
+                <Route path="/liste" element={<QRCodeDisplay />} />
               </Routes>
             </MainLayout>
           }
         />
-      </Routes> 
+      </Routes>
     </Router>
   );
 }

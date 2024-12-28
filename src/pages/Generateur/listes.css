@@ -1,0 +1,15 @@
+.wrapper {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .qr-code img {
+    max-width: 300px;
+    margin-top: 20px;
+    border: 2px solid #ccc;
+  }
+  
+  header h1 {
+    color: #333;
+  }
+  

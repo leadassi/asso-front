@@ -4,10 +4,12 @@ import MapComponent from "./MapComponent"; // Import de la carte
 import "./style.css"; // CSS spécifique au composant
 
 const Carte = () => {
-  const [depart, setDepart] = useState("");
-  const [arrivee, setArrivee] = useState("");
+  const [depart, setDepart] = useState(""); // Seul le départ est demandé
   const [currentPosition, setCurrentPosition] = useState(null);
   const [routes, setRoutes] = useState([]);
+
+  // L'arrivée est fixée à "Yaoundé, Ngoa"
+  const arrivee = "Yaoundé, Ngoa";
 
   const handleFormSubmit = async () => {
     try {
@@ -17,6 +19,7 @@ const Carte = () => {
       const data = await response.json();
       const departCoord = data.results[0].position;
 
+      // Utilisation de "Yaoundé, Ngoa" pour l'arrivée
       const responseArrivee = await fetch(
         `https://api.tomtom.com/search/2/geocode/${arrivee}.json?key=wntKCJUiXq0MM1325AV79nZHxio0FMHI`
       );
@@ -56,8 +59,6 @@ const Carte = () => {
         onSubmit={handleFormSubmit}
         depart={depart}
         setDepart={setDepart}
-        arrivee={arrivee}
-        setArrivee={setArrivee}
       />
       <MapComponent currentPosition={currentPosition} routes={routes} />
     </div>

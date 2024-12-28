@@ -242,3 +242,71 @@
   opacity: 1;
   visibility: visible;
 }
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .navbar-container {
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+  }
+
+  .search-form {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .search-input,
+  .search-category,
+  .search-button {
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  .search-button {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .icon-container-1 {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .dropdown-menu {
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .navbar-logo {
+    height: 40px;
+  }
+
+  .search-input,
+  .search-category {
+    font-size: 0.9rem;
+  }
+
+  .search-button {
+    font-size: 0.9rem;
+  }
+
+  .dropdown-list li {
+    font-size: 12px;
+  }
+
+  .service-client-tooltip {
+    font-size: 10px;
+  }
+}
