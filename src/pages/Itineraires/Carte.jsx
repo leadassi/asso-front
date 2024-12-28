@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Importation du hook de navigation
 import FormComponent from "./FormComponent"; // Import du formulaire
 import MapComponent from "./MapComponent"; // Import de la carte
 import "./style.css"; // CSS spécifique au composant
@@ -7,6 +8,7 @@ const Carte = () => {
   const [depart, setDepart] = useState(""); // Seul le départ est demandé
   const [currentPosition, setCurrentPosition] = useState(null);
   const [routes, setRoutes] = useState([]);
+  const navigate = useNavigate(); // Hook de navigation
 
   // L'arrivée est fixée à "Yaoundé, Ngoa"
   const arrivee = "Yaoundé, Ngoa";
@@ -48,6 +50,12 @@ const Carte = () => {
       };
 
       setRoutes([geoJsonRoute]);
+
+      // Attendre 15 secondes avant de rediriger vers la page de validation
+      setTimeout(() => {
+        navigate("/ValidationCart"); // Redirection vers la page de validation
+      }, 15000); // 15 secondes = 15000 ms
+
     } catch (error) {
       console.error("Erreur lors du calcul de l'itinéraire:", error);
     }

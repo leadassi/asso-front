@@ -131,7 +131,6 @@ const Fruits = () => {
 
 export default Fruits;
 */
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavbarCategories from "../NavbarCategories";
@@ -163,17 +162,14 @@ const Fruits = () => {
 
   const toggleFavorite = (product) => {
     setFavorites((prevFavorites) => {
-      const isFavorite = prevFavorites.some((fav) => fav.id === product.id);
+      const isFavorite = prevFavorites.some((fav) => fav.title === product.title);
 
-      if (isFavorite) {
-        const updatedFavorites = prevFavorites.filter((fav) => fav.id !== product.id);
-        localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-        return updatedFavorites;
-      } else {
-        const updatedFavorites = [...prevFavorites, product];
-        localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-        return updatedFavorites;
-      }
+      const updatedFavorites = isFavorite
+        ? prevFavorites.filter((fav) => fav.title !== product.title)
+        : [...prevFavorites, product];
+
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      return updatedFavorites;
     });
   };
 
@@ -199,78 +195,87 @@ const Fruits = () => {
     fetchProduits();
   }, []);
 
+  // Produits venant de data (format 1)
+  const produitsAffichesData = data.filter((product) => product.category === "fruits");
+
+  // Produits venant de localStorage (format 2)
+  const produitsAffichesStockes = produitsStockes.filter((product) => product.category === "fruits");
+
+  // Produits venant de l'API (format 2 également)
+  const produitsAffichesAPI = produitsAPI.filter((product) => product.subCategory === "fruits");
+
+  // Fusionner tous les produits sans les normaliser
   const produitsAffiches = [
-    ...data.filter((product) => product.category === "fruits"),
-    ...produitsStockes.filter((product) => product.category === "fruits"),
-    ...produitsAPI.filter((product) => product.subCategory === "fruits"),
+    ...produitsAffichesData,
+    ...produitsAffichesStockes,
+    ...produitsAffichesAPI,
   ];
+
+  const productsPerPage = 8;
+  const paginatedProducts = produitsAffiches.slice(currentPage * productsPerPage, currentPage * productsPerPage + productsPerPage);
 
   return (
     <div className="clothing-page">
       <NavbarCategories />
 
-      {/* Products Section */}
       <section className="products" id="products">
         <h1 className="heading">
           <span>Nos Produits</span>
         </h1>
         <div className="carousel-products-container">
           <div className="carousel-products">
-            {produitsAffiches
-              .slice(currentPage * 8, currentPage * 8 + 8) // 8 images par page
-              .map((product, index) => (
-                <div className="box" key={product.id}>
-                  <div className="icons">
-                    <button
-                      className="icon-button fas fa-plus"
-                      title="Voir les détails"
-                      onClick={() =>
-                        navigate('/description', {
-                          state: { ...product }
-                        })
-                      }
-                    ></button>
-                    <button
-                      className="icon-button fas fa-heart"
-                      title="Ajouter aux favoris"
-                      onClick={() => toggleFavorite(product)}
-                      style={{
-                        color: favorites.some((fav) => fav.id === product.id) ? 'red' : 'black',
-                      }}
-                    ></button>
-                    <button
-                      className="icon-button fas fa-eye"
-                      title="Voir l'image"
-                      onClick={() => openModal(product.imageUrl)}
-                    ></button>
-                  </div>
-                  <img
-                    src={product.imageUrl || "placeholder.jpeg"}
-                    alt={product.name || "Produit"}
-                  />
-                  <div className="content">
-                    <h3>{product.name}</h3>
-                    <div className="price">{product.price} FCFA</div>
-                    <div className="stars">
-                      {[...Array(5)].map((_, i) => (
-                        <i
-                          key={i}
-                          className={`fa-star ${
-                            i < product.rating ? 'fas' : 'far'
-                          }`}
-                        ></i>
-                      ))}
-                    </div>
+            {paginatedProducts.map((product) => (
+              <div className="box" key={product.title || product.id}> {/* Utilisation de title ou id comme clé */}
+                <div className="icons">
+                  <button
+                    className="icon-button fas fa-plus"
+                    title="Voir les détails"
+                    onClick={() =>
+                      navigate('/description', { state: { product } })
+                    }
+                  ></button>
+
+                  <button
+                    className="icon-button fas fa-heart"
+                    title="Ajouter aux favoris"
+                    onClick={() => toggleFavorite(product)}
+                    style={{
+                      color: favorites.some((fav) => fav.title === product.title || fav.id === product.id) ? 'red' : 'black',
+                    }}
+                  ></button>
+
+                  <button
+                    className="icon-button fas fa-eye"
+                    title="Voir l'image"
+                    onClick={() => openModal(product.img || product.imageUrl)}
+                  ></button>
+                </div>
+
+                <img
+                  src={product.img || product.imageUrl || "placeholder.jpeg"} // Utilisation de img ou imageUrl
+                  alt={product.title || product.name || "Produit"} // Utilisation de title ou name
+                />
+
+                <div className="content">
+                  <h3>{product.title || product.name || "Produit sans nom"}</h3>
+                  <div className="price">{product.price} FCFA</div>
+                  <div className="stars">
+                    {[...Array(5)].map((_, i) => (
+                      <i
+                        key={i}
+                        className={`fa-star ${i < product.rating ? 'fas' : 'far'}`}
+                      ></i>
+                    ))}
                   </div>
                 </div>
-              ))}
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Pagination */}
         <div className="carousel-bar">
           {Array.from(
-            { length: Math.ceil(produitsAffiches.length / 8) },
+            { length: Math.ceil(produitsAffiches.length / productsPerPage) },
             (_, i) => (
               <div
                 key={i}
@@ -284,7 +289,6 @@ const Fruits = () => {
         </div>
       </section>
 
-      {/* Modal */}
       {isModalOpen && modalImage && (
         <div className="modal open" onClick={closeModal}>
           <div className="modal-content">
