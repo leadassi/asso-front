@@ -23,6 +23,9 @@ const Accueil = () => {
   // État pour la page actuelle
   const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
+  const [produitsStockes, setProduitsStockes] = useState([]);
+  const [produitsAPI, setProduitsAPI] = useState([]);
+  
 
   // Change l'image toutes les 6 secondes
   useEffect(() => {
@@ -131,6 +134,47 @@ const Accueil = () => {
   const handleCardClick = () => {
     navigate("/Adresse"); // Redirige vers la page "Details"
   };
+  /*nouvele */
+  const fetchProduits = async () => {
+    try {
+      const response = await fetch('http://192.168.229.17:8080/produitService/getAllProduits', {
+        method: 'GET',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+      const produitsData = await response.json();
+      localStorage.setItem('produits', JSON.stringify(produitsData));
+      setProduitsAPI(produitsData);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des produits:', error);
+    }
+  };
+
+  useEffect(() => {
+    const produitsStockesLocal = JSON.parse(localStorage.getItem("produits")) || [];
+    setProduitsStockes(produitsStockesLocal);
+    fetchProduits();
+  }, []);
+
+  // Produits venant de localStorage (format 2)
+  const produitsAffichesStockes = produitsStockes.slice(0, 16); // Limiter à 16 produits
+
+  // Produits venant de l'API (format 2 également)
+  const produitsAffichesAPI = produitsAPI.slice(0, 16); // Limiter à 16 produits
+
+  // Fusionner uniquement les produits venant de localStorage et de l'API en éliminant les doublons
+  const produitsAffiches = [
+    ...produitsAffichesStockes,
+    ...produitsAffichesAPI,
+  ].filter((value, index, self) => 
+    index === self.findIndex((t) => (
+      t.id === value.id // Filtrer les produits avec le même id
+    ))
+  ).slice(0, 16); // Limiter à 16 produits après fusion
+
+  const productsPerPage = 8;
+  const paginatedProducts = produitsAffiches.slice(currentPage * productsPerPage, currentPage * productsPerPage + productsPerPage);
 
   return (
     <div className="accueil-page">
@@ -237,64 +281,58 @@ const Accueil = () => {
         </h1>
         <div className="carousel-products-container">
           <div className="carousel-products">
-            {galleryImages
-              .slice(currentPage * 8, currentPage * 8 + 8) // 8 images par page
-              .map((image, index) => (
-                <div className="box" key={image.id}>
-                  <div className="icons">
-                    <button
-                      className="icon-button fas fa-plus"
-                      title="View Details"
-                      onClick={() =>
-                        navigate('/description', {
-                          state: {
-                            imageSrc: image.src,
-                            name: image.name,
-                            price: image.price,
-                            rating: image.rating,
-                            description: image.description,
-                          },
-                        })
-                      }
-                    ></button>
-                    <button
-                      className="icon-button fas fa-heart"
-                      title="Add to Favorites"
-                      onClick={() => toggleFavorite(image)} // Passer l'objet produit complet
-                      style={{
-                        color: favorites.some((fav) => fav.id === image.id) ? 'red' : 'black',
-                      }}
-                    ></button>
-                    <button
-                      className="icon-button fas fa-eye"
-                      title="View Image"
-                      onClick={() => openModal(image.src)}
-                    ></button>
-                  </div>
-                  <img src={image.src} alt={image.name} />
-                  <div className="content">
-                    <h3>{image.name}</h3>
-                    <div className="price">{image.price} FCFA</div>
-                    <div className="stars">
-                      {[...Array(5)].map((_, i) => (
-                        <i
-                          key={i}
-                          className={`fa-star ${
-                            i < image.rating ? 'fas' : 'far'
-                          }`}
-                        ></i>
-                      ))}
-                    </div>
+            {paginatedProducts.map((product) => (
+              <div className="box" key={product.title || product.id}> {/* Utilisation de title ou id comme clé */}
+                <div className="icons">
+                  <button
+                    className="icon-button fas fa-plus"
+                    title="Voir les détails"
+                    onClick={() =>
+                      navigate('/description', { state: { product } })
+                    }
+                  ></button>
+
+                  <button
+                    className="icon-button fas fa-heart"
+                    title="Ajouter aux favoris"
+                    onClick={() => toggleFavorite(product)}
+                    style={{
+                      color: favorites.some((fav) => fav.title === product.title || fav.id === product.id) ? 'red' : 'black',
+                    }}
+                  ></button>
+
+                  <button
+                    className="icon-button fas fa-eye"
+                    title="Voir l'image"
+                    onClick={() => openModal(product.img || product.imageUrl)}
+                  ></button>
+                </div>
+
+                <img
+                  src={product.img || product.imageUrl || "placeholder.jpeg"} // Utilisation de img ou imageUrl
+                  alt={product.title || product.name || "Produit"} // Utilisation de title ou name
+                />
+
+                <div className="content">
+                  <h3>{product.title || product.name || "Produit sans nom"}</h3>
+                  <div className="price">{product.price} FCFA</div>
+                  <div className="stars">
+                    {[...Array(5)].map((_, i) => (
+                      <i
+                        key={i}
+                        className={`fa-star ${i < product.rating ? 'fas' : 'far'}`}
+                      ></i>
+                    ))}
                   </div>
                 </div>
-              ))}
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Pagination */}
         <div className="carousel-bar">
           {Array.from(
-            { length: Math.ceil(galleryImages.length / 8) },
+            { length: Math.ceil(produitsAffiches.length / productsPerPage) },
             (_, i) => (
               <div
                 key={i}
@@ -307,7 +345,6 @@ const Accueil = () => {
           )}
         </div>
       </section>
-
       {/* Help Section */}
       <div className="acceuil-container">
         <div className="help-container-inline">
