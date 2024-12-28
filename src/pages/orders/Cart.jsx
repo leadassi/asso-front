@@ -99,7 +99,7 @@ function Cart({ cartItems, onAddQuantity, onSubtractQuantity, onRemoveFromCart }
         </ul>
 
         <h3 className="text-center text-primary-emphasis">
-          Total : <span className="text-success">${total.toFixed(2)}</span>
+          Total : <span className="text-success">{total.toFixed(2)}FCFA</span>
         </h3>
 
         <div className="d-flex justify-content-center mt-4">
