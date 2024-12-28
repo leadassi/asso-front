@@ -226,7 +226,7 @@ const Fruits = () => {
                       title="Voir les détails"
                       onClick={() =>
                         navigate('/description', {
-                          state: { ...product }
+                          state: { product }
                         })
                       }
                     ></button>

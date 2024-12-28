@@ -32,7 +32,7 @@ function Cart({ cartItems, onAddQuantity, onSubtractQuantity, onRemoveFromCart }
     }
 
     // Rediriger vers la page de validation
-    navigate('/ValidationCart');
+    navigate('/choisir');
   };
 
   useEffect(() => {
