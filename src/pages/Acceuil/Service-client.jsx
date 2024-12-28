@@ -51,10 +51,10 @@ const ServiceClient = () => {
           <div
             style={{
               color: "#664d03",
-              transform: "translateY(50%)",
+              
               fontSize: "30px",
-              left: "1000px",
-              position: "absolute",
+              marginLeft:"",
+              position: "relative",
             display: "flex",
             flexDirection: "column", 
             justifyContent: "center",

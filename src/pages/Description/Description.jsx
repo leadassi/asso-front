@@ -19,10 +19,14 @@ const Description = ({ onAddToCart }) => {
   const [rating, setRating] = useState(0); // État local pour la note sélectionnée
   const [hover, setHover] = useState(0); // État pour gérer le survol
   const utilisateurId = sessionStorage.getItem("utilisateurId");
+  if (!utilisateurId) {
+    navigate('/connection');
+    
+  }
 
   /*useEffect(() => {
     // Appel pour récupérer la catégorie et sous-catégorie depuis le microservice produit
-    fetch(`http://localhost:8080/produits/${productId}`)
+    fetch(`http://192.168.107.239:8080/produits/${productId}`)
       .then((response) => response.json())
       .then((data) => {
         setCategorie(data.categorie);
@@ -37,15 +41,18 @@ const Description = ({ onAddToCart }) => {
     // Désactiver le bouton si la quantité n'est pas définie
     setIsBoutonDisabled(quantite <= 0 || !optionChoisie || !couleurChoisie);
   }, [quantite, optionChoisie, couleurChoisie]);*/
-  
-    const { productId, imageSrc, name, price, description } = location.state || {};
 
-    const product =useState({
-      id:productId,
+  /* const{id} = useParams();
+      const product= produi*/
+  
+    const { id, imageSrc, name, price, description } = location.state || {};
+
+    const product ={
+      id:id,
       name:name,
       description:description,
       price:price
-    });
+    };
 
 
     if (!imageSrc || !name || !price || !description) {
@@ -103,14 +110,14 @@ const Description = ({ onAddToCart }) => {
   
       // Construire le corps de la requête
       const body = {
-        productId: productId,
+        productId: id,
         userId: utilisateurId,
         rating: selectedRating,
       };
   
       try {
         // Appeler l'endpoint du microservice avec fetch
-        const response = await fetch(`http://192.168.88.220:8067/recommandations/saverecommandation`, {
+        const response = await fetch(`http://192.168.107.101:8067/recommandations/saverecommandation`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -152,15 +159,15 @@ const Description = ({ onAddToCart }) => {
 
   {/* Section gauche (texte) */}
   <div className="left-section1">
-  <h3 className="mb-3 text-warning-emphasis">{name}</h3>
+  <h3 className="mb-3 text-warning-emphasis">{product.name}</h3>
     <h1 className="mb-5 text-warning-emphasis">DESCRIPTION</h1>
     <br/>
     <br/>
     <p className="mb-3 text-warning-emphasis">
-    {description}
+    {product.description}
     </p>
     <div>
-              <span className="mb-3 text-warning-emphasis">PRIX : {price} FCFA</span><br/><br/>
+              <span className="mb-3 text-warning-emphasis">PRIX : {product.price} FCFA</span><br/><br/>
               <span className="mb-3 text-warning-emphasis">
         Laissez une note sur le produit :
         {[...Array(5)].map((_, i) => (
