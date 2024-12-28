@@ -9,7 +9,7 @@ const Api = () => {
   // Fonction pour récupérer les produits
   const fetchProduits = async () => {
     try {
-      const response = await fetch('http://192.168.229.239:8080/produitService/getAllProduits', {
+      const response = await fetch('http://192.168.17.239:8080/produitService/getAllProduits', {
         method: 'GET',
         headers: {
           'Access-Control-Allow-Origin': '*', // Permet de gérer CORS pour les requêtes vers l'API
