@@ -91,7 +91,7 @@ body {
   }
   
   .icon-button-11:hover {
-    color:#007BFF;
+    color:#74613f;
   }
   
   .fas1 {
@@ -100,7 +100,7 @@ body {
   /* Menu Icon */
   /* Dropdown Menu Container */
   .dropdown-menu1 {
-    border: 2px solid rgb(218, 141, 40); /* Bordure bleue */
+    border: 2px solid rgb(233, 152, 59); /* Bordure bleue */
     border-radius: 8px; /* Coins arrondis (optionnel) */
     padding: 16px; /* Espacement intérieur */
     background: rgba(14, 6, 6, 0.651); /* Transparence */
@@ -116,13 +116,13 @@ body {
   }
   
   .dropdown-menu1:hover {
-    border-color: rgb(67, 131, 156); /* Bordure plus foncée au survol (optionnel) */
+    border-color: rgb(156, 107, 67); /* Bordure plus foncée au survol (optionnel) */
   }
   
   
   /* Section Accueil avec Bonjour */
   .welcome-section {
-    background-color: rgb(99, 116, 122); /* Gris sombre au lieu de noir pur */
+    background-color: #a86d28; /* Gris sombre au lieu de noir pur */
     color: #fff;
     padding: 15px;
     display: flex;
@@ -227,3 +227,40 @@ body {
     visibility: visible;
   }
   
+  .notification1 {
+    background-color: #9eb19e; /* Vert pour le succès */
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+    animation: fadeIn1 0.5s, fadeOut1 0.5s 4.5s; /* Apparition et disparition */
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.notification1.error {
+    background-color: #f44336; /* Rouge pour les erreurs */
+}
+
+@keyframes fadeIn1 {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut1 {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}

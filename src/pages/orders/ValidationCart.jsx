@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
-function PaymentComponent({ handleCheckout, handleDeliveryCheckout, testCheckout }) {
+function PaymentComponent({ checkout, DeliveryCheckout, testCheckout }) {
   return (
     <div className="d-flex justify-content-between mb-3">
       <button
         type="button"
         className="btn btn-warning"
-        onClick={handleCheckout}
+        onClick={checkout}
       >
         Paiement avant livraison
       </button>
       <button
         type="button"
         className="btn btn-warning"
-        onClick={handleDeliveryCheckout}
+        onClick={DeliveryCheckout}
       >
         Paiement après livraison
       </button>
@@ -35,13 +35,14 @@ function PaymentComponent({ handleCheckout, handleDeliveryCheckout, testCheckout
 
 function ValidationCart() {
   const navigate = useNavigate();
-  const { state } = useLocation(); 
-  const cartItems = state?.cartItems || [];
+  //const { state } = useLocation(); 
+  //const cartItems = state?.cartItems || [];
+  const cartItems = JSON.parse(localStorage.getItem("cartItems"));
   const [formData, setFormData] = useState({
     email: '',
     name: '',
     confirmation: false,
-    //paymentPreference: '', // Stocke le type de paiement sélectionné
+    paymentPreference: '', // Stocke le type de paiement sélectionné
   });
 
   const [error, setError] = useState('');
@@ -129,7 +130,7 @@ function ValidationCart() {
 
       console.log("Données du panier :", panier);
 
-      const panierResponse = await fetch('http://localhost:8081/commande/panier/validerPanier', {
+      const panierResponse = await fetch('http://192.168.17.234:8081/commande/panier/validerPanier', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(panier),
@@ -158,7 +159,7 @@ function ValidationCart() {
         },
       };
 
-      const commandeResponse = await fetch('http://localhost:8081/commande/validercmd', {
+      const commandeResponse = await fetch('http://192.168.17.234:8081/commande/validercmd', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(commande),
@@ -171,7 +172,7 @@ function ValidationCart() {
       const idCommande  = await commandeResponse.text();
       console.log("Commande validée. ID de commande :", idCommande);
 
-      const factureResponse = await fetch(`http://localhost:8081/commande/email/envoyer-facture/${idCommande}`,{
+      const factureResponse = await fetch(`http://192.168.17.234:8081/commande/email/envoyer-facture/${idCommande}`,{
         method: 'POST',
         headers: { "Content-Type": "application/json" },
       });
@@ -184,11 +185,12 @@ function ValidationCart() {
 
       sessionStorage.setItem('idCommande', idCommande);
       sessionStorage.setItem('idPanier', idPanier);
-
+      console.log("cartItems");
       setSuccess("Commande validée avec succès !");
       setTimeout(() => navigate('/orders'), 3000);
     } catch (err) {
       console.error("Erreur :", err);
+      console.log("cartItems");
       setError(err.message || "Impossible de compléter l'opération.");
     } finally {
       setLoading(false);

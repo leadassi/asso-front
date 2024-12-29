@@ -156,7 +156,7 @@ const Register = () => {
         </button>
       </div>
       <fieldset className="container special">
-        <h2 className="h2" style={{marginTop:"50px"}}>INSCRIPTION</h2>
+        <h2 className="h2 text-dark" style={{marginTop:"50px"}}>INSCRIPTION</h2>
         <br/>
         <form onSubmit={handleSubmit}>
           <div className="form-group mt-3 text-warning-emphasis">

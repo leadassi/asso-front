@@ -8,7 +8,7 @@ import avatar2 from './avatar2.avif';
 import avatar3 from './avatar3.avif';
 import avatar4 from './avatar4.avif';
 import avatar5 from './avatar5.avif';
-import editIcon from "./editionicone.avif";
+
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -267,14 +267,12 @@ const Profile = () => {
         />
         {/* Icône de modification */}
         
-        <img
-          src={editIcon}
-          alt="Modifier l'avatar"
+        <FaPen
           onClick={() => setIsEditing(!isEditing)}
           style={{
             position: "absolute",
             bottom: "0",
-            right: "-8%",
+            right: "0",
             width: "21%",
             cursor: "pointer",
           }}
@@ -310,7 +308,7 @@ const Profile = () => {
         </div>
       )}
 
-      <div class="background-image-container" style={{color:"blue"}}>
+      <div class="background-image-container">
         <img src="fontprofile.jpg" alt="" class="background-image"/>
       </div>
       <br/>
