@@ -14,7 +14,6 @@ const Description = ({ onAddToCart }) => {
   const [couleurChoisie, setCouleurChoisie] = useState(""); 
   const [categorie, setCategorie] = useState("");
   const [sousCategorie, setSousCategorie] = useState("");
-  const [isBoutonDisabled, setIsBoutonDisabled] = useState(true);
 
   const [rating, setRating] = useState(0); // État local pour la note sélectionnée
   const [hover, setHover] = useState(0); // État pour gérer le survol
@@ -28,22 +27,12 @@ const Description = ({ onAddToCart }) => {
   const { product } = location.state || {}; 
 
   useEffect(() => {
-    // Appel pour récupérer la catégorie et sous-catégorie depuis le microservice produit
-    fetch(`http://192.168.17.239:8080/produitService/getProduit/${product.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setCategorie(data.category);
-        setSousCategorie(data.subCategory);
-        chargerOptions(data.category, data.subCategory); // Charger les options en fonction de la catégorie
-      })
-      .catch((error) => console.error("Erreur lors de la récupération du produit :", error));
-  }, [product.id]);
-
-
-  useEffect(() => {
+    setCategorie(product.category);
+    setSousCategorie(product.subCategory);
+    chargerOptions(product.category, product.subCategory); 
     // Désactiver le bouton si la quantité n'est pas définie
-    setIsBoutonDisabled(!optionChoisie || !couleurChoisie);
-  }, [optionChoisie, couleurChoisie]);
+    //setIsBoutonDisabled(!optionChoisie || !couleurChoisie);
+  }, [product.category, product.subCategory, optionChoisie, couleurChoisie]);
 
  
 
@@ -53,22 +42,28 @@ const Description = ({ onAddToCart }) => {
   
     // Fonction pour charger les options dynamiques
     const chargerOptions = (categorie, sousCategorie) => {
-      if (categorie === "Vetements" && sousCategorie === "Chaussures") {
+      if (categorie === "accessoire" && sousCategorie === "chaussure") {
         setOptions(["Pointure 36", "Pointure 37", "Pointure 38", "Pointure 39", "Pointure 40"]);
         setCouleurs(["Noir", "Blanc", "Rouge", "Bleu"]);
-      } else if (categorie === "Vêtements" && sousCategorie === "Sac") {
-        setOptions(["5L", "10L", "15L", "20L"]);
-        setCouleurs(["Noir", "Gris", "Beige", "Bleu"]);
-      } else if (categorie === "alimentaire" && sousCategorie === "legumes") {
-        setOptions(["5L", "10L", "15L", "20L"]);
-        setCouleurs(["rouge"]);
-      } else if (categorie === "Alimentation" && sousCategorie === "Épices") {
-        setOptions(["50g", "100g", "200g", "500g"]);
-        setCouleurs(["null"]);
-      } else if (categorie === "Alimentaire" && sousCategorie === "Feculents") {
-        setOptions(["50g", "100g", "200g", "500g"]);
-        setCouleurs(["null"]);
-      } else {
+      } else if (categorie === "accessoire" && sousCategorie === "sac") {
+        setOptions([]);
+        setCouleurs(["Noir", "Gris", "Beige", "Bleu","rouge"]);
+      } else if (categorie === "vetement" && sousCategorie === "pantalon") {
+        setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
+        setCouleurs(["blanc", "rouge", "noir", "gris"]);
+      } else if (categorie === "vetement" && sousCategorie === "robe") {
+        setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
+        setCouleurs(["blanc", "rouge", "noir", "gris"]);
+      } else if (categorie === "vetement" && sousCategorie === "t-shirt") {
+        setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
+        setCouleurs(["blanc", "rouge", "noir", "gris"]);
+      }  else if (categorie === "vetements" && sousCategorie === "jupe") {
+      setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
+      setCouleurs(["blanc", "rouge", "noir", "gris"]);
+    }  else if (categorie === "vetements" && sousCategorie === "chapeau") {
+      setOptions([]);
+      setCouleurs(["blanc", "rouge", "noir", "gris"]);
+    } else {
         setOptions([]);
         setCouleurs([]);
       }
@@ -157,9 +152,6 @@ const Description = ({ onAddToCart }) => {
       </span><br/><br/>
             </div>
 
-    <p className="mb-3 text-warning-emphasis">Catégorie : {categorie}</p>
-      <p className="mb-3 text-warning-emphasis">Sous-catégorie : {sousCategorie}</p>
-
 
       {options.length > 0 && (
         <div>
@@ -194,7 +186,7 @@ const Description = ({ onAddToCart }) => {
           </select>
         </div>
       )}    
-  <button className="bout" onClick={()=> onAddToCart(product)} disabled={isBoutonDisabled} style={{boxShadow:"initial", marginTop:"15px"}}>Ajouter au panier</button>
+  <button className="bout" onClick={()=> onAddToCart(product)} style={{boxShadow:"initial", marginTop:"15px"}}>Ajouter au panier</button>
   </div>
   {/* Section droite (image) */}
   <div className="right-section1" style={{borderRadius: "50%", mixBlendMode: 'multiply' }}>
