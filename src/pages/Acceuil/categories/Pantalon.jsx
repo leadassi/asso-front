@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavbarCategories from "../NavbarCategories";
-import "../Clothing.css";
 
 const Pantalon = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,10 +27,10 @@ const Pantalon = () => {
 
   const toggleFavorite = (product) => {
     setFavorites((prevFavorites) => {
-      const isFavorite = prevFavorites.some((fav) => fav.title === product.title);
+      const isFavorite = prevFavorites.some((fav) => fav.id === product.id);
 
       const updatedFavorites = isFavorite
-        ? prevFavorites.filter((fav) => fav.title !== product.title)
+        ? prevFavorites.filter((fav) => fav.id !== product.id)
         : [...prevFavorites, product];
 
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
@@ -41,44 +40,52 @@ const Pantalon = () => {
 
   const fetchProduits = async () => {
     try {
-      const response = await fetch('http://192.168.17.239:8080/produitService/getAllProduits', {
-        method: 'GET',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      });
+      const response = await fetch(
+        "http://192.168.17.239:8080/produitService/getAllProduits",
+        {
+          method: "GET",
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
       const produitsData = await response.json();
-      localStorage.setItem('produits', JSON.stringify(produitsData));
+      localStorage.setItem("produits", JSON.stringify(produitsData));
       setProduitsAPI(produitsData);
     } catch (error) {
-      console.error('Erreur lors de la récupération des produits:', error);
+      console.error("Erreur lors de la récupération des produits:", error);
     }
   };
 
   useEffect(() => {
-    const produitsStockesLocal = JSON.parse(localStorage.getItem("produits")) || [];
+    const produitsStockesLocal =
+      JSON.parse(localStorage.getItem("produits")) || [];
     setProduitsStockes(produitsStockesLocal);
     fetchProduits();
   }, []);
 
-  // Produits venant de localStorage (format 2)
-  const produitsAffichesStockes = produitsStockes.filter((product) => product.subCategory === "pantalon");
+  // Produits filtrés pour la catégorie "pantalon"
+  const produitsAffichesStockes = produitsStockes.filter(
+    (product) => product.subCategory === "pantalon"
+  );
+  const produitsAffichesAPI = produitsAPI.filter(
+    (product) => product.subCategory === "pantalon"
+  );
 
-  // Produits venant de l'API (format 2 également)
-  const produitsAffichesAPI = produitsAPI.filter((product) => product.subCategory === "pantalon");
-
-  // Fusionner uniquement les produits venant de localStorage et de l'API en éliminant les doublons
+  // Fusion et suppression des doublons par `id`
   const produitsAffiches = [
     ...produitsAffichesStockes,
     ...produitsAffichesAPI,
-  ].filter((value, index, self) => 
-    index === self.findIndex((t) => (
-      t.id === value.id // Filtrer les produits avec le même id
-    ))
+  ].filter(
+    (value, index, self) =>
+      index === self.findIndex((t) => t.id === value.id)
   );
 
   const productsPerPage = 8;
-  const paginatedProducts = produitsAffiches.slice(currentPage * productsPerPage, currentPage * productsPerPage + productsPerPage);
+  const paginatedProducts = produitsAffiches.slice(
+    currentPage * productsPerPage,
+    currentPage * productsPerPage + productsPerPage
+  );
 
   return (
     <div className="clothing-page">
@@ -91,13 +98,13 @@ const Pantalon = () => {
         <div className="carousel-products-container">
           <div className="carousel-products">
             {paginatedProducts.map((product) => (
-              <div className="box" key={product.title || product.id}>
+              <div className="box" key={product.id}>
                 <div className="icons">
                   <button
                     className="icon-button fas fa-plus"
                     title="Voir les détails"
                     onClick={() =>
-                      navigate('/description', { state: { product } })
+                      navigate("/description", { state: { product } })
                     }
                   ></button>
 
@@ -106,7 +113,9 @@ const Pantalon = () => {
                     title="Ajouter aux favoris"
                     onClick={() => toggleFavorite(product)}
                     style={{
-                      color: favorites.some((fav) => fav.title === product.title || fav.id === product.id) ? 'red' : 'black',
+                      color: favorites.some((fav) => fav.id === product.id)
+                        ? "red"
+                        : "black",
                     }}
                   ></button>
 
@@ -124,12 +133,16 @@ const Pantalon = () => {
 
                 <div className="content">
                   <h3>{product.title || product.name || "Produit sans nom"}</h3>
-                  <div className="price">{product.price} FCFA</div>
+                  <div className="price">
+                    {product.price ? `${product.price} FCFA` : "Prix indisponible"}
+                  </div>
                   <div className="stars">
                     {[...Array(5)].map((_, i) => (
                       <i
                         key={i}
-                        className={`fa-star ${i < product.rating ? 'fas' : 'far'}`}
+                        className={`fa-star ${
+                          i < (product.rating || 0) ? "fas" : "far"
+                        }`}
                       ></i>
                     ))}
                   </div>
@@ -145,7 +158,7 @@ const Pantalon = () => {
             (_, i) => (
               <div
                 key={i}
-                className={`carousel-dot ${currentPage === i ? 'active' : ''}`}
+                className={`carousel-dot ${currentPage === i ? "active" : ""}`}
                 onClick={() => setCurrentPage(i)}
               >
                 {i + 1}

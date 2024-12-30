@@ -48,21 +48,25 @@ const ServiceClient = () => {
     <div className="content-grid" style={{marginTop:"5%", padding:"5%"}}>
       <div>
         <form ref={form} onSubmit={handleSubmit}>
-          <div
+          <h2 className="text-warning-emphasis">Service Client</h2>
+           <div
             style={{
               color: "#664d03",
-              
               fontSize: "30px",
-              marginLeft:"",
               position: "relative",
-            display: "flex",
-            flexDirection: "column", 
-            justifyContent: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
             }}
           >
-            <p>AVEZ VOUS RENCONTRÉ DES PRÉOCCUPATIONS LORS DE L'UTILISATION DE L'APPLICATION ?</p>
-            <p>SI OUI, DITES NOUS EN PLUS.</p>
+            <p className="typewriter-container">
+              AVEZ VOUS RENCONTRÉ DES PRÉOCCUPATIONS LORS DE L'UTILISATION DE L'APPLICATION ?
+            </p>
+            <p className="typewriter-container" style={{ animationDelay: "5s" }}>
+              SI OUI, DITES NOUS EN PLUS.
+            </p>
           </div>
+
           
 
           <label className="text-warning-emphasis">Email :</label>

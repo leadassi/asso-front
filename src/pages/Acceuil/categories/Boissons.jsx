@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import NavbarCategories from "../NavbarCategories";
 import "../Clothing.css";
 
-const Boissons = () => { // Nouveau nom du composant pour "Boissons"
+const Boissons = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState(null);
   const [favorites, setFavorites] = useState(() => {
@@ -28,10 +28,10 @@ const Boissons = () => { // Nouveau nom du composant pour "Boissons"
 
   const toggleFavorite = (product) => {
     setFavorites((prevFavorites) => {
-      const isFavorite = prevFavorites.some((fav) => fav.title === product.title);
+      const isFavorite = prevFavorites.some((fav) => fav.id === product.id);
 
       const updatedFavorites = isFavorite
-        ? prevFavorites.filter((fav) => fav.title !== product.title)
+        ? prevFavorites.filter((fav) => fav.id !== product.id)
         : [...prevFavorites, product];
 
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
@@ -61,20 +61,14 @@ const Boissons = () => { // Nouveau nom du composant pour "Boissons"
     fetchProduits();
   }, []);
 
-  // Produits venant de localStorage (format 2)
-  const produitsAffichesStockes = produitsStockes.filter((product) => product.subCategory === "boissons"); // Remplacer "feculents" par "boissons"
+  const produitsAffichesStockes = produitsStockes.filter((product) => product.subCategory === "boissons");
+  const produitsAffichesAPI = produitsAPI.filter((product) => product.subCategory === "boissons");
 
-  // Produits venant de l'API (format 2 également)
-  const produitsAffichesAPI = produitsAPI.filter((product) => product.subCategory === "boissons"); // Remplacer "feculents" par "boissons"
-
-  // Fusionner uniquement les produits venant de localStorage et de l'API en éliminant les doublons
   const produitsAffiches = [
     ...produitsAffichesStockes,
     ...produitsAffichesAPI,
   ].filter((value, index, self) => 
-    index === self.findIndex((t) => (
-      t.id === value.id // Filtrer les produits avec le même id
-    ))
+    index === self.findIndex((t) => t.id === value.id)
   );
 
   const productsPerPage = 8;
@@ -91,7 +85,7 @@ const Boissons = () => { // Nouveau nom du composant pour "Boissons"
         <div className="carousel-products-container">
           <div className="carousel-products">
             {paginatedProducts.map((product) => (
-              <div className="box" key={product.title || product.id}> {/* Utilisation de title ou id comme clé */}
+              <div className="box" key={product.title || product.id}>
                 <div className="icons">
                   <button
                     className="icon-button fas fa-plus"
@@ -106,7 +100,9 @@ const Boissons = () => { // Nouveau nom du composant pour "Boissons"
                     title="Ajouter aux favoris"
                     onClick={() => toggleFavorite(product)}
                     style={{
-                      color: favorites.some((fav) => fav.title === product.title || fav.id === product.id) ? 'red' : 'black',
+                      color: favorites.some((fav) => fav.id === product.id)
+                        ? "red"
+                        : "black",
                     }}
                   ></button>
 
@@ -118,8 +114,8 @@ const Boissons = () => { // Nouveau nom du composant pour "Boissons"
                 </div>
 
                 <img
-                  src={product.img || product.imageUrl || "placeholder.jpeg"} // Utilisation de img ou imageUrl
-                  alt={product.title || product.name || "Produit"} // Utilisation de title ou name
+                  src={product.img || product.imageUrl || "placeholder.jpeg"}
+                  alt={product.title || product.name || "Produit"}
                 />
 
                 <div className="content">
@@ -169,4 +165,4 @@ const Boissons = () => { // Nouveau nom du composant pour "Boissons"
   );
 };
 
-export default Boissons; // Changez également le nom du composant ici
+export default Boissons;

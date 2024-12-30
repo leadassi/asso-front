@@ -72,7 +72,7 @@ const MesFavoris = () => {
                       onClick={() => window.open(image.imageUrl, '_blank')}
                     ></button>
                   </div>
-                  <img src={image.src} alt={image.name} />
+                  <img src={image.imageUrl} alt={image.name} />
                   <div className="content">
                     <h3>{image.name}</h3>
                     <div className="price">{image.price} FCFA</div>

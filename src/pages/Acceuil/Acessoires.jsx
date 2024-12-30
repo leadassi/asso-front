@@ -1,20 +1,24 @@
 // pages/Acceuil/Cosmetics.jsx
 import React, { useState } from "react";
-import NavbarCategories from "./NavbarCategories";
+import "./Accessoires.css"
 import { Link } from "react-router-dom";
-import "./Cosmetics.css";
 import '../../index.css';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
-
 import Sac from "./categories/Sac";
 import Chaussures from "./categories/Chaussures";
 
 const Accessoires = () => {
-  const [category, setCategory] = useState("Agro_Alimentaires");
+  const [category, setCategory] = useState("Sac");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState(null);
+  const closeModal = () => {
+    setModalImage(null);
+    setIsModalOpen(false);
+  };
   return (
     <div className="cosmetics-page">
-      <NavbarCategories />
       {/* Navigation des catégories */}
+      <div className="spacer"></div>
       <div className="category-nav">
         {[
            "Sac",
@@ -31,6 +35,17 @@ const Accessoires = () => {
       </div>
       {category === "Sac" && <Sac />}
       {category === "Chaussures" && <Chaussures />}
+      {/* Modal */}
+      {isModalOpen && modalImage && (
+        <div className="modal open" onClick={closeModal}>
+          <div className="modal-content">
+            <button className="close-button" onClick={closeModal}>
+              &times;
+            </button>
+            <img src={modalImage} alt="Zoom" />
+          </div>
+        </div>
+      )}
       <footer className="footer py-3" style={{ backgroundColor: 'rgba(0, 0, 0, 0)', borderTop: '1px solid #ddd' }}>
       <div className="container text-center">
         <Link

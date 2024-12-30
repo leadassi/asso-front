@@ -491,6 +491,20 @@
   background-color: #007bff; /* Couleur de la barre */
   border-radius: 0 0 10px 10px; /* Coins arrondis au bas */
 }
+.box {
+  position: relative;
+  overflow: hidden; /* Empêche le contenu de dépasser le conteneur */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
 
 .box.favorite {
   position: relative;

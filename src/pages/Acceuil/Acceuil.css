@@ -1,110 +1,102 @@
+/* Navbar */
+.navbar {
+  width: 100%;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
+/* Container pour ajustement */
+.navbar-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
 
-  .navbar {
-    width: 100%;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.3); /* Transparence */
-    backdrop-filter: blur(10px); /* Effet flouté */
-    position: fixed; /* Fixé en haut de la page */
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .navbar-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .navbar-logo {
-    height: 40px;
-    cursor: pointer;
-  }
-  
-  .navbar-links {
-    margin-left: auto; /* Espace entre le logo et les icônes */
-    display: flex;
-    gap: 20px;
-  }
-  
-  .icon-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-    color: #333;
-    transition: color 0.3s ease;
-  }
-  
-  .icon-button:hover {
-    color: #007bff; /* Couleur au survol */
-  }
-  
-  /* Espacement entre le Navbar et la galerie */
+.navbar-logo {
+  height: 40px;
+  cursor: pointer;
+}
+
+/* Liens dans la navbar */
+.navbar-links {
+  margin-left: auto;
+  display: flex;
+  gap: 20px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.icon-button:hover {
+  color: #007bff;
+}
+
+/* Espacement entre navbar et contenu */
 .spacer {
   height: 80px;
 }
-/* Cadre pour la galerie d'images */
+
+/* Galerie */
 .image-carousel {
-  width: calc(100% - 40px); 
-  margin: 0 auto; 
+  width: calc(100% - 40px);
+  margin: 0 auto;
   border-radius: 15px;
-  overflow: hidden; 
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 400px; 
+  height: 400px;
   position: relative;
-  background-color: rgba(0, 0, 0, 0.1); 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre pour un effet esthétique */
-  
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Images ajustées au cadre */
+/* Images dans la galerie */
 .carousel-image {
-  width: 0; 
-  height: 0; 
-  object-fit: cover; /* Ajuste l'image sans déformation */
+  width: 0;
+  height: 0;
+  object-fit: cover;
 }
 
-/* Éléments de la barre de navigation */
-
+/* Navbar categories */
 .navbar-categories-i {
-  width: 95vw; /* Largeur du cadre */
-  margin: 20px auto; /* Centre la barre */
-  display: grid; /* Utilisation de la grille */
-  grid-template-columns: repeat(4, 1fr); /* Trois colonnes de largeur égale */
-  grid-template-rows: auto auto; /* Deux lignes auto-adaptables */
-  gap: 6px; /* Espacement entre les éléments */
-  border-radius: 10px; /* Bords arrondis */
-  background: linear-gradient(to left,#D97706,#b45309);
-  backdrop-filter: blur(10px); /* Effet flouté */
-  padding: 10px 0; /* Espacement intérieur */
-  text-align: center; /* Centre le texte */
+  width: 95%;
+  margin: 30px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  border-radius: 10px;
+  background: linear-gradient(to left, #D97706, #b45309);
+  backdrop-filter: blur(10px);
+  padding: 20px 0;
+  text-align: center;
 }
 
-.nav-item-1 {
-  font-size: 18px;
+.nav-item-1{
+  font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
-  color:black; /* Couleur du texte */
+  color: black;
   cursor: pointer;
   transition: color 0.3s ease;
-  margin-left: 0px;
-  margin-right: 100px;
 }
-.nav-item {
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color:black; /* Couleur du texte */
-  cursor: pointer;
-  transition: color 0.3s ease;
+.nav-item-1:hover{
+  color: #ffd700;
 }
 
 /* Placement des éléments dans la grille */
@@ -122,6 +114,7 @@
 }
 .accessoires {
   grid-column: 5; /* "ACCESSORIES" occupe la deuxième colonne de la première ligne */
+  margin-right: 50px;
 }
 
 .aliments {
@@ -129,23 +122,11 @@
   grid-row: 1; /* Placement sur la deuxième ligne */
 }
 
-
-/* Effet au survol */
 .nav-item:hover {
-  color: #ffd700; /* Changement de couleur au survol */
-}
-/* Style des cœurs */
-.hearts i {
-  color: red; /* Cœur rouge */
-  font-size: 24px; /* Taille des cœurs */
-  margin-right: 5px; /* Espacement entre les cœurs */
+  color: #ffd700;
 }
 
 /* Carrousel */
-
-
-
-/* Boutons de navigation */
 .carousel-prev,
 .carousel-next {
   position: absolute;
@@ -173,4 +154,64 @@
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-/*modif*/
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .navbar-links {
+    gap: 10px;
+  }
+
+  .image-carousel {
+    height: 300px;
+  }
+
+  .nav-item {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px;
+  }
+
+  .navbar-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .image-carousel {
+    height: 250px;
+  }
+
+  .navbar-categories-i {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .nav-item {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-container {
+    flex-direction: column;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .image-carousel {
+    height: 200px;
+  }
+
+  .navbar-categories-i {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-item {
+    font-size: 12px;
+  }
+}

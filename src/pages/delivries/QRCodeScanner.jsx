@@ -60,13 +60,15 @@ const QRCodeScanner = () => {
   }, []);
 
   return (
+    
     <div className="containner-page">
       {/* Première page */}
+      <div className="spacer"></div>
       <div className="scanner-page">
         <div className="scanner-header">
           {/* Bouton retour avec icône */}
           <Link to="/profil" className="return-button">
-            <i className="fas fa-arrow-left"></i> Retour
+            <i className="fas fa-arrow-left"></i>
           </Link>
           <h1>Votre Scanner de QR_Code</h1>
         </div>

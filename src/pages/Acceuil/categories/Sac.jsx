@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavbarCategories from "../NavbarCategories";
-import "../Clothing.css";
 
 const Sac = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,10 +27,10 @@ const Sac = () => {
 
   const toggleFavorite = (product) => {
     setFavorites((prevFavorites) => {
-      const isFavorite = prevFavorites.some((fav) => fav.title === product.title);
+      const isFavorite = prevFavorites.some((fav) => fav.id === product.id);
 
       const updatedFavorites = isFavorite
-        ? prevFavorites.filter((fav) => fav.title !== product.title)
+        ? prevFavorites.filter((fav) => fav.id !== product.id)
         : [...prevFavorites, product];
 
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
@@ -91,7 +90,7 @@ const Sac = () => {
         <div className="carousel-products-container">
           <div className="carousel-products">
             {paginatedProducts.map((product) => (
-              <div className="box" key={product.title || product.id}>
+              <div className="box" key={product.id}>
                 <div className="icons">
                   <button
                     className="icon-button fas fa-plus"
@@ -106,7 +105,9 @@ const Sac = () => {
                     title="Ajouter aux favoris"
                     onClick={() => toggleFavorite(product)}
                     style={{
-                      color: favorites.some((fav) => fav.title === product.title || fav.id === product.id) ? 'red' : 'black',
+                      color: favorites.some((fav) => fav.id === product.id)
+                        ? "red"
+                        : "black",
                     }}
                   ></button>
 

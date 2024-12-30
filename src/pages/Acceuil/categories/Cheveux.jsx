@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import NavbarCategories from "../NavbarCategories";
 import "../Clothing.css";
 
-const Cheveux = () => { // Nouveau nom du composant pour "Cheveux"
+const Cheveux = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState(null);
   const [favorites, setFavorites] = useState(() => {
@@ -28,10 +28,10 @@ const Cheveux = () => { // Nouveau nom du composant pour "Cheveux"
 
   const toggleFavorite = (product) => {
     setFavorites((prevFavorites) => {
-      const isFavorite = prevFavorites.some((fav) => fav.title === product.title);
+      const isFavorite = prevFavorites.some((fav) => fav.id === product.id);
 
       const updatedFavorites = isFavorite
-        ? prevFavorites.filter((fav) => fav.title !== product.title)
+        ? prevFavorites.filter((fav) => fav.id !== product.id)
         : [...prevFavorites, product];
 
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
@@ -41,7 +41,7 @@ const Cheveux = () => { // Nouveau nom du composant pour "Cheveux"
 
   const fetchProduits = async () => {
     try {
-      const response = await fetch('http://192.168.229.239:8080/produitService/getAllProduits', {
+      const response = await fetch('http://192.168.107.239:8080/produitService/getAllProduits', {
         method: 'GET',
         headers: {
           'Access-Control-Allow-Origin': '*',
@@ -61,20 +61,14 @@ const Cheveux = () => { // Nouveau nom du composant pour "Cheveux"
     fetchProduits();
   }, []);
 
-  // Produits venant de localStorage (format 2)
-  const produitsAffichesStockes = produitsStockes.filter((product) => product.subCategory === "cheveux"); // Remplacer "corps" par "cheveux"
+  const produitsAffichesStockes = produitsStockes.filter((product) => product.subCategory === "cheveux");
+  const produitsAffichesAPI = produitsAPI.filter((product) => product.subCategory === "cheveux");
 
-  // Produits venant de l'API (format 2 également)
-  const produitsAffichesAPI = produitsAPI.filter((product) => product.subCategory === "cheveux"); // Remplacer "corps" par "cheveux"
-
-  // Fusionner uniquement les produits venant de localStorage et de l'API en éliminant les doublons
   const produitsAffiches = [
     ...produitsAffichesStockes,
     ...produitsAffichesAPI,
   ].filter((value, index, self) => 
-    index === self.findIndex((t) => (
-      t.id === value.id // Filtrer les produits avec le même id
-    ))
+    index === self.findIndex((t) => t.id === value.id)
   );
 
   const productsPerPage = 8;
@@ -91,7 +85,7 @@ const Cheveux = () => { // Nouveau nom du composant pour "Cheveux"
         <div className="carousel-products-container">
           <div className="carousel-products">
             {paginatedProducts.map((product) => (
-              <div className="box" key={product.title || product.id}> {/* Utilisation de title ou id comme clé */}
+              <div className="box" key={product.title || product.id}>
                 <div className="icons">
                   <button
                     className="icon-button fas fa-plus"
@@ -106,7 +100,9 @@ const Cheveux = () => { // Nouveau nom du composant pour "Cheveux"
                     title="Ajouter aux favoris"
                     onClick={() => toggleFavorite(product)}
                     style={{
-                      color: favorites.some((fav) => fav.title === product.title || fav.id === product.id) ? 'red' : 'black',
+                      color: favorites.some((fav) => fav.id === product.id)
+                        ? "red"
+                        : "black",
                     }}
                   ></button>
 
@@ -118,8 +114,8 @@ const Cheveux = () => { // Nouveau nom du composant pour "Cheveux"
                 </div>
 
                 <img
-                  src={product.img || product.imageUrl || "placeholder.jpeg"} // Utilisation de img ou imageUrl
-                  alt={product.title || product.name || "Produit"} // Utilisation de title ou name
+                  src={product.img || product.imageUrl || "placeholder.jpeg"}
+                  alt={product.title || product.name || "Produit"}
                 />
 
                 <div className="content">
@@ -169,4 +165,4 @@ const Cheveux = () => { // Nouveau nom du composant pour "Cheveux"
   );
 };
 
-export default Cheveux; // Changez également le nom du composant ici
+export default Cheveux;

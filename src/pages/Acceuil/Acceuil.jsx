@@ -51,7 +51,7 @@ const Accueil = () => {
   ];
 
   const helpOptions = [
-    { name: "Trouver un magasin", src: `${process.env.PUBLIC_URL}/images/t.svg` },
+    { name: "Trouver ASSO", src: `${process.env.PUBLIC_URL}/images/t.svg` },
     { name: "Obtenir de l'aide", src: `${process.env.PUBLIC_URL}/images/y.svg` },
     { name: "Services Livraisons", src: `${process.env.PUBLIC_URL}/images/serv-1.png` },
     { name: "Consulter la FAQ", src: `${process.env.PUBLIC_URL}/images/i.svg` },
@@ -137,7 +137,7 @@ const Accueil = () => {
   /*nouvele */
   const fetchProduits = async () => {
     try {
-      const response = await fetch('http://192.168.229.17:8080/produitService/getAllProduits', {
+      const response = await fetch('http://192.168.17.239:8080/produitService/getAllProduits', {
         method: 'GET',
         headers: {
           'Access-Control-Allow-Origin': '*',
@@ -158,20 +158,22 @@ const Accueil = () => {
   }, []);
 
   // Produits venant de localStorage (format 2)
-  const produitsAffichesStockes = produitsStockes.slice(0, 16); // Limiter à 16 produits
+  const produitsAffichesStockes = produitsStockes
 
   // Produits venant de l'API (format 2 également)
-  const produitsAffichesAPI = produitsAPI.slice(0, 16); // Limiter à 16 produits
+  const produitsAffichesAPI = produitsAPI
 
   // Fusionner uniquement les produits venant de localStorage et de l'API en éliminant les doublons
-  const produitsAffiches = [
-    ...produitsAffichesStockes,
-    ...produitsAffichesAPI,
-  ].filter((value, index, self) => 
-    index === self.findIndex((t) => (
-      t.id === value.id // Filtrer les produits avec le même id
-    ))
-  ).slice(0, 16); // Limiter à 16 produits après fusion
+  // Fusionner uniquement les produits venant de localStorage et de l'API en éliminant les doublons
+const produitsAffiches = [
+  ...produitsAffichesStockes,
+  ...produitsAffichesAPI,
+].filter((value, index, self) => 
+  index === self.findIndex((t) => (
+    t.id === value.id // Filtrer les produits avec le même id
+  ))
+);
+
 
   const productsPerPage = 8;
   const paginatedProducts = produitsAffiches.slice(currentPage * productsPerPage, currentPage * productsPerPage + productsPerPage);
@@ -297,7 +299,9 @@ const Accueil = () => {
                     title="Ajouter aux favoris"
                     onClick={() => toggleFavorite(product)}
                     style={{
-                      color: favorites.some((fav) => fav.title === product.title || fav.id === product.id) ? 'red' : 'black',
+                      color: favorites.some((fav) => fav.id === product.id)
+                        ? "red"
+                        : "black",
                     }}
                   ></button>
 
@@ -352,7 +356,13 @@ const Accueil = () => {
             <div
               className="help-item"
               key={index}
-              onClick={() => image.name === "Consulter la FAQ" && navigate('/faq')} // Navigation conditionnelle
+              onClick={() => {
+                if (image.name === "Consulter la FAQ") {
+                  navigate('/faq');
+                } else if (image.name === "Obtenir de l'aide") {
+                  navigate('/service-client');
+                }
+              }}
             >
               <img
                 src={image.src}

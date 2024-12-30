@@ -1,8 +1,6 @@
 // pages/Acceuil/Cosmetics.jsx
 import React, { useState } from "react";
-import NavbarCategories from "./NavbarCategories";
 import { Link } from "react-router-dom";
-import "./Cosmetics.css";
 import '../../index.css';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import Corps from "./categories/Corps";
@@ -10,10 +8,10 @@ import Cheveux from "./categories/Cheveux";
 import Visage from "./categories/Visage";
 
 const Cosmetics = () => {
-  const [category, setCategory] = useState("Agro_Alimentaires");
+  const [category, setCategory] = useState("Visage");
   return (
     <div className="cosmetics-page">
-      <NavbarCategories />
+      <div className="spacer"></div>
       {/* Navigation des catégories */}
       <div className="category-nav">
         {[

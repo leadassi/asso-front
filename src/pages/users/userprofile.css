@@ -105,6 +105,38 @@
   .icon:hover {
     color: #74613f;
   }
+/*Animation*/
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #000;
+  }
+}
+
+.typewriter-container {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #000;
+  font-family: "Courier New", Courier, monospace; /* Style typewriter */
+  font-size: 24px;
+  letter-spacing: 2px;
+  margin-right: 20px; /* Ajout du margin-right */
+  animation: typewriter 4s steps(40, end) 1s 1 normal both,
+             blink-caret 0.75s step-end infinite;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavbarCategories from "../NavbarCategories";
-import "../Clothing.css";
 
 const TShirt = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,10 +27,10 @@ const TShirt = () => {
 
   const toggleFavorite = (product) => {
     setFavorites((prevFavorites) => {
-      const isFavorite = prevFavorites.some((fav) => fav.title === product.title);
+      const isFavorite = prevFavorites.some((fav) => fav.id === product.id);
 
       const updatedFavorites = isFavorite
-        ? prevFavorites.filter((fav) => fav.title !== product.title)
+        ? prevFavorites.filter((fav) => fav.id !== product.id)
         : [...prevFavorites, product];
 
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
@@ -61,20 +60,14 @@ const TShirt = () => {
     fetchProduits();
   }, []);
 
-  // Produits venant de localStorage (format 2)
   const produitsAffichesStockes = produitsStockes.filter((product) => product.subCategory === "t_shirt");
-
-  // Produits venant de l'API (format 2 également)
   const produitsAffichesAPI = produitsAPI.filter((product) => product.subCategory === "t_shirt");
 
-  // Fusionner uniquement les produits venant de localStorage et de l'API en éliminant les doublons
   const produitsAffiches = [
     ...produitsAffichesStockes,
     ...produitsAffichesAPI,
   ].filter((value, index, self) => 
-    index === self.findIndex((t) => (
-      t.id === value.id // Filtrer les produits avec le même id
-    ))
+    index === self.findIndex((t) => t.id === value.id)
   );
 
   const productsPerPage = 8;
@@ -91,7 +84,7 @@ const TShirt = () => {
         <div className="carousel-products-container">
           <div className="carousel-products">
             {paginatedProducts.map((product) => (
-              <div className="box" key={product.title || product.id}>
+              <div className="box" key={product.id || product.title}>
                 <div className="icons">
                   <button
                     className="icon-button fas fa-plus"
@@ -106,7 +99,7 @@ const TShirt = () => {
                     title="Ajouter aux favoris"
                     onClick={() => toggleFavorite(product)}
                     style={{
-                      color: favorites.some((fav) => fav.title === product.title || fav.id === product.id) ? 'red' : 'black',
+                      color: favorites.some((fav) => fav.id === product.id) ? 'red' : 'black',
                     }}
                   ></button>
 

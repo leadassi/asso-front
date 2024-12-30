@@ -134,7 +134,7 @@ export default Fruits;
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavbarCategories from "../NavbarCategories";
-import "../Clothing.css";
+
 import data from "./fruits";
 
 const Fruits = () => {

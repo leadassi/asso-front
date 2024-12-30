@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavbarCategories from "../NavbarCategories";
-import "../Clothing.css";
 
 const Chaussures = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,10 +27,12 @@ const Chaussures = () => {
 
   const toggleFavorite = (product) => {
     setFavorites((prevFavorites) => {
-      const isFavorite = prevFavorites.some((fav) => fav.title === product.title);
+      const isFavorite = prevFavorites.some(
+        (fav) => fav.id === product.id // Utilisation de l'ID pour éviter les doublons
+      );
 
       const updatedFavorites = isFavorite
-        ? prevFavorites.filter((fav) => fav.title !== product.title)
+        ? prevFavorites.filter((fav) => fav.id !== product.id) // Filtre basé sur l'ID
         : [...prevFavorites, product];
 
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
@@ -71,7 +72,7 @@ const Chaussures = () => {
   const produitsAffiches = [
     ...produitsAffichesStockes,
     ...produitsAffichesAPI,
-  ].filter((value, index, self) => 
+  ].filter((value, index, self) =>
     index === self.findIndex((t) => (
       t.id === value.id // Filtrer les produits avec le même id
     ))
@@ -91,7 +92,7 @@ const Chaussures = () => {
         <div className="carousel-products-container">
           <div className="carousel-products">
             {paginatedProducts.map((product) => (
-              <div className="box" key={product.title || product.id}>
+              <div className="box" key={product.id}> {/* Utilisation de l'ID comme clé unique */}
                 <div className="icons">
                   <button
                     className="icon-button fas fa-plus"
@@ -106,7 +107,7 @@ const Chaussures = () => {
                     title="Ajouter aux favoris"
                     onClick={() => toggleFavorite(product)}
                     style={{
-                      color: favorites.some((fav) => fav.title === product.title || fav.id === product.id) ? 'red' : 'black',
+                      color: favorites.some((fav) => fav.id === product.id) ? 'red' : 'black',
                     }}
                   ></button>
 

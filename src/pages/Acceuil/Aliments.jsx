@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import NavbarCategories from "./NavbarCategories";
 import { Link, /*useNavigate*/ } from "react-router-dom";
-import "./Aliments.css";
 import "../../index.css";
+
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import Fruits from "./categories/Fruits";
 import Legumes from "./categories/Legumes";
@@ -28,7 +28,7 @@ const Aliments = () => {
   return (
     <div className="aliments-page">
       <NavbarCategories />
-
+      <div className="spacer"></div>
       {/* Navigation des catégories */}
       <div className="category-nav">
         {[

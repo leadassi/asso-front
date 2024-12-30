@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import NavbarCategories from "./NavbarCategories";
 import { Link } from "react-router-dom";
-import "./Cosmetics.css";
+
 import '../../index.css';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import Pantalon from "./categories/Pantalon";
