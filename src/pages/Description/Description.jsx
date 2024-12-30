@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from "react";
+import React, {useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Description.css";
 import fleche from './fleche.png'
@@ -26,48 +26,50 @@ const Description = ({ onAddToCart }) => {
 
   const { product } = location.state || {}; 
 
+  // Fonction pour charger les options dynamiques
+  const chargerOptions = useCallback(() => {
+    if (categorie === "accessoire" && sousCategorie === "Chaussures") {
+      setOptions(["Pointure 36", "Pointure 37", "Pointure 38", "Pointure 39", "Pointure 40"]);
+      setCouleurs(["Noir", "Blanc", "Rouge", "Bleu"]);
+    } else if (categorie === "accessoire" && sousCategorie === "sac") {
+      setOptions([]);
+      setCouleurs(["Noir", "Gris", "Beige", "Bleu","rouge"]);
+    } else if (categorie === "vetement" && sousCategorie === "pantalon") {
+      setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
+      setCouleurs(["blanc", "rouge", "noir", "gris"]);
+    } else if (categorie === "vetement" && sousCategorie === "robe") {
+      setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
+      setCouleurs(["blanc", "rouge", "noir", "gris"]);
+    } else if (categorie === "vetement" && sousCategorie === "t-shirt") {
+      setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
+      setCouleurs(["blanc", "rouge", "noir", "gris"]);
+    }  else if (categorie === "vetements" && sousCategorie === "jupe") {
+    setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
+    setCouleurs(["blanc", "rouge", "noir", "gris"]);
+  }  else if (categorie === "vetements" && sousCategorie === "chapeau") {
+    setOptions([]);
+    setCouleurs(["blanc", "rouge", "noir", "gris"]);
+  } else {
+      setOptions([]);
+      setCouleurs([]);
+    }
+  }, [categorie, sousCategorie]);
+
   useEffect(() => {
     setCategorie(product.category);
     setSousCategorie(product.subCategory);
-    chargerOptions(product.category, product.subCategory); 
     // Désactiver le bouton si la quantité n'est pas définie
     //setIsBoutonDisabled(!optionChoisie || !couleurChoisie);
-  }, [product.category, product.subCategory, optionChoisie, couleurChoisie]);
+  }, [product.category, product.subCategory]);
+
+  useEffect(() => {
+    // Charger les options en fonction de la catégorie et de la sous-catégorie
+    chargerOptions();
+  }, [categorie, sousCategorie, chargerOptions]);
 
  
 
-      if(!product) return <p className="mb-3 text-warning-emphasis">produit non trouvé</p>
-  
-
-  
-    // Fonction pour charger les options dynamiques
-    const chargerOptions = (categorie, sousCategorie) => {
-      if (categorie === "accessoire" && sousCategorie === "chaussure") {
-        setOptions(["Pointure 36", "Pointure 37", "Pointure 38", "Pointure 39", "Pointure 40"]);
-        setCouleurs(["Noir", "Blanc", "Rouge", "Bleu"]);
-      } else if (categorie === "accessoire" && sousCategorie === "sac") {
-        setOptions([]);
-        setCouleurs(["Noir", "Gris", "Beige", "Bleu","rouge"]);
-      } else if (categorie === "vetement" && sousCategorie === "pantalon") {
-        setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
-        setCouleurs(["blanc", "rouge", "noir", "gris"]);
-      } else if (categorie === "vetement" && sousCategorie === "robe") {
-        setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
-        setCouleurs(["blanc", "rouge", "noir", "gris"]);
-      } else if (categorie === "vetement" && sousCategorie === "t-shirt") {
-        setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
-        setCouleurs(["blanc", "rouge", "noir", "gris"]);
-      }  else if (categorie === "vetements" && sousCategorie === "jupe") {
-      setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
-      setCouleurs(["blanc", "rouge", "noir", "gris"]);
-    }  else if (categorie === "vetements" && sousCategorie === "chapeau") {
-      setOptions([]);
-      setCouleurs(["blanc", "rouge", "noir", "gris"]);
-    } else {
-        setOptions([]);
-        setCouleurs([]);
-      }
-    };
+  if(!product) return <p className="mb-3 text-warning-emphasis">produit non trouvé</p>
 
 
   

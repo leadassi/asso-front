@@ -200,7 +200,7 @@ const Register = () => {
                 onChange={handleInputChange}
                 required
               />
-              <label style={{marginRight:"0.1rem", display:"flex"}} htmlFor="masculin">Masculin</label>
+              <label htmlFor="masculin">Masculin</label>
             
               <input
                 type="radio"

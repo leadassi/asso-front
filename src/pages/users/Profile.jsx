@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./userprofile.css";
+import ConfirmationModal from "./ConfirmationModal";
 import { FaHeart, FaPen, FaPlus, FaQrcode } from "react-icons/fa";
 import defaultAvatar from "./avatar1.avif";
 import avatar1 from './avatar1.avif';
@@ -41,7 +42,7 @@ const Profile = () => {
   const [utilisateurNom, setUtilisateurNom] = useState("");
   const [utilisateurPrenom, setUtilisateurPrenom] = useState("");
 
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const fetchCsrfToken = async () => {
     try {
       const response = await fetch('http://localhost:9091/Utilisateurs/csrf-token', {
@@ -161,85 +162,97 @@ const Profile = () => {
   };
 
 
+  function showNotification(message, type = "success") {
+    const container = document.getElementById("notification2-container");
+
+    if (!container) return;
+
+    const notification = document.createElement("div");
+    notification.className = `notification1 ${type}`;
+    notification.textContent = message;
+
+    container.appendChild(notification);
+
+    // Supprimer la notification après 5 secondes
+    setTimeout(() => {
+        notification.style.opacity = "0";
+        setTimeout(() => container.removeChild(notification), 500); // Attendre la fin de la transition
+    }, 5000);
+}
+
+
   const handleLogout = async () => {
     try {
-      const csrfToken = await fetchCsrfToken();
-  
-      // Ajouter l'en-tête Authorization avec Basic Auth
-      const username = 'user'; // Nom d'utilisateur Basic Auth
-      const password = 'password123'; // Mot de passe Basic Auth
-      const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
-
-
-      const response = await fetch("http://localhost:9091/Utilisateurs/deconnexion", {
-        method: "POST", // Ou 'GET' selon votre backend
-        credentials: "include", // Inclure les cookies pour la session, si nécessaire
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-TOKEN": csrfToken, // Inclure le token CSRF
-          Authorization: authHeader
-        },
-        
-      });
-  
-      if (response.ok) {
-        // Déconnexion réussie : rediriger l'utilisateur ou afficher un message
-        alert("Déconnexion réussie !");
-        sessionStorage.removeItem("utilisateurId");
-        sessionStorage.removeItem("utilisateurPrenom");
-        sessionStorage.removeItem("utilisateurNom");
-        navigate("/Accueil"); // Redirection vers la page de connexion
-      } else {
-        // Gérer les erreurs de déconnexion
-        const errorData = await response.json();
-        alert(`Erreur : ${errorData.message}`);
-      }
-    } catch (error) {
-      console.error("Erreur lors de la déconnexion :", error);
-      alert("Une erreur est survenue. Veuillez réessayer.");
-    }
-  };
-
-  const handleAccountDeletion = async () => {
-    
-    const utilisateurId = sessionStorage.getItem('utilisateurId');
-
-    if (window.confirm("Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.")) {
-      try {
-
         const csrfToken = await fetchCsrfToken();
-  
-      // Ajouter l'en-tête Authorization avec Basic Auth
-      const username = 'user'; // Nom d'utilisateur Basic Auth
-      const password = 'password123'; // Mot de passe Basic Auth
-      const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
 
-        const response = await fetch(`http://localhost:9091/Utilisateurs/${utilisateurId}`, {
-          method: "DELETE", // Méthode DELETE pour la suppression
-          credentials: "include", // Inclure les cookies pour la session
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": csrfToken, // Inclure le token CSRF
-            Authorization: authHeader
-          },
+        const username = "user"; 
+        const password = "password123"; 
+        const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
+
+        const response = await fetch("http://localhost:9091/Utilisateurs/deconnexion", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": csrfToken,
+                Authorization: authHeader,
+            },
         });
-  
+
         if (response.ok) {
-          alert("Votre compte a été supprimé avec succès.");
-          sessionStorage.removeItem("utilisateurId");
-          sessionStorage.removeItem("utilisateurPrenom");
-          sessionStorage.removeItem("utilisateurNom");
-          navigate("/"); // Redirection après suppression (modifiez l'URL selon votre application)
+            // Déconnexion réussie
+            showNotification("Déconnexion réussie !", "success");
+            sessionStorage.removeItem("utilisateurId");
+            sessionStorage.removeItem("utilisateurPrenom");
+            sessionStorage.removeItem("utilisateurNom");
+            
         } else {
-          const errorData = await response.json();
-          alert(`Erreur : ${errorData.message}`);
+            // Gérer les erreurs de déconnexion
+            const errorData = await response.json();
+            showNotification(`Erreur : ${errorData.message}`, "error");
         }
-      } catch (error) {
-        console.error("Erreur lors de la suppression du compte :", error);
-        alert("Une erreur est survenue. Veuillez réessayer.");
-      }
+    } catch (error) {
+        console.error("Erreur lors de la déconnexion :", error);
+        showNotification("Une erreur est survenue. Veuillez réessayer.", "error");
     }
-  };
+};
+
+const handleAccountDeletion = async () => {
+  const utilisateurId = sessionStorage.getItem("utilisateurId");
+  try {
+    const csrfToken = await fetchCsrfToken();
+
+    const username = "user";
+    const password = "password123";
+    const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
+
+    const response = await fetch(`http://localhost:9091/Utilisateurs/${utilisateurId}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": csrfToken,
+        Authorization: authHeader,
+      },
+    });
+
+    if (response.ok) {
+      showNotification("Votre compte a été supprimé avec succès.", "success");
+      sessionStorage.clear();
+      setTimeout(() => {
+        navigate("/Acceuil");
+    }, 5000);
+      
+    } else {
+      const errorData = await response.json();
+      showNotification(`Erreur : ${errorData.message}`, "error");
+    }
+  } catch (error) {
+    console.error("Erreur lors de la suppression du compte :", error);
+    showNotification("Une erreur est survenue. Veuillez réessayer.", "error");
+  }
+};
+
   
 
   return (
@@ -385,8 +398,18 @@ const Profile = () => {
       <div className="row justify-content-center mt-4">
     <div className="col-auto">
     <button type="submit" className="btn  me-6" style={{ backgroundColor: '#D97706' }} onMouseEnter={(e) => (e.target.style.backgroundColor = '#b45309')} onMouseLeave={(e) => (e.target.style.backgroundColor = '#D97706')} onClick={handleLogout}>Se déconnecter</button>
-    <button type="submit" className="btn  " style={{ backgroundColor: '#D97706' }} onMouseEnter={(e) => (e.target.style.backgroundColor = '#b45309')} onMouseLeave={(e) => (e.target.style.backgroundColor = '#D97706')} onClick={handleAccountDeletion}>Supprimer le compte</button>
+    <button type="submit" className="btn  " style={{ backgroundColor: '#D97706' }} onMouseEnter={(e) => (e.target.style.backgroundColor = '#b45309')} onMouseLeave={(e) => (e.target.style.backgroundColor = '#D97706')} onClick={() => setIsModalOpen(true)}>Supprimer le compte</button>
+    <ConfirmationModal
+        isOpen={isModalOpen}
+        onConfirm={() => {
+          setIsModalOpen(false);
+          handleAccountDeletion();
+        }}
+        onCancel={() => setIsModalOpen(false)}
+        message="Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible."
+      />
     </div>
+    <div id="notification2-container"></div>
   </div>
 
     </div>

@@ -159,8 +159,8 @@ const Reregister = () => {
           onClick={handleTogglePassword}
           style={{
             position: "absolute",
-            right: "10px",
-            top: "50%",
+            right: "42px",
+            top: "65%",
             transform: "translateY(50%)",
             cursor: "pointer",
             color: "#ffc107",
