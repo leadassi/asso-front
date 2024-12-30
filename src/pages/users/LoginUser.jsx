@@ -17,6 +17,8 @@ const LoginUser = () => {
   
   const [showPassword, setShowPassword] = useState(false);
 
+  
+
   // Fonction pour afficher temporairement le mot de passe
   const handleTogglePassword = () => {
     setShowPassword(true);
@@ -95,11 +97,11 @@ const LoginUser = () => {
       sessionStorage.setItem('utilisateurNom', JSON.stringify(data.nom));
       sessionStorage.setItem('utilisateurPrenom', JSON.stringify(data.prenom));
 
-      // Rediriger l'utilisateur vers la page d'accueil
-      navigate(-1); // Modifier selon la route de votre page profil
+     
+      navigate("/Acceuil"); 
     } catch (err) {
       console.error('Erreur de connexion:', err);
-      setError(err.message || 'Une erreur est survenue.');
+      setError('Une erreur est survenue.');
     }
   };
 

@@ -48,14 +48,14 @@ const LoginSupplier = () => {
       </div>
 
       
-      <div style={{display: "flex", justifyContent: "center", marginBottom: "20px"}}>
+      <div style={{display: "flex", justifyContent: "center", marginBottom: "20px", mixBlendMode: 'multiply' }}>
         <img
           src={logo}
           alt="Logo"
           style={{width: "130px", height: "130px", objectFit: "contain"}}
         />
       </div>
-      <h2 className="text text-center text-warning-emphasis">Vous souhaitez vendre ?</h2>
+      <h2 className="text text-center">Vous souhaitez vendre ?</h2>
       <br/>
       <form ref={form} id="contact-form" onSubmit={handleSubmit}>
         <label className="text-warning-emphasis">Nom:</label>

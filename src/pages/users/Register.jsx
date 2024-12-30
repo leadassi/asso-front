@@ -156,7 +156,7 @@ const Register = () => {
         </button>
       </div>
       <fieldset className="container special">
-        <h2 className="h2" style={{marginTop:"50px"}}>INSCRIPTION</h2>
+        <h2 className="h2 text-dark" style={{marginTop:"50px"}}>INSCRIPTION</h2>
         <br/>
         <form onSubmit={handleSubmit}>
           <div className="form-group mt-3 text-warning-emphasis">
@@ -200,7 +200,7 @@ const Register = () => {
                 onChange={handleInputChange}
                 required
               />
-              <label style={{marginRight:"0.1rem", display:"flex"}} htmlFor="masculin">Masculin</label>
+              <label htmlFor="masculin">Masculin</label>
             
               <input
                 type="radio"

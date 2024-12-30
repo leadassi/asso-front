@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const PaymentPage = () => {
+const PaymentComponent = () => {
   const paymentServiceURL = "http://192.168.17.101:9090/";
   const orderServiceURL = "http://192.168.17.234:8081/";
   const userId = 1; // Remplacez par la logique pour obtenir l'ID utilisateur
@@ -164,6 +164,66 @@ const PaymentPage = () => {
     });
   };
 
+  const deliveryCheckout = () => {
+    getPaymentData(userId).then((userData) => {
+      if (!window.CinetPay) {
+        console.error("CinetPay n'est pas trouvé.");
+        return;
+      }
+
+      window.CinetPay.setConfig({
+        apikey: userData.apikey,
+        site_id: userData.site_id,
+        notify_url: userData.notify_url,
+        return_url: userData.return_url,
+        mode: userData.mode,
+      });
+
+      window.CinetPay.getCheckout({
+        transaction_id: userData.transaction_id,
+        amount: userData.amount,
+        currency: userData.currency,
+        channels: userData.channels,
+        description: userData.description,
+        customer_name: userData.customer_name,
+        customer_surname: userData.customer_surname,
+        customer_email: userData.customer_email,
+        customer_phone_number: userData.customer_phone_number,
+        customer_address: userData.customer_address,
+        customer_city: userData.customer_city,
+        customer_country: userData.customer_country,
+        customer_state: userData.customer_state,
+        customer_zip_code: userData.customer_zip_code,
+      });
+
+      window.CinetPay.waitResponse(async (data) => {
+        console.log("Réponse de CinetPay:", data);
+
+        if (data.status === "REFUSED") {
+          alert("Votre paiement a échoué");
+        } else if (data.status === "ACCEPTED") {
+          await reduceQuantity(orderId);
+          alert("Votre paiement a été effectué avec succès");
+        }
+        await updateOrderStatus(userData.transaction_id, "IN_PROGRESS");
+        await saveTransaction(userData.transaction_id, data.status, data.payment_method, data.amount, userId);
+      });
+
+      window.CinetPay.onError((data) => {
+        console.error("Erreur de CinetPay:", data);
+      });
+    });
+  };
+
+  // Fonction pour simuler un paiement sans transaction
+  const testCheckout = () => {
+    getPaymentData(userId).then((userData) => {
+      updateOrderStatus(userData.transaction_id, "ACCEPTED");
+      reduceQuantity(orderId);
+      saveTransaction(userData.transaction_id, "ACCEPTED", "OMCM", userData.amount, userId);
+    });
+  };
+
   return (
     <div>
       <h1>Payment Page</h1>
@@ -172,4 +232,4 @@ const PaymentPage = () => {
   );
 };
 
-export default PaymentPage;
+export default PaymentComponent;

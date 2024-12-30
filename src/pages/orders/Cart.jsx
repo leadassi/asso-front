@@ -46,6 +46,7 @@ function Cart({ cartItems, onAddQuantity, onSubtractQuantity, onRemoveFromCart }
   }, [notification]);
 
   return (
+    <div className='cont'>
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="card shadow-lg p-4 w-100" style={{ maxWidth: '600px' }}>
         <h2 className="text-center mb-4 text-primary-emphasis">Votre panier</h2>
@@ -114,6 +115,7 @@ function Cart({ cartItems, onAddQuantity, onSubtractQuantity, onRemoveFromCart }
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 }

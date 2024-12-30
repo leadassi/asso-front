@@ -56,44 +56,61 @@ const NavbarCategories = () => {
     }
   };
 
+  function showNotification(message, type = "success") {
+    const container = document.getElementById("notification-container");
+
+    if (!container) return;
+
+    const notification = document.createElement("div");
+    notification.className = `notification1 ${type}`;
+    notification.textContent = message;
+
+    container.appendChild(notification);
+
+    // Supprimer la notification après 5 secondes
+    setTimeout(() => {
+        notification.style.opacity = "0";
+        setTimeout(() => container.removeChild(notification), 0); // Attendre la fin de la transition
+    }, 5000);
+}
+
+
   const handleLogout = async () => {
     try {
-      const csrfToken = await fetchCsrfToken();
-  
-      // Ajouter l'en-tête Authorization avec Basic Auth
-      const username = 'user'; // Nom d'utilisateur Basic Auth
-      const password = 'password123'; // Mot de passe Basic Auth
-      const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
+        const csrfToken = await fetchCsrfToken();
 
+        const username = "user"; 
+        const password = "password123"; 
+        const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
 
-      const response = await fetch("http://localhost:9091/Utilisateurs/deconnexion", {
-        method: "POST", // Ou 'GET' selon votre backend
-        credentials: "include", // Inclure les cookies pour la session, si nécessaire
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-TOKEN": csrfToken, // Inclure le token CSRF
-          Authorization: authHeader
-        },
-        
-      });
-  
-      if (response.ok) {
-        // Déconnexion réussie : rediriger l'utilisateur ou afficher un message
-        alert("Déconnexion réussie !");
-        sessionStorage.removeItem("utilisateurId");
-        sessionStorage.removeItem("utilisateurPrenom");
-        sessionStorage.removeItem("utilisateurNom");
-        navigate("/"); // Redirection vers la page de connexion
-      } else {
-        // Gérer les erreurs de déconnexion
-        const errorData = await response.json();
-        alert(`Erreur : ${errorData.message}`);
-      }
+        const response = await fetch("http://localhost:9091/Utilisateurs/deconnexion", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": csrfToken,
+                Authorization: authHeader,
+            },
+        });
+
+        if (response.ok) {
+            // Déconnexion réussie
+            showNotification("Déconnexion réussie !", "success");
+            sessionStorage.removeItem("utilisateurId");
+            sessionStorage.removeItem("utilisateurPrenom");
+            sessionStorage.removeItem("utilisateurNom");
+            
+        } else {
+            // Gérer les erreurs de déconnexion
+            const errorData = await response.json();
+            showNotification(`Erreur : ${errorData.message}`, "error");
+        }
     } catch (error) {
-      console.error("Erreur lors de la déconnexion :", error);
-      alert("Une erreur est survenue. Veuillez réessayer.");
+        console.error("Erreur lors de la déconnexion :", error);
+        showNotification("Une erreur est survenue. Veuillez réessayer.", "error");
     }
-  };
+};
+
 
   const isActive = (path) => location.pathname === path;
 
@@ -235,6 +252,7 @@ const NavbarCategories = () => {
           Se déconnecter</li>
           </ul>
         </div>
+        <div id="notification-container" style={{ position: "fixed", top: "40px", right: "10px", zIndex: 1000 }}></div>
       </div>
     </nav>
   );
