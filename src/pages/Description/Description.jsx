@@ -40,7 +40,7 @@ const Description = ({ onAddToCart }) => {
     } else if (categorie === "vetement" && sousCategorie === "robe") {
       setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
       setCouleurs(["blanc", "rouge", "noir", "gris"]);
-    } else if (categorie === "vetement" && sousCategorie === "t-shirt") {
+    } else if (categorie === "vetement" && sousCategorie === "t_shirt") {
       setOptions(["Taille XS", "Taille S", "Taille M", "Taille L", "Taille XL", "Taille XXL"]);
       setCouleurs(["blanc", "rouge", "noir", "gris"]);
     }  else if (categorie === "vetements" && sousCategorie === "jupe") {
@@ -85,10 +85,11 @@ const Description = ({ onAddToCart }) => {
   
       try {
         // Appeler l'endpoint du microservice avec fetch
-        const response = await fetch(`http://192.168.17.101:8082/recommandations/saverecommandation`, {
+        const response = await fetch(`http://192.168.88.125:8082/recommandations/saverecommandation`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            'Access-Control-Allow-Origin':'*',
           },
           //credentials: 'include',
           body: JSON.stringify(body),
