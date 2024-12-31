@@ -11,21 +11,22 @@ function PaymentComponen({ handleCheckout, handleDeliveryCheckout, testCheckout 
   return (
     <div className="d-flex justify-content-between mb-3">
       <button
-        type="button"
+        type="submit"
         className="btn btn-warning me-4"
         onClick={handleCheckout}
+        
       >
         Paiement avant livraison
       </button>
       <button
-        type="button"
+        type="submit"
         className="btn btn-warning me-4"
         onClick={handleDeliveryCheckout}
       >
         Paiement après livraison
       </button>
       <button
-        type="button"
+        type="submit"
         className="btn btn-warning"
         onClick={testCheckout}
       >
@@ -49,7 +50,7 @@ function ValidationCart() {
 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [loading, setLoading] = useState(false);
+  //const [loading, setLoading] = useState(false);
 
   
   
@@ -63,9 +64,9 @@ function ValidationCart() {
   };
 
   const paymentServiceURL = "http://localhost:9090/";
-  //const orderServiceURL = "http://192.168.17.234:8081/";
+  const orderServiceURL = "http://192.168.88.125:8081/";
   const userId = 1; // Remplacez par la logique pour obtenir l'ID utilisateur
-  const orderId = 22; // Remplacez par la logique pour obtenir l'ID commande
+  const orderId = 24; // Remplacez par la logique pour obtenir l'ID commande
 
   useEffect(() => {
     if (!userId || !orderId) {
@@ -110,7 +111,7 @@ function ValidationCart() {
     }
   };
 
-  /*const updateOrderStatus = async (orderId, status) => {
+  const updateOrderStatus = async (orderId, status) => {
     try {
       const response = await fetch(`${orderServiceURL}commande/${orderId}`, {
         method: "PATCH",
@@ -126,7 +127,7 @@ function ValidationCart() {
     } catch (error) {
       console.error("Error updating order status:", error);
     }
-  };*/
+  };
 
   const sendPaymentRequest = async (orderId, status, paymentMethod, amount, userId) => {
     try {
@@ -216,7 +217,7 @@ function ValidationCart() {
         await reduceQuantity(orderId);
         await sendPaymentRequest(orderId, data.status, data.payment_method, data.amount, userId);
       }
-      //await updateOrderStatus(orderId, data.status);
+      await updateOrderStatus(orderId, data.status);
       await saveTransaction(orderId, data.status, data.payment_method, data.amount, userId);
     });
 
@@ -261,7 +262,7 @@ function ValidationCart() {
     }
   };
 
-  /*const updateOrderStatus = async (orderId, status) => {
+  const updateOrderStatus = async (orderId, status) => {
     try {
       const response = await fetch(`${orderServiceURL}commande/${orderId}`, {
         method: "PATCH",
@@ -277,7 +278,7 @@ function ValidationCart() {
     } catch (error) {
       console.error("Error updating order status:", error);
     }
-  };*/
+  };
 
 
   const saveTransaction = async (orderId, status, paymentMethod, amount, userId) => {
@@ -346,7 +347,7 @@ function ValidationCart() {
           await reduceQuantity(orderId);
           alert("Votre paiement a été effectué avec succès");
         }
-        //await updateOrderStatus(userData.transaction_id, "IN_PROGRESS");
+        await updateOrderStatus(userData.transaction_id, "IN_PROGRESS");
         await saveTransaction(userData.transaction_id, data.status, data.payment_method, data.amount, userId);
       });
 
@@ -392,7 +393,7 @@ function ValidationCart() {
     }
   };
 
-  /*const updateOrderStatus = async (orderId, status) => {
+  const updateOrderStatus = async (orderId, status) => {
     try {
       const response = await fetch(`${orderServiceURL}commande/${orderId}`, {
         method: "PATCH",
@@ -408,7 +409,7 @@ function ValidationCart() {
     } catch (error) {
       console.error("Error updating order status:", error);
     }
-  };*/
+  };
 
 
 
@@ -439,7 +440,7 @@ function ValidationCart() {
 
     
       getPaymentData(userId).then((userData) => {
-       // updateOrderStatus(userData.transaction_id, "ACCEPTED");
+        updateOrderStatus(userData.transaction_id, "ACCEPTED");
         reduceQuantity(orderId);
         saveTransaction(userData.transaction_id, "ACCEPTED", "OMCM", userData.amount, userId);
       });
@@ -475,7 +476,7 @@ function ValidationCart() {
     }
 
     setError('');
-    setLoading(true);
+    //setLoading(true);
 
     try {
   let prixTotal = cartItems.reduce(
@@ -501,7 +502,7 @@ function ValidationCart() {
 
       console.log("Données du panier :", panier);
 
-      const panierResponse = await fetch('http://192.168.17.234:8081/commande/panier/validerPanier', {
+      const panierResponse = await fetch('http://192.168.88.125:8081/commande/panier/validerPanier', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(panier),
@@ -530,7 +531,7 @@ function ValidationCart() {
         },
       };
 
-      const commandeResponse = await fetch('http://192.168.17.234:8081/commande/validercmd', {
+      const commandeResponse = await fetch('http://192.168.88.125:8081/commande/validercmd', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(commande),
@@ -543,7 +544,7 @@ function ValidationCart() {
       const idCommande  = await commandeResponse.text();
       console.log("Commande validée. ID de commande :", idCommande);
 
-      const factureResponse = await fetch(`http://192.168.17.234:8081/commande/email/envoyer-facture/${idCommande}`,{
+      const factureResponse = await fetch(`http://192.168.88.125:8081/commande/email/envoyer-facture/${idCommande}`,{
         method: 'POST',
         headers: { "Content-Type": "application/json" },
       });
@@ -564,7 +565,7 @@ function ValidationCart() {
       console.log("cartItems");
       setError(err.message || "Impossible de compléter l'opération.");
     } finally {
-      setLoading(false);
+      //setLoading(false);
     }
   };
 
@@ -638,13 +639,13 @@ function ValidationCart() {
               </label>
             </div>
             <br/>
-            <button
+            {/*<button
               type="submit"
               className="btn  w-100" style={{ backgroundColor: '#D97706' }} onMouseEnter={(e) => (e.target.style.backgroundColor = '#b45309')} onMouseLeave={(e) => (e.target.style.backgroundColor = '#D97706')}
               disabled={loading}
             >
               {loading ? 'Validation en cours...' : 'Envoyer'}
-            </button>
+            </button>*/}
 
           </form>
 
