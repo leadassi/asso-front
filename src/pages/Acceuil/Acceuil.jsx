@@ -96,7 +96,7 @@ const Accueil = () => {
     setIsCoursesModalOpen(false);
   };
   const handleDiscoverClick = () => {
-    navigate("/nouvostés");
+    navigate("/nouveaute");
   };
 
   // Fonction pour gérer les favoris avec stockage local
@@ -460,6 +460,8 @@ const produitsAffiches = [
                   navigate('/service-client');
                 }else if (image.name === "Trouver ASSO") {
                   navigate('/asso');
+                }else if (image.name === "Services Livraisons") {
+                  navigate('');
                 }
               }}
             >

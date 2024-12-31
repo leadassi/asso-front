@@ -35,6 +35,7 @@ import Accessoires from './pages/Acceuil/Acessoires.jsx';
 import ASSO from './pages/Asso/Asso.jsx';
 import NotificationSystem from './pages/Asso/NotificationSystem.js';
 import Livraisons from './pages/Acceuil/Livraisons.jsx';
+import Nouveaute from './pages/Acceuil/Nouvostés.jsx';
 function App() {
 
   // Définir des produits par défaut
@@ -139,6 +140,7 @@ function App() {
                 <Route path="/asso" element={<ASSO />} />
                 <Route path="/notification" element={<NotificationSystem />} />
                 <Route path='/livraisons' element={<Livraisons />} />
+                <Route path="/nouveaute" element={<Nouveaute />} />
 
               </Routes>
             </MainLayout>
