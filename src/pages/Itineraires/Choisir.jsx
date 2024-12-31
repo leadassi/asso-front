@@ -13,7 +13,7 @@ const Page = () => {
 
   const handleRecuperer = () => {
     setNotification("Vous avez choisi de récupérer vous-même votre commande.");
-    hideNotificationAfterDelay("retrait"); // Redirige vers la page Retrait (ou une autre)
+    hideNotificationAfterDelay("asso"); // Redirige vers la page Retrait (ou une autre)
   };
 
   const hideNotificationAfterDelay = (path) => {

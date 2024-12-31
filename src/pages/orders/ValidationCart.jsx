@@ -63,10 +63,10 @@ function ValidationCart() {
     }));
   };
 
-  const paymentServiceURL = "http://localhost:9090/";
-  const orderServiceURL = "http://192.168.88.125:8081/";
+  const paymentServiceURL = "http://192.168.227.101:9090/";
+  const orderServiceURL = "http://192.168.227.101:8081/";
   const userId = 1; // Remplacez par la logique pour obtenir l'ID utilisateur
-  const orderId = 24; // Remplacez par la logique pour obtenir l'ID commande
+  const orderId = 26; // Remplacez par la logique pour obtenir l'ID commande
 
   useEffect(() => {
     if (!userId || !orderId) {
@@ -502,7 +502,7 @@ function ValidationCart() {
 
       console.log("Données du panier :", panier);
 
-      const panierResponse = await fetch('http://192.168.88.125:8081/commande/panier/validerPanier', {
+      const panierResponse = await fetch('http://192.168.227.101:8081/commande/panier/validerPanier', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(panier),
@@ -531,7 +531,7 @@ function ValidationCart() {
         },
       };
 
-      const commandeResponse = await fetch('http://192.168.88.125:8081/commande/validercmd', {
+      const commandeResponse = await fetch('http://192.168.227.101:8081/commande/validercmd', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(commande),
@@ -544,7 +544,7 @@ function ValidationCart() {
       const idCommande  = await commandeResponse.text();
       console.log("Commande validée. ID de commande :", idCommande);
 
-      const factureResponse = await fetch(`http://192.168.88.125:8081/commande/email/envoyer-facture/${idCommande}`,{
+      const factureResponse = await fetch(`http://192.168.227.101:8081/commande/email/envoyer-facture/${idCommande}`,{
         method: 'POST',
         headers: { "Content-Type": "application/json" },
       });
@@ -639,13 +639,13 @@ function ValidationCart() {
               </label>
             </div>
             <br/>
-            {/*<button
+            <button
               type="submit"
               className="btn  w-100" style={{ backgroundColor: '#D97706' }} onMouseEnter={(e) => (e.target.style.backgroundColor = '#b45309')} onMouseLeave={(e) => (e.target.style.backgroundColor = '#D97706')}
-              disabled={loading}
+              //disabled={loading}
             >
-              {loading ? 'Validation en cours...' : 'Envoyer'}
-            </button>*/}
+              envoyer
+            </button>
 
           </form>
 

@@ -85,7 +85,7 @@ const Description = ({ onAddToCart }) => {
   
       try {
         // Appeler l'endpoint du microservice avec fetch
-        const response = await fetch(`http://192.168.88.125:8082/recommandations/saverecommandation`, {
+        const response = await fetch(`http://192.168.227.101:8082/recommandations/saverecommandation`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
