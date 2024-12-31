@@ -9,7 +9,7 @@ const Api = () => {
   // Fonction pour récupérer les produits
   const fetchProduits = async () => {
     try {
-      const response = await fetch('http://192.168.17.239:8080/produitService/getAllProduits', {
+      const response = await fetch('http://192.168.88.23:8080/produitService/getAllProduits', {
         method: 'GET',
         headers: {
           'Access-Control-Allow-Origin': '*', // Permet de gérer CORS pour les requêtes vers l'API
@@ -29,7 +29,7 @@ const Api = () => {
   // Fonction pour récupérer les recommandations
   const fetchRecommandations = async () => {
     try {
-      const response = await fetch('http://192.168.224.101:8082/recommandations', {
+      const response = await fetch('http://192.168.88.129:8082/recommandations', {
         method: 'GET',
         headers: {
           'Access-Control-Allow-Origin': '*', // Permet de gérer CORS pour les requêtes vers l'API
@@ -119,6 +119,7 @@ const Api = () => {
               <th>Prix</th>
               <th>Quantité</th>
               <th>Catégorie</th>
+              <th>SubCatégorie</th>
               <th>Image</th>
             </tr>
           </thead>
@@ -131,6 +132,7 @@ const Api = () => {
                 <td>{produit.price}</td>
                 <td>{produit.quantity}</td>
                 <td>{produit.category}</td>
+                <td>{produit.subCategory}</td>
                 <td>
                   <img
                     src={produit.imageUrl}

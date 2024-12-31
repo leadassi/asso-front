@@ -84,16 +84,20 @@ const MapComponent = ({ currentPosition, routes }) => {
       const totalDistance = routes[0].properties?.distance || null; // Distance en mètres
       if (totalDistance && distanceRef.current) {
         const distanceInKm = totalDistance / 1000; // Conversion en kilomètres
-        const price = distanceInKm * 300 * 2; // Calcul du prix (300 unités par km * 2)
+        let price = distanceInKm * 300 * 2; // Calcul du prix (300 unités par km * 2)
+
+        // Arrondir le prix au multiple de 5 le plus proche
+        price = Math.round(price); // Arrondi au plus proche
+        price = Math.ceil(price / 5) * 5; // Conversion au multiple de 5 supérieur
 
         // Afficher la distance et le prix
         distanceRef.current.textContent = `Distance : ${distanceInKm.toFixed(2)} km`;
         if (priceRef.current) {
-          priceRef.current.textContent = `Prix estimé : ${price.toFixed(2)} unités`;
+          priceRef.current.textContent = `Prix estimé : ${price} Francs CFA`;
         }
 
         // Stocker le prix dans le Local Storage
-        localStorage.setItem("prixLivraison", price.toFixed(2));
+        localStorage.setItem("prixLivraison", price);
       }
     }
   }, [currentPosition, routes]); // Réexécuter l'effet si les dépendances changent

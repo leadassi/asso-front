@@ -15,6 +15,8 @@ const Accueil = () => {
     (_, i) => `${process.env.PUBLIC_URL}/images/${i + 1}.jpeg`
   );
 
+
+  const [recommandations, setRecommandations] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
@@ -35,7 +37,18 @@ const Accueil = () => {
     return () => clearInterval(interval);
   }, [images.length]);
 
-  const galleryImages = [
+  // Changement automatique des produits toutes les 6 secondes
+  useEffect(() => {
+    if (recommandations.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % recommandations.length);
+      }, 6000); // 6 secondes
+      return () => clearInterval(interval);
+    }
+  }, [recommandations]);
+
+
+  /*const galleryImages = [
     { id: 1, name: "Veste", src: `${process.env.PUBLIC_URL}/image/1.jpeg`, rating: 4, price: 15000, description: "Une veste élégante et confortable, parfaite pour les occasions formelles ou décontractées." },
     { id: 2, name: "Chemise", src: `${process.env.PUBLIC_URL}/image/3.jpeg`, rating: 5, price: 9999, description: "Chemise en coton de haute qualité, idéale pour les journées de travail ou les sorties." },
     { id: 3, name: "Tshirt", src: `${process.env.PUBLIC_URL}/image/10.jpeg`, rating: 3, price: 11000, description: "Un t-shirt décontracté pour un confort optimal, parfait pour l'été." },
@@ -48,7 +61,7 @@ const Accueil = () => {
     { id: 10, name: "Parfum", src: `${process.env.PUBLIC_URL}/image/c.jpg`, rating: 4, price: 4000, description: "Parfum raffiné pour une touche de sophistication au quotidien." },
     { id: 11, name: "Chapeau", src: `${process.env.PUBLIC_URL}/image/p.jpg`, rating: 4, price: 4000, description: "Un chapeau traditionnel unique pour les amateurs de culture." },
     { id: 12, name: "Chaussures", src: `${process.env.PUBLIC_URL}/image/slider0.jpg`, rating: 3, price: 7000, description: "Meilleur choix pour vos sorties." },
-  ];
+  ];*/
 
   const helpOptions = [
     { name: "Trouver ASSO", src: `${process.env.PUBLIC_URL}/images/t.svg` },
@@ -67,13 +80,13 @@ const Accueil = () => {
     setIsModalOpen(false);
   };
 
-  const nextImage = () => {
+ /*const nextImage = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
   const prevImage = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-  };
+  };*/
 
   const openCoursesModal = () => {
     setIsCoursesModalOpen(true);
@@ -114,7 +127,7 @@ const Accueil = () => {
     console.log("Favoris chargés depuis localStorage:", storedFavorites);
   }, []);
 
-  const currentImage = galleryImages[currentIndex] || {};
+  /*const currentImage = galleryImages[currentIndex] || {};
 
   // Fonction pour gérer le clic sur l'image
   const handleImageClick = (image) => {
@@ -128,7 +141,61 @@ const Accueil = () => {
         description: image.description,
       }
     });
+  };*/
+  /*recommandation */
+  // Fonction pour récupérer les recommandations
+  const fetchRecommandations = async () => {
+    try {
+      const response = await fetch('http://192.168.88.129:8082/recommandations', {
+        method: 'GET',
+        headers: {
+          'Access-Control-Allow-Origin': '*', // Permet de gérer CORS pour les requêtes vers l'API
+        },
+      });
+      const recommandationsData = await response.json();
+      const formattedRecommandations = recommandationsData.map((recommandation) => ({
+        id: recommandation.id,
+        name: recommandation.name,
+        description: recommandation.description,
+        price: recommandation.price,
+        quantity: recommandation.quantity,
+        category: recommandation.category,
+        imageUrl: recommandation.imageUrl,
+        subCategory: recommandation.subCategory,
+        idFournisseur: recommandation.idFournisseur,
+      }));
+      console.log('Recommandations:', formattedRecommandations);
+
+      // Sauvegarder dans localStorage
+      localStorage.setItem('recommandations', JSON.stringify(formattedRecommandations));
+      setRecommandations(formattedRecommandations);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des recommandations:', error);
+    }
   };
+
+  useEffect(() => {
+    fetchRecommandations();
+  }, []);
+
+  const nextProduct = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % recommandations.length);
+  };
+
+  const prevProduct = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + recommandations.length) % recommandations.length);
+  };
+
+  const currentProduct = recommandations[currentIndex] || {};
+
+  // Fonction pour gérer le clic sur l'image
+  const handleProductClick = (product) => {
+    // Naviguer vers la page /description en envoyant l'état avec les informations du produit
+    navigate('/description', {
+      state: {product},
+    });
+  };
+
 
   /*details*/
   const handleCardClick = () => {
@@ -137,7 +204,7 @@ const Accueil = () => {
   /*nouvele */
   const fetchProduits = async () => {
     try {
-      const response = await fetch('http://192.168.17.239:8080/produitService/getAllProduits', {
+      const response = await fetch('http://192.168.88.23:8080/produitService/getAllProduits', {
         method: 'GET',
         headers: {
           'Access-Control-Allow-Origin': '*',
@@ -183,8 +250,8 @@ const produitsAffiches = [
       <Navbar />
       <div className="spacer"></div>
 
-      <div className="carousel-container">
-        {/* Images floutées en arrière-plan */}
+      {/*<div className="carousel-container">
+        {/* Images floutées en arrière-plan }
         <div className="carousel-background">
           {Array(9)
             .fill(currentImage.src)
@@ -193,7 +260,7 @@ const produitsAffiches = [
             ))}
         </div>
 
-        {/* Image principale */}
+        {/* Image principale }
         <div className="carousel-center">
           <img
             src={currentImage.src}
@@ -203,14 +270,44 @@ const produitsAffiches = [
           />
         </div>
 
-        {/* Navigation */}
+        {/* Navigation }
         <button className="carousel-prev" onClick={prevImage}>
           &#10094;
         </button>
         <button className="carousel-next" onClick={nextImage}>
           &#10095;
         </button>
+      </div>*/}
+      <div className="carousel-container">
+      {/* Images floutées en arrière-plan */}
+      <div className="carousel-background">
+        {Array(9)
+          .fill(currentProduct.imageUrl)
+          .map((src, index) => (
+            <img key={index} src={src} alt={`Background ${index}`} className="blurred-image" />
+          ))}
       </div>
+
+      {/* Image principale */}
+      <div className="carousel-center">
+        {currentProduct.imageUrl && (
+          <img
+            src={currentProduct.imageUrl}
+            alt={currentProduct.name}
+            className="carousel-image"
+            onClick={() => handleProductClick(currentProduct)} // Lorsqu'on clique sur l'image, on passe les infos à la page de description
+          />
+        )}
+      </div>
+
+      {/* Navigation */}
+      <button className="carousel-prev" onClick={prevProduct}>
+        &#10094;
+      </button>
+      <button className="carousel-next" onClick={nextProduct}>
+        &#10095;
+      </button>
+    </div>
 
       {/* Navigation des catégories */}
       <div className="navbar-categories-i">
@@ -361,6 +458,8 @@ const produitsAffiches = [
                   navigate('/faq');
                 } else if (image.name === "Obtenir de l'aide") {
                   navigate('/service-client');
+                }else if (image.name === "Trouver ASSO") {
+                  navigate('/asso');
                 }
               }}
             >

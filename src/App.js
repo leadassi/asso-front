@@ -32,7 +32,9 @@ import QRCodeGenerator from "./pages/Generateur/QRCodeGenerator.jsx";
 import QRCodeDisplay from './pages/Generateur/liste.jsx';
 import ValidationCart from './pages/orders/ValidationCart.jsx';
 import Accessoires from './pages/Acceuil/Acessoires.jsx';
-
+import ASSO from './pages/Asso/Asso.jsx';
+import NotificationSystem from './pages/Asso/NotificationSystem.js';
+import Livraisons from './pages/Acceuil/Livraisons.jsx';
 function App() {
 
   // Définir des produits par défaut
@@ -134,6 +136,10 @@ function App() {
                 <Route path="/liste" element={<QRCodeDisplay />} />
                 <Route path="/ValidationCart" element={<ValidationCart />} />
                 <Route path="/accessoires" element={<Accessoires />} />
+                <Route path="/asso" element={<ASSO />} />
+                <Route path="/notification" element={<NotificationSystem />} />
+                <Route path='/livraisons' element={<Livraisons />} />
+
               </Routes>
             </MainLayout>
           }

@@ -70,3 +70,26 @@ input:focus {
   font-weight: bold;
   color: red;
 }
+.suggestions-list {
+  position: absolute;
+  max-height: 150px; /* Limite la hauteur */
+  width: 26%; /* Adapte la largeur au champ */
+  overflow-y: auto; /* Ajoute un défilement si nécessaire */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000; /* Assure que la liste reste au-dessus */
+  margin-top: 5px;
+  margin-right: 1000000px;
+  padding: 0;
+  list-style: none;
+}
+
+.suggestion-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}

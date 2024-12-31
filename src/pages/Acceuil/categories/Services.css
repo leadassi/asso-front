@@ -1,5 +1,6 @@
 /* Services.css */
 .services-container {
+    margin-top: 100px;
     width: 100%;
     padding: 20px;
   }
@@ -10,8 +11,9 @@
   
   .map {
     width: 100%;
-    height: 400px; /* Assurez-vous que la carte ait une hauteur définie */
+    height: 700px; /* Assurez-vous que la carte ait une hauteur définie */
     border: 1px solid #ddd;
+    position: center;
   }
   
   .our-deliverers {

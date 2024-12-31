@@ -1,0 +1,79 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f9ff;
+     margin-top: 100px;
+    padding: 0;
+  }
+  
+  .livraisons-container {
+   
+    width: 90%;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .page-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #007bff;
+    margin-bottom: 30px;
+  }
+  
+  .livraison-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .livreur-image {
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  .livraison-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+  }
+  
+  
+  .livreur-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+
+  .livreur-info h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .livreur-role {
+    font-size: 0.9rem;
+    color: #888;
+  }
+  
+  .livraison-details p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 8px 0;
+  }
+  
+  .qr-code-link {
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .qr-code-link:hover {
+    text-decoration: underline;
+  }
+  

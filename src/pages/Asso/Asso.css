@@ -1,0 +1,64 @@
+.asso-container {
+    margin-top: 100px;
+    flex-direction: column;
+    background-color: rgba(252, 216, 98, 0.664);
+    align-items: center;
+  }
+  /* Assurez-vous que la classe suivante est ajoutée pour la bordure ronde */
+.icon-asso {
+  border-radius: 50%; /* Rend l'icône ronde */
+  border: 2px ;
+  padding: 4px; /* Ajoute un peu d'espace autour de l'image */
+}
+
+  .map-section {
+    margin-bottom: 20px;
+    margin-left: 180px;
+  }
+  
+  .map {
+    height: 500px;
+    width: 100%;
+    
+  }
+  
+  .message-section {
+    margin-top: 20px;
+  }
+  
+  .regions-section {
+    margin-top: 30px;
+  }
+  
+  .region {
+    margin: 10px 0;
+  }
+  
+  .divider {
+    width: 50%;
+    border-top: 2px solid black;
+    margin: 10px auto;
+  }
+  .region-villes-container {
+    display: flex;
+    justify-content: space-evenly; /* Espacement entre les colonnes */
+    margin-top: 20px;
+    width: 80%; /* Contrôler la largeur des colonnes */
+  }
+  
+  .regions-column, .villes-column {
+    width: 45%; /* Largeur des colonnes */
+    padding: 10px;
+  }
+  
+  .regions-column h5, .villes-column h5 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+
+  }
+  
+  .divider {
+    margin: 5px 0;
+    border: 1px solid #ddd;
+  }
+  
