@@ -141,8 +141,7 @@ function App() {
                 <Route path="/notification" element={<NotificationSystem />} />
                 <Route path='/livraisons' element={<Livraisons />} />
                 <Route path="/nouveaute" element={<Nouveaute />} />
-
-              </Routes>
+                </Routes>
             </MainLayout>
           }
         />

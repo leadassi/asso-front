@@ -84,7 +84,7 @@ const MapComponent = ({ currentPosition, routes }) => {
       const totalDistance = routes[0].properties?.distance || null; // Distance en mètres
       if (totalDistance && distanceRef.current) {
         const distanceInKm = totalDistance / 1000; // Conversion en kilomètres
-        let price = distanceInKm * 300 * 2; // Calcul du prix (300 unités par km * 2)
+        let price = distanceInKm * 100 * 2; // Calcul du prix (300 unités par km * 2)
 
         // Arrondir le prix au multiple de 5 le plus proche
         price = Math.round(price); // Arrondi au plus proche
