@@ -98,14 +98,14 @@ const Description = ({ onAddToCart }) => {
         if (response.ok) {
           const result = await response.json();
           console.log("Vote enregistré avec succès :", result);
-          alert("Votre vote a été enregistré avec succès !");
+          
         } else {
           console.error("Erreur lors de l'enregistrement du vote :", response.statusText);
-          alert("Une erreur est survenue lors de l'enregistrement de votre vote.");
+          
         }
       } catch (error) {
         console.error("Erreur réseau :", error);
-        alert("Une erreur réseau est survenue. Veuillez réessayer.");
+        
       }
     };
 
