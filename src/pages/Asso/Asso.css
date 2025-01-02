@@ -34,11 +34,7 @@
     margin: 10px 0;
   }
   
-  .divider {
-    width: 50%;
-    border-top: 2px solid black;
-    margin: 10px auto;
-  }
+ 
   .region-villes-container {
     display: flex;
     justify-content: space-evenly; /* Espacement entre les colonnes */

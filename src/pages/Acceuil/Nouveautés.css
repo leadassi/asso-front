@@ -1,0 +1,159 @@
+.clothing-page {
+    font-family: Arial, sans-serif;
+  }
+  
+  .heading {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .carousel-products-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+  }
+  
+  .carousel-products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .box {
+    position: relative;
+    width: 200px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .box:hover {
+    transform: scale(1.05);
+  }
+  
+ 
+  
+  .discount-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff6347;
+    color: #fff;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 1;
+  }
+  
+  .content {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .content h3 {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .price-1 {
+    font-size: 1rem;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .price span:first-child {
+    text-decoration: line-through;
+    color: red;
+    margin-bottom: 5px;
+  }
+  
+  .price span:last-child {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  
+  .stars {
+    margin-top: 10px;
+    color: #ffb400;
+  }
+  
+ 
+  
+  .modal-content {
+    width: 300px;
+    height: 300px; /* Taille fixe pour le cadre carré */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 2px solid #ccc;
+    border-radius: 10px; /* Pour arrondir légèrement les coins */
+    margin: 20px auto;
+    background-color: #f8f8f8; /* Couleur de fond pour un contraste agréable */
+  }
+  
+  .modal img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; /* Assure que l'image s'adapte bien au cadre */
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .carousel-bar {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 20px;
+  }
+  
+  .carousel-dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .carousel-dot.active,
+  .carousel-dot:hover {
+    background: #007bff;
+  }
+  .original-price {
+    text-decoration: line-through; /* Barrer le texte */
+    color: red;/* Couleur grise pour montrer que c'est l'ancien prix */
+    margin-right: 10px; /* Espacement entre les deux prix */
+  }
+  
+  .discount-price {
+    color:  #28a745;/* Couleur rouge pour mettre en avant le prix réduit */
+    font-weight: bold; /* Mettre en gras pour attirer l'attention */
+  }
+  .back-button {
+   background-color: #D97706;
+  }
+  .back-button:hover {
+    background-color: #b45309;
+    
+  }

@@ -2,7 +2,7 @@
 .navbar-categories {
   background: rgba(255, 255, 255, 0.3); /* Transparence */
   backdrop-filter: blur(10px); /* Flou pour l'effet de transparence */
-  color: #fff;
+  color: black;
   font-family: "Poppins", sans-serif;
   position: absolute;
   padding: 10px 20px;

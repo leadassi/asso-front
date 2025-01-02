@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Nouvostés.css"
-
+import "./Nouveautés.css";
 
 const Nouveaute = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,6 +14,9 @@ const Nouveaute = () => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const navigate = useNavigate();
+  const handleBack = () => {
+    navigate(-1); // Retourne à la page précédente
+  };
 
   const openModal = (src) => {
     setModalImage(src);
@@ -41,17 +43,20 @@ const Nouveaute = () => {
 
   const fetchProduits = async () => {
     try {
-      const response = await fetch('http://192.168.107.239:8080/produitService/getAllProduits', {
-        method: 'GET',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      });
+      const response = await fetch(
+        "http://192.168.107.239:8080/produitService/getAllProduits",
+        {
+          method: "GET",
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
       const produitsData = await response.json();
-      localStorage.setItem('produits', JSON.stringify(produitsData));
+      localStorage.setItem("produits", JSON.stringify(produitsData));
       setProduitsAPI(produitsData);
     } catch (error) {
-      console.error('Erreur lors de la récupération des produits:', error);
+      console.error("Erreur lors de la récupération des produits:", error);
     }
   };
 
@@ -61,42 +66,47 @@ const Nouveaute = () => {
     fetchProduits();
   }, []);
 
-  // Filtrer les produits de chaque sous-catégorie (2 produits par sous-catégorie)
   const sousCategories = ["pantalon", "sac", "jupe", "chaussure", "boissons"];
   const produitsAffiches = sousCategories.flatMap((sousCategorie) => {
-    const produitsStockesParSousCategorie = produitsStockes.filter(
-      (product) => product.subCategory === sousCategorie
-    ).slice(0, 2); // Prendre seulement les 2 premiers produits
-    const produitsAPIPartSousCategorie = produitsAPI.filter(
-      (product) => product.subCategory === sousCategorie
-    ).slice(0, 2); // Prendre seulement les 2 premiers produits
+    const produitsStockesParSousCategorie = produitsStockes
+      .filter((product) => product.subCategory === sousCategorie)
+      .slice(0, 2);
+    const produitsAPIPartSousCategorie = produitsAPI
+      .filter((product) => product.subCategory === sousCategorie)
+      .slice(0, 2);
 
     return [...produitsStockesParSousCategorie, ...produitsAPIPartSousCategorie];
   });
 
   const productsPerPage = 8;
-  const paginatedProducts = produitsAffiches.slice(currentPage * productsPerPage, currentPage * productsPerPage + productsPerPage);
+  const paginatedProducts = produitsAffiches.slice(
+    currentPage * productsPerPage,
+    currentPage * productsPerPage + productsPerPage
+  );
 
   return (
     <div className="clothing-page">
-     
       <section className="products" id="products">
+         {/* Bouton de retour */}
+      <button className="back-button" onClick={handleBack}>
+        <i className="fas fa-arrow-left"></i> Retour
+      </button>
         <h1 className="heading">
-          <span>Vos Produits a des Prix Reduits</span>
+          <span>Vos Produits à des Prix Réduits</span>
         </h1>
         <div className="carousel-products-container">
           <div className="carousel-products">
             {paginatedProducts.map((product) => {
-              // Calcul de la réduction de 10%
               const discountPrice = product.price * 0.9;
               return (
                 <div className="box" key={product.title || product.id}>
+                  <div className="discount-tag">-10%</div>
                   <div className="icons">
                     <button
                       className="icon-button fas fa-plus"
                       title="Voir les détails"
                       onClick={() =>
-                        navigate('/description', { state: { product } })
+                        navigate("/description", { state: { product } })
                       }
                     ></button>
 
@@ -114,7 +124,9 @@ const Nouveaute = () => {
                     <button
                       className="icon-button fas fa-eye"
                       title="Voir l'image"
-                      onClick={() => openModal(product.img || product.imageUrl)}
+                      onClick={() =>
+                        openModal(product.img || product.imageUrl)
+                      }
                     ></button>
                   </div>
 
@@ -125,22 +137,17 @@ const Nouveaute = () => {
 
                   <div className="content">
                     <h3>{product.title || product.name || "Produit sans nom"}</h3>
-                    <div className="price">
-                      <span style={{ textDecoration: 'line-through', color: 'red' }}>
-                        {product.price} FCFA
-                      </span>
-                      <span style={{ marginLeft: '10px', fontWeight: 'bold' }}>
-                        {discountPrice.toFixed(2)} FCFA
-                      </span>
-                      <span style={{ color: 'green', marginLeft: '5px' }}>
-                        -10%
-                      </span>
+                    <div className="price-1">
+                      <span className="original-price">{product.price} FCFA</span>
+                      <span className="discount-price">{discountPrice.toFixed(2)} FCFA</span>
                     </div>
                     <div className="stars">
                       {[...Array(5)].map((_, i) => (
                         <i
                           key={i}
-                          className={`fa-star ${i < product.rating ? 'fas' : 'far'}`}
+                          className={`fa-star ${
+                            i < product.rating ? "fas" : "far"
+                          }`}
                         ></i>
                       ))}
                     </div>
@@ -157,7 +164,7 @@ const Nouveaute = () => {
             (_, i) => (
               <div
                 key={i}
-                className={`carousel-dot ${currentPage === i ? 'active' : ''}`}
+                className={`carousel-dot ${currentPage === i ? "active" : ""}`}
                 onClick={() => setCurrentPage(i)}
               >
                 {i + 1}

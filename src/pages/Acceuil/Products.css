@@ -152,7 +152,7 @@
   overflow: hidden; /* Empêche le débordement */
 }
 
-.modal-content {
+.modal-content-1 {
   position: relative;
   max-width: 90%;
   max-height: 90%;
@@ -402,7 +402,7 @@
   }
 }
 
-.modal-content {
+.modal-content-1 {
   background-color: #ffffff;
   border-radius: 10px;
   padding: 20px;

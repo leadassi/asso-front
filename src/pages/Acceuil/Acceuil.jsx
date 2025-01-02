@@ -343,7 +343,7 @@ const produitsAffiches = [
       {/* Courses Modal */}
       {isCoursesModalOpen && (
         <div className="modal-1" onClick={closeCoursesModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-content-1" onClick={(e) => e.stopPropagation()}>
             <button className="close-button" onClick={closeCoursesModal}>&times;</button>
             <h2>Comment souhaitez-vous faire vos courses aujourd’hui ?</h2>
             <p>Choisissez un service pour profiter des produits et des promos disponibles dans votre magasin 👇</p>

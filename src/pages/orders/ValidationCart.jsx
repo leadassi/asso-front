@@ -1,13 +1,13 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,/*useEffect*/ } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import PaymentComponent from './PaymentComponent';
+/*import PaymentComponent from './PaymentComponent';*/
 
 
 
-{/*function PaymentComponen({ handleCheckout, handleDeliveryCheckout, testCheckout }) {
+/*{/*function PaymentComponen({ handleCheckout, handleDeliveryCheckout, testCheckout }) {
   return (
     <div className="d-flex justify-content-between mb-3">
       <button
@@ -655,7 +655,7 @@ function ValidationCart() {
       </div>
     </div>
   );
-}*/}
+}*/
 
 function PaymentComponent({ checkout, DeliveryCheckout, testCheckout }) {
   return (

@@ -1,14 +1,53 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation,Link } from "react-router-dom";
 import "./NavbarCategories.css";
 import logo from "./logoappli.jpg"; // Importation du logo
 import { useTheme } from "../../ThemeContext";
 
 const NavbarCategories = () => {
+  const [notifications, setNotifications] = useState([]);
+  const [isNotificationListVisible, setNotificationListVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
+
+  const deleteNotification = (index) => {
+    setNotifications((prevNotifications) =>
+      prevNotifications.filter((_, i) => i !== index)
+    );
+  };
+  /*notification*/
+     // Connexion WebSocket à Django Channels pour recevoir des notifications
+     useEffect(() => {
+      const socket = new WebSocket("ws://127.0.0.1:8000/ws/Gestion_Livraison.asgi/notifications/");
+      socket.onopen = () => console.log("Connexion établie");
+      socket.onmessage = (event) => console.log(event.data);
+      
+  
+      socket.onopen = () => {
+        console.log("Connexion WebSocket établie");
+      };
+  
+      socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        setNotifications((prevNotifications) => [
+          ...prevNotifications,
+          data.message,
+        ]);
+      };
+  
+      socket.onclose = () => {
+        console.log("Connexion WebSocket fermée");
+      };
+  
+      return () => {
+        socket.close();
+      };
+    }, []);
+    const handleNotificationToggle = () => {
+      setNotificationListVisible(!isNotificationListVisible);
+    };
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   const { isDarkMode, toggleTheme } = useTheme();
@@ -110,7 +149,7 @@ const NavbarCategories = () => {
         showNotification("Une erreur est survenue. Veuillez réessayer.", "error");
     }
 };
-
+  
 
   const isActive = (path) => location.pathname === path;
 
@@ -184,25 +223,50 @@ const NavbarCategories = () => {
           </button>
         </form>
 
-        {/* Icônes de navigation */}
-        <div className="icon-container-1">
-          <i
-            className="icon-button-1 fas fa-home"
-            onClick={() => navigate("/acceuil")}
-            title="Accueil"
-          ></i>
-          <i
-            className="icon-button-1 fas fa-shopping-cart"
-            onClick={() => navigate("/cart")}
-            title="Panier"
-          ></i>
-          <i
-            className="icon-button-1 fas fa-user"
-            onClick={() => navigate("/profil")}
-            title="Profil"
-          ></i>
-        </div>
-
+        
+                {/* Icônes de navigation */}
+                <div className="icon-container-1">
+                  <Link
+                    to="/Acceuil"
+                    className="icon-button-1 fas fa-home"
+                    title="Accueil"
+                  ></Link>
+                  <Link
+                    to="/cart"
+                    className="icon-button-1 fas fa-shopping-cart"
+                    title="Panier"
+                  ></Link>
+                  <Link
+                    to="/profil"
+                    className="icon-button-1 fas fa-user"
+                    title="Profil"
+                  ></Link>
+                  <div className="notification-icon" onClick={handleNotificationToggle}>
+                    <i className="fas fa-bell"></i>
+                    {notifications.length > 0 && <span className="badge">{notifications.length}</span>}
+                  </div>
+                </div>
+                {isNotificationListVisible && (
+                <div className="notification-list">
+                  <ul>
+                    {notifications.length > 0 ? (
+                      notifications.map((notification, index) => (
+                        <li key={index}>
+                          {notification}
+                          <button
+                            className="delete-btn"
+                            onClick={() => deleteNotification(index)}
+                          >
+                            Supprimer
+                          </button>
+                        </li>
+                      ))
+                    ) : (
+                      <li>Aucune notification</li>
+                    )}
+                  </ul>
+                </div>
+              )}
         {/* Menu Icon */}
       <div className="menu-icon" onClick={toggleMenu}>
         <i className={`bx ${menuOpen ? "bx-x" : "bx-menu"}`}></i>
