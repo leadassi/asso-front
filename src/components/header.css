@@ -264,3 +264,68 @@ body {
         transform: translateX(100%);
     }
 }
+
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .navbar-container1 {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .icon-container-11 {
+    margin-left: 0;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .acceuil-container {
+    padding: 10px;
+  }
+
+  .faq-inline-item {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .welcome-section {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .dropdown-menu1 {
+    width: 90%;
+    left: 5%;
+    right: 5%;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar1 {
+    padding: 8px;
+  }
+
+  .acceuil-container {
+    font-size: 14px;
+  }
+
+  .faq-inline-title {
+    font-size: 18px;
+  }
+
+  .faq-inline-item {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .dropdown-menu1 {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .welcome-section {
+    padding: 6px;
+    font-size: 12px;
+  }
+}
+

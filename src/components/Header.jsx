@@ -14,12 +14,49 @@ const Header = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   const { isDarkMode, toggleTheme } = useTheme();
-
+  const [notifications, setNotifications] = useState([]);
+  const [isNotificationListVisible, setNotificationListVisible] = useState(false);
   useEffect(() => {
     document.body.className = isDarkMode ? "dark" : "light";
   }, [isDarkMode]);
 
   const navigate = useNavigate();
+   const deleteNotification = (index) => {
+      setNotifications((prevNotifications) =>
+        prevNotifications.filter((_, i) => i !== index)
+      );
+    };
+    /*notification*/
+       // Connexion WebSocket à Django Channels pour recevoir des notifications
+       useEffect(() => {
+        const socket = new WebSocket("ws://127.0.0.1:8000/ws/Gestion_Livraison.asgi/notifications/");
+        socket.onopen = () => console.log("Connexion établie");
+        socket.onmessage = (event) => console.log(event.data);
+        
+    
+        socket.onopen = () => {
+          console.log("Connexion WebSocket établie");
+        };
+    
+        socket.onmessage = (event) => {
+          const data = JSON.parse(event.data);
+          setNotifications((prevNotifications) => [
+            ...prevNotifications,
+            data.message,
+          ]);
+        };
+    
+        socket.onclose = () => {
+          console.log("Connexion WebSocket fermée");
+        };
+    
+        return () => {
+          socket.close();
+        };
+      }, []);
+      const handleNotificationToggle = () => {
+        setNotificationListVisible(!isNotificationListVisible);
+      };
 
   const fetchCsrfToken = async () => {
     try {
@@ -141,7 +178,33 @@ const Header = () => {
             className="icon-button-11 fas fa-user"
             title="Profil"
           ></Link>
+          <div className="notification-icon" onClick={handleNotificationToggle}>
+                    <i className="fas fa-bell"></i>
+                    {notifications.length > 0 && <span className="badge">{notifications.length}</span>}
+           </div>
         </div>
+        {isNotificationListVisible && (
+                <div className="notification-list">
+                  <ul>
+                    {notifications.length > 0 ? (
+                      notifications.map((notification, index) => (
+                        <li key={index}>
+                          {notification}
+                          <button
+                            className="delete-btn"
+                            onClick={() => deleteNotification(index)}
+                          >
+                            Supprimer
+                          </button>
+                        </li>
+                      ))
+                    ) : (
+                      <li>Aucune notification</li>
+                    )}
+                  </ul>
+                </div>
+              )}
+        
 
         {/* Menu Icon */}
         <div className="menu-icon" onClick={toggleMenu}>

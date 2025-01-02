@@ -313,7 +313,7 @@
   background-color: #D97706;
   color: #ffffff;
   border: none;
-  padding: 20px 15px; /* Réduit légèrement la taille du bouton */
+  padding: 10px 20px; /* Réduit légèrement la taille du bouton */
   font-size: 0.9rem; /* Taille du texte */
   border-radius: 4px; /* Coins arrondis */
   cursor: pointer;

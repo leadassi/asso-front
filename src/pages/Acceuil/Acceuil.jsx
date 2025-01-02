@@ -336,7 +336,7 @@ const produitsAffiches = [
           <button className="blue-button" onClick={handleDiscoverClick}>
             Découvrir</button>
           </div>
-          <img src={`${process.env.PUBLIC_URL}/images/1.gif`} alt="Maison gif" className="card-gif" />
+          <img src={`${process.env.PUBLIC_URL}/images/1.png`} alt="Maison gif" className="card-gif" />
         </div>
       </section>
 
