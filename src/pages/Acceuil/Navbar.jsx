@@ -18,12 +18,68 @@ const Navbar = () => {
     document.body.className = isDarkMode ? "dark" : "light";
   }, [isDarkMode]);
 
+  
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log("Search Query:", searchQuery);
-    console.log("Selected Category:", category);
-    // Logique de recherche ou appel API peut être ajouté ici
+    const products = localStorage.getItem('produits');
+    const produits = JSON.parse(products);
+    // Si une catégorie spécifique est choisie, redirige vers la page correspondante
+    if (category !== "Tout" && category !== "null") {
+      switch (category) {
+        case "Clothing":
+          handleNavigation("/Clothing");
+          break;
+        case "aliments":
+          handleNavigation("/aliments");
+          break;
+        case "cosmetics":
+          handleNavigation("/cosmetics");
+          break;
+        case "accessoires":
+          handleNavigation("/accessoires");
+          break;
+        default:
+          handleNavigation("/Acceuil");
+      }
+    } else if (searchQuery) {
+      // Logique de recherche par sous-catégorie
+      const matchedProducts = produits.filter((product) =>
+        product.subCategory.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+  
+      if (matchedProducts.length > 0) {
+        console.log("Produits correspondants :", matchedProducts);
+        // Redirigez vers une page de résultats si nécessaire
+        const firstMatchedProduct = matchedProducts[0]; 
+        if (firstMatchedProduct.category !== "Tout" && firstMatchedProduct.category !== "null") {
+          switch (firstMatchedProduct.category) {
+            case "vetement":
+              handleNavigation("/Clothing");
+              break;
+            case "alimentaire":
+              handleNavigation("/aliments");
+              break;
+            case "cosmetique":
+              handleNavigation("/cosmetics");
+              break;
+            case "accessoire":
+              handleNavigation("/accessoires");
+              break;
+            default:
+              handleNavigation("/Acceuil");
+          }
+        }
+      } else {
+        console.log("Aucun produit trouvé pour cette recherche.");
+      }
+    } else {
+      console.log("Veuillez entrer une recherche ou sélectionner une catégorie.");
+    }
   };
+  
+
+
+
 
   const navigate = useNavigate();
   const handleNavigation = (path) => {
@@ -176,7 +232,7 @@ const Navbar = () => {
             type="search"
             name="search"
             placeholder="Search"
-            required
+            //required
             className="search-input"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

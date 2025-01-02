@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import jsQR from "jsqr";
+import '../../index.css';
 import { Link } from "react-router-dom"; // Importation de Link pour la navigation
 import "./QRCodeScanner.css";
 
@@ -60,8 +61,8 @@ const QRCodeScanner = () => {
   }, []);
 
   return (
-    
-    <div className="containner-page">
+    <div className="cont">
+    <div className="">
       {/* Première page */}
       <div className="spacer"></div>
       <div className="scanner-page">
@@ -83,6 +84,7 @@ const QRCodeScanner = () => {
           <p id="result">{result}</p>
         </div>
       </div>
+    </div>
     </div>
   );
 };

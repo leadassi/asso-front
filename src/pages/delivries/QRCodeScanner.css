@@ -11,7 +11,7 @@
 /* Première page */
 .scanner-page {
   position: relative;
-  background: linear-gradient(to right, #e74c3c, #e67e22);
+  background: linear-gradient(to right, #b49567, #e67e22);
   width: 90%;
   max-width: 600px;
   border-radius: 20px;

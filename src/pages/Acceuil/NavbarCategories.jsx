@@ -48,6 +48,8 @@ const NavbarCategories = () => {
     const handleNotificationToggle = () => {
       setNotificationListVisible(!isNotificationListVisible);
     };
+  const [searchQuery, setSearchQuery] = useState("");
+  const [category, setCategory] = useState("null");
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   const { isDarkMode, toggleTheme } = useTheme();
@@ -62,9 +64,60 @@ const NavbarCategories = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const searchQuery = e.target.search.value;
-    const category = e.target.category.value;
-    navigate(`/search?query=${searchQuery}&category=${category}`);
+    const products = localStorage.getItem('produits');
+    const produits = JSON.parse(products);
+    // Si une catégorie spécifique est choisie, redirige vers la page correspondante
+    if (category !== "Tout" && category !== "null") {
+      switch (category) {
+        case "Clothing":
+          handleNavigation("/Clothing");
+          break;
+        case "aliments":
+          handleNavigation("/aliments");
+          break;
+        case "cosmetics":
+          handleNavigation("/cosmetics");
+          break;
+        case "accessoires":
+          handleNavigation("/accessoires");
+          break;
+        default:
+          handleNavigation("/Acceuil");
+      }
+    } else if (searchQuery) {
+      // Logique de recherche par sous-catégorie
+      const matchedProducts = produits.filter((product) =>
+        product.subCategory.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+  
+      if (matchedProducts.length > 0) {
+        console.log("Produits correspondants :", matchedProducts);
+        // Redirigez vers une page de résultats si nécessaire
+        const firstMatchedProduct = matchedProducts[0]; 
+        if (firstMatchedProduct.category !== "Tout" && firstMatchedProduct.category !== "null") {
+          switch (firstMatchedProduct.category) {
+            case "vetement":
+              handleNavigation("/Clothing");
+              break;
+            case "alimentaire":
+              handleNavigation("/aliments");
+              break;
+            case "cosmetique":
+              handleNavigation("/cosmetics");
+              break;
+            case "accessoire":
+              handleNavigation("/accessoires");
+              break;
+            default:
+              handleNavigation("/Acceuil");
+          }
+        }
+      } else {
+        console.log("Aucun produit trouvé pour cette recherche.");
+      }
+    } else {
+      console.log("Veuillez entrer une recherche ou sélectionner une catégorie.");
+    }
   };
 
   const fetchCsrfToken = async () => {
@@ -196,12 +249,12 @@ const NavbarCategories = () => {
         </ul>
 
         {/* Search Bar */}
-        <form className="search-form" onSubmit={handleSearch}>
+        {/*<form className="search-form" onSubmit={handleSearch}>
           <input
             type="search"
             name="search"
             placeholder="Search"
-            required
+            //required
             className="search-input"
           />
           <div className="search-category-container">
@@ -210,6 +263,36 @@ const NavbarCategories = () => {
               name="category"
               className="search-category"
               defaultValue="null"
+            >
+              <option value="null">Tout</option>
+              <option value="Clothing">Vetements</option>
+              <option value="aliments">Aliments</option>
+              <option value="cosmetics">Cosmetiques</option>
+              <option value="accessoires">Accessoires</option>
+            </select>
+          </div>
+          <button type="submit" className="search-button">
+            <i className="fas fa-search"></i>
+          </button>
+        </form>*/}
+
+<form className="search-form" onSubmit={handleSearch}>
+          <input
+            type="search"
+            name="search"
+            placeholder="Search"
+            //required
+            className="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <div className="search-category-container">
+            <select
+              id="category"
+              name="category"
+              className="search-category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
             >
               <option value="null">Tout</option>
               <option value="Clothing">Vetements</option>
