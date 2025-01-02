@@ -1,13 +1,13 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import PaymentComponent from './PaymentComponent';
+//import PaymentComponent from './PaymentComponent';
 
 
 
-{/*function PaymentComponen({ handleCheckout, handleDeliveryCheckout, testCheckout }) {
+/*function PaymentComponen({ handleCheckout, handleDeliveryCheckout, testCheckout }) {
   return (
     <div className="d-flex justify-content-between mb-3">
       <button
@@ -655,21 +655,21 @@ function ValidationCart() {
       </div>
     </div>
   );
-}*/}
+}*/
 
 function PaymentComponent({ checkout, DeliveryCheckout, testCheckout }) {
   return (
     <div className="d-flex justify-content-between mb-3">
       <button
         type="button"
-        className="btn btn-warning"
+        className="btn btn-warning me-4"
         onClick={checkout}
       >
         Paiement avant livraison
       </button>
       <button
         type="button"
-        className="btn btn-warning"
+        className="btn btn-warning me-4"
         onClick={DeliveryCheckout}
       >
         Paiement après livraison
@@ -859,7 +859,7 @@ function ValidationCart() {
         <div
           className="card shadow-lg p-4 w-100"
           style={{
-            maxWidth: '350px',
+            maxWidth: '500px',
             minHeight: '400px',
           }}
         >
@@ -871,7 +871,7 @@ function ValidationCart() {
           <h2 className="text-center mb-4">Formulaire des commandes</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label htmlFor="email" className="form-label">Email :</label>
+              <label htmlFor="email" className="form-label text-warning-emphasis">Email :</label>
               <input
                 type="email"
                 className="form-control"
@@ -885,7 +885,7 @@ function ValidationCart() {
             </div>
 
             <div className="mb-3">
-              <label htmlFor="name" className="form-label">Nom :</label>
+              <label htmlFor="name" className="form-label text-warning-emphasis">Nom :</label>
               <input
                 type="text"
                 className="form-control"
@@ -904,7 +904,7 @@ function ValidationCart() {
               testCheckout={testCheckout}
             />
 
-            <div className="mb-3 form-check">
+            <div className="mb-1 form-check">
               <input
                 type="checkbox"
                 className="form-check-input"
@@ -913,7 +913,7 @@ function ValidationCart() {
                 checked={formData.confirmation}
                 onChange={handleChange}
               />
-              <label htmlFor="confirmation" className="form-check-label">
+              <label htmlFor="confirmation" className="form-check-label ml-3">
                 Je confirme que mes informations sont correctes.
               </label>
             </div>
