@@ -6,6 +6,7 @@ import '../../index.css';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import Sac from "./categories/Sac";
 import Chaussures from "./categories/Chaussures";
+import MainLayout from  "../../components/MainLayout";
 
 const Accessoires = () => {
   const [category, setCategory] = useState("Sac");
@@ -16,6 +17,7 @@ const Accessoires = () => {
     setIsModalOpen(false);
   };
   return (
+    <MainLayout hideHeader={true}>
     <div className="cosmetics-page">
       {/* Navigation des catégories */}
       <div className="spacer"></div>
@@ -94,6 +96,7 @@ const Accessoires = () => {
       </div>
     </footer>
     </div>
+    </MainLayout>
   );
 };
 

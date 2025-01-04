@@ -7,7 +7,7 @@ const Livraisons = () => {
   useEffect(() => {
     const fetchLivraisons = async () => {
       try {
-        const response = await fetch("http://localhost:8001/Livraisonservices/Livraisonservicesapi/livraisons");
+        const response = await fetch("django_backend/Livraisonservices/Livraisonservicesapi/livraisons");
         const data = await response.json();
         setLivraisons(data);
       } catch (error) {

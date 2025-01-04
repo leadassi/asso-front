@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  build:
+    image: node:latest
+    container_name: build-container
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: >
+      sh -c "npm ci && npm run build"
+
+  nginx:
+    image: nginx:stable
+    container_name: nginx-container
+    depends_on:
+      - build
+    volumes:
+      - ./build:/usr/share/nginx/html
+    ports:
+      - "3000:80"
+    restart: always
+

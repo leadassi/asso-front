@@ -2,10 +2,10 @@ import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 
-function MainLayout({ children }) {
+function MainLayout({ children, hideHeader = false }) {
   return (
     <div>
-      <Header />
+      {!hideHeader && <Header />}
       <main>{children}</main>
       <Footer />
     </div>

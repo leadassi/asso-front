@@ -36,6 +36,7 @@ import ASSO from './pages/Asso/Asso.jsx';
 import NotificationSystem from './pages/Asso/NotificationSystem.js';
 import Livraisons from './pages/Acceuil/Livraisons.jsx';
 import Nouveaute from './pages/Acceuil/Nouvostés.jsx';
+import LivraisonScene from "./pages/delivries/LivraisonScene.jsx";
 function App() {
 
   // Définir des produits par défaut
@@ -141,6 +142,7 @@ function App() {
                 <Route path="/notification" element={<NotificationSystem />} />
                 <Route path='/livraisons' element={<Livraisons />} />
                 <Route path="/nouveaute" element={<Nouveaute />} />
+                <Route path="/livraison-scene" element={<LivraisonScene />} />
                 </Routes>
             </MainLayout>
           }

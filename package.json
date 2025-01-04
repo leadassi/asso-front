@@ -6,6 +6,8 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "@react-three/drei": "^9.120.5",
+    "@react-three/fiber": "^8.17.10",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -40,6 +42,7 @@
     "socket.io-client": "^4.8.1",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
+    "three": "^0.172.0",
     "url": "^0.11.4",
     "util": "^0.12.5",
     "web-vitals": "^2.1.4"

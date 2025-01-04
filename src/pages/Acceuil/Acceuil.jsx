@@ -461,7 +461,7 @@ const produitsAffiches = [
                 }else if (image.name === "Trouver ASSO") {
                   navigate('/asso');
                 }else if (image.name === "Services Livraisons") {
-                  navigate('');
+                  navigate('/livraison-scene');
                 }
               }}
             >

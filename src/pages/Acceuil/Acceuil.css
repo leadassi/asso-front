@@ -215,3 +215,79 @@
     font-size: 12px;
   }
 }
+
+/*.acceuil-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.help-container-inline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.help-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 180px; /* Taille fixe sur grands écrans 
+  padding: 15px;
+  border-radius: 10px;
+  background: #f5f5f5;
+  transition: transform 0.3s, background 0.3s;
+}
+
+.help-item:hover {
+  transform: scale(1.05);
+  background: #e0e0e0;
+}
+
+.help-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}*/
+
+/* 📱 Responsive: ajustements pour tablettes et mobiles */
+@media (max-width: 1024px) {
+  .help-container-inline {
+    gap: 15px;
+  }
+
+  .help-item {
+    width: 150px; /* Réduction de la taille */
+  }
+
+  .help-icon {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media (max-width: 768px) {
+  .help-container-inline {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .help-item {
+    width: 80%; /* Utilisation de la largeur disponible */
+  }
+}
+
+@media (max-width: 480px) {
+  .help-item {
+    width: 100%; /* Sur mobiles, occupe toute la largeur */
+    padding: 10px;
+  }
+
+  .help-icon {
+    width: 60px;
+    height: 60px;
+  }
+}
