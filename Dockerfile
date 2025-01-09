@@ -35,6 +35,8 @@ COPY --from=build /app/build /usr/share/nginx/html
 # Exposer le port 80 pour Nginx (port par défaut)
 EXPOSE 80
 
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Commande par défaut pour démarrer Nginx
 CMD ["nginx", "-g", "daemon off;"]
 
