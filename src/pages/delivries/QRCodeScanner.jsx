@@ -62,6 +62,7 @@ const QRCodeScanner = () => {
 
   return (
     <div className="cont">
+    <div className="containner-page">
     <div className="">
       {/* Première page */}
       <div className="spacer"></div>
@@ -84,6 +85,7 @@ const QRCodeScanner = () => {
           <p id="result">{result}</p>
         </div>
       </div>
+    </div>
     </div>
     </div>
   );

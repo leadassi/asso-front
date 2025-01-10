@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Importation du hook de navigation
-import FormComponent from "./FormComponent"; // Import du formulaire
-import MapComponent from "./MapComponent"; // Import de la carte
-import "./style.css"; // CSS spécifique au composant
+import { useNavigate } from "react-router-dom";
+import FormComponent from "./FormComponent";
+import MapComponent from "./MapComponent";
+import "./style.css";
 
 const Carte = () => {
   const [depart, setDepart] = useState(""); // Seul le départ est demandé
   const [currentPosition, setCurrentPosition] = useState(null);
   const [routes, setRoutes] = useState([]);
-  const navigate = useNavigate(); // Hook de navigation
+  const navigate = useNavigate();
 
   // L'arrivée est fixée à "Yaoundé, Ngoa"
   const arrivee = "Yaoundé, Ngoa";
@@ -20,6 +20,22 @@ const Carte = () => {
       );
       const data = await response.json();
       const departCoord = data.results[0].position;
+
+      // Récupérer l'ID de l'utilisateur depuis sessionStorage
+      const userId = sessionStorage.getItem("utilisateurId")
+
+      if (userId) {
+        const { idUtilisateur } = JSON.parse(userId);
+
+        if (idUtilisateur) {
+          // Stocker le lieu de départ en fonction de l'ID de l'utilisateur
+          sessionStorage.setItem(`lieuDepart_${idUtilisateur}`, depart);
+        } else {
+          console.error("ID utilisateur introuvable dans sessionStorage !");
+        }
+      } else {
+        console.error("Aucune donnée utilisateur trouvée dans sessionStorage !");
+      }
 
       // Utilisation de "Yaoundé, Ngoa" pour l'arrivée
       const responseArrivee = await fetch(
@@ -53,8 +69,8 @@ const Carte = () => {
 
       // Attendre 15 secondes avant de rediriger vers la page de validation
       setTimeout(() => {
-        navigate("/ValidationCart"); // Redirection vers la page de validation
-      }, 15000); // 15 secondes = 15000 ms
+        navigate("/ValidationCart");
+      }, 15000);
 
     } catch (error) {
       console.error("Erreur lors du calcul de l'itinéraire:", error);

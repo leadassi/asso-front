@@ -1,103 +1,100 @@
-import React, { useEffect, useRef, useState } from "react";
-import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
+import React, { useEffect, useState } from "react";
 import "./Livraison.css";
+import q from "./q.png"; // Image illustration
+import scooter from "./scooter.jpeg";
+import voiture from "./voiture.jpeg";
+import moto from "./moto.jpeg";
+import camion from "./camion.jpeg";
+import Header from "../../components/Header";
 
 const messages = ["Rapide", "Sécurisé", "7/7J", "24/24h"];
-const colors = ["#FF5733", "#33FF57", "#337BFF", "#337BF"];
+const colors = ["#FF5733", "#33FF57", "#337BFF", "#FFFF00"];
+
+const moyens = [
+  { image: scooter, titre: "Scooters", description: "Rapides et pratiques pour les livraisons en ville." },
+  { image: voiture, titre: "Voitures", description: "Sécurisées et adaptées aux longues distances." },
+  { image: moto, titre: "Motos", description: "Parfaites pour les livraisons express et flexibles." },
+  { image: camion, titre: "Camions", description: "Idéaux pour les grandes quantités et la logistique." }
+];
 
 const LivraisonScene = () => {
-  const mountRef = useRef(null);
-  const [currentMessage, setCurrentMessage] = useState("");
+  const [currentMessage, setCurrentMessage] = useState(messages[0]);
   const [currentColor, setCurrentColor] = useState(colors[0]);
-
-  useEffect(() => {
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xFFFFFF); // Fond blanc
-
-    const camera = new THREE.PerspectiveCamera(
-      45,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      100
-    );
-    camera.position.set(-0.1, 0.25, 5);
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    mountRef.current.appendChild(renderer.domElement);
-
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.autoRotate = true;
-
-    // Ajouter une lumière d'environnement pour éclairer la scène
-    const ambientLight = new THREE.AmbientLight(0x404040, 1); // Lumière douce
-    scene.add(ambientLight);
-
-    // Ajouter une lumière directionnelle pour éclairer uniformément
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(1, 1, 1).normalize();
-    scene.add(directionalLight);
-
-    // Post-processing setup
-    const composer = new EffectComposer(renderer);
-    const renderPass = new RenderPass(scene, camera);
-    composer.addPass(renderPass);
-
-    const bloomPass = new UnrealBloomPass(
-      new THREE.Vector2(window.innerWidth, window.innerHeight),
-      1.2,  // Moins de bloom
-      0.2,  // Moins de flou
-      0.5   // Moins de luminosité
-    );
-    composer.addPass(bloomPass);
-
-    const animate = () => {
-      requestAnimationFrame(animate);
-      controls.update();
-      composer.render();
-    };
-
-    animate();
-
-    window.addEventListener("resize", () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    return () => {
-      renderer.dispose();
-    };
-  }, []);
+  const [fade, setFade] = useState(true);
 
   useEffect(() => {
     let i = 0;
-    const interval = setInterval(() => {
-      setCurrentMessage(messages[i]);
-      setCurrentColor(colors[i]);
-      i = (i + 1) % messages.length;
-    }, 2000);
+    const messageInterval = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setCurrentMessage(messages[i]);
+        setCurrentColor(colors[i]);
+        setFade(true);
+        i = (i + 1) % messages.length;
+      }, 500);
+    }, 2500);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(messageInterval);
+    };
   }, []);
 
   return (
     <div className="livraison-container">
+      <Header />
       <div className="scrolling-text">
-        <p style={{ color:"#D97706" }}>Bienvenue sur Votre Page Gestions de Vos Livraison</p>
+        <p style={{ color: "#D97706" }}>Bienvenue sur Votre Page Gestion de Vos Livraisons</p>
       </div>
-      <div className="scene" ref={mountRef}></div>
+
+      {/* Animation des messages */}
       <div className="overlay">
         <h2>Vos Livraisons :</h2>
-        <h3 style={{ color: currentColor, transition: "opacity 0.5s" }}>
+        <h3 style={{ color: currentColor, opacity: fade ? 1 : 0, transition: "opacity 0.5s ease-in-out" }}>
           {currentMessage}
         </h3>
       </div>
+
+      {/* Barre de navigation */}
+      <div className="navLiv">
+        <ul>
+          <li><a href="/livraisons">Livraisons en cours</a></li>
+          <li><a href="#suivi">Suivi Livraison</a></li>
+          <li><a href="/historique-livraisons">Historique Livraisons</a></li>
+          <li><a href="/ASSO">Retraits Commandes</a></li>
+        </ul>
+      </div>
+
+      {/* Illustration */}
+      <div className="image-container">
+        <img src={q} alt="Illustration Livraison" />
+      </div>
+
+      {/* Moyens de livraison */}
+      <div className="moyens-container">
+        <h2 className="title">Nos moyens de Livraisons</h2>
+        <div className="slogan-container">
+          <p className="slogan">La rapidité et la sécurité au service de vos besoins</p>
+        </div>
+
+        {/* Liste statique des moyens de livraison */}
+        <div className="carousel">
+          <div className="carousel-inner">
+            {moyens.map((moyen, i) => (
+              <div className="card-1" key={i}>
+                <div className="image-section">
+                  <img src={moyen.image} alt={moyen.titre} />
+                </div>
+                <div className="divider"></div>
+                <div className="text-section">
+                  <h3>{moyen.titre}</h3>
+                  <p>{moyen.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <p>salut</p>
     </div>
   );
 };

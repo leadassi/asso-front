@@ -7,7 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 
-{/*function PaymentComponen({ handleCheckout, handleDeliveryCheckout, testCheckout }) {
+/*{/*function PaymentComponen({ handleCheckout, handleDeliveryCheckout, testCheckout }) {
   return (
     <div className="d-flex justify-content-between mb-3">
       <button
@@ -655,16 +655,12 @@ function ValidationCart() {
       </div>
     </div>
   );
-}*/}
+}**/
 
 function PaymentComponent({ checkout, DeliveryCheckout, testCheckout }) {
   return (
     <div className="d-flex justify-content-between mb-3">
-      <button
-        type="button"
-        className="btn btn-warning me-4"
-        onClick={checkout}
-      >
+      <button type="button" className="btn btn-warning me-4" onClick={checkout}>
         Paiement avant livraison
       </button>
       <button
@@ -674,11 +670,7 @@ function PaymentComponent({ checkout, DeliveryCheckout, testCheckout }) {
       >
         Paiement après livraison
       </button>
-      <button
-        type="button"
-        className="btn btn-warning"
-        onClick={testCheckout}
-      >
+      <button type="button" className="btn btn-warning" onClick={testCheckout}>
         Continuer sans payer
       </button>
     </div>
@@ -687,50 +679,45 @@ function PaymentComponent({ checkout, DeliveryCheckout, testCheckout }) {
 
 function ValidationCart() {
   const navigate = useNavigate();
-  //const { state } = useLocation(); 
-  //const cartItems = state?.cartItems || [];
   const cartItems = JSON.parse(localStorage.getItem("cartItems"));
+
   const [formData, setFormData] = useState({
-    email: '',
-    name: '',
+    email: "",
+    name: "",
     confirmation: false,
-    paymentPreference: '', // Stocke le type de paiement sélectionné
+    paymentPreference: "", // Stocke le type de paiement sélectionné
   });
 
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-
-  
-  
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const handleCheckout = () => {
-    setFormData((prev) => ({ ...prev, paymentPreference: 'avant' }));
+    setFormData((prev) => ({ ...prev, paymentPreference: "avant" }));
     console.log("Paiement avant livraison sélectionné.");
   };
 
   const handleDeliveryCheckout = () => {
-    setFormData((prev) => ({ ...prev, paymentPreference: 'apres' }));
+    setFormData((prev) => ({ ...prev, paymentPreference: "apres" }));
     console.log("Paiement après livraison sélectionné.");
   };
 
   const testCheckout = () => {
-    setFormData((prev) => ({ ...prev, paymentPreference: 'sans' }));
+    setFormData((prev) => ({ ...prev, paymentPreference: "sans" }));
     console.log("Test sans paiement sélectionné.");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation des champs
     if (!formData.email || !formData.name || !formData.paymentPreference) {
       setError("Veuillez remplir tous les champs et sélectionner un mode de paiement.");
       return;
@@ -746,28 +733,19 @@ function ValidationCart() {
       return;
     }
 
-    const panierValide = cartItems.every(
-      (item) => item.quantity > 0 && item.price > 0
-    );
+    const panierValide = cartItems.every((item) => item.quantity > 0 && item.price > 0);
 
     if (!panierValide) {
       setError("Votre panier contient des articles invalides. Veuillez vérifier.");
       return;
     }
 
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
-  let prixTotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
-  // Convertir prixTotal en entier multiple de 5
-  prixTotal = Math.round(prixTotal / 5) * 5;
-
-
+      let prixTotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      prixTotal = Math.round(prixTotal / 5) * 5;
 
       const contenances = cartItems.map((item) => ({
         idProduit: item.id,
@@ -782,67 +760,68 @@ function ValidationCart() {
 
       console.log("Données du panier :", panier);
 
-      const panierResponse = await fetch('http://192.168.17.234:8081/commande/panier/validerPanier', {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(panier),
-      });
+      const panierResponse = await fetch(
+        "http://192.168.17.234:8081/commande/panier/validerPanier",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(panier),
+        }
+      );
 
       if (!panierResponse.ok) {
         throw new Error(`Erreur lors de la création du panier : ${panierResponse.statusText}`);
       }
 
       const idPanier = await panierResponse.text();
+      const userId = sessionStorage.getItem("utilisateurId");
+      const livraisonPrice = parseFloat(sessionStorage.getItem(`prixLivraison_${userId}`));
 
       const commande = {
         date: new Date().toISOString(),
-        prixTotal: prixTotal + 5.0,
-        montant_livraison: 5.0,
+        prixTotal: prixTotal + livraisonPrice,
+        montant_livraison: livraisonPrice,
         statutCommande: "NULL",
-        idUtilisateur: 1,
+        idUtilisateur: userId,
         panier: {
           idPanier: idPanier,
-          idUtilisateur: 1,
+          idUtilisateur: userId,
           prixTotal: prixTotal,
-          contenances: contenances.map(item => ({
+          contenances: contenances.map((item) => ({
             idProduit: item.idProduit,
             quantite: item.quantite,
           })),
         },
       };
 
-      const commandeResponse = await fetch('http://192.168.17.234:8081/commande/validercmd', {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(commande),
-      });
+      const commandeResponse = await fetch(
+        "http://192.168.17.234:8081/commande/validercmd",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(commande),
+        }
+      );
 
       if (!commandeResponse.ok) {
         throw new Error(`Erreur lors de la validation de la commande : ${commandeResponse.statusText}`);
       }
 
-      const idCommande  = await commandeResponse.text();
+      const idCommande = await commandeResponse.text();
       console.log("Commande validée. ID de commande :", idCommande);
 
-      const factureResponse = await fetch(`http://192.168.17.234:8081/commande/email/envoyer-facture/${idCommande}`,{
-        method: 'POST',
+      await fetch(`http://192.168.17.234:8081/commande/email/envoyer-facture/${idCommande}`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
       });
 
-      if (!factureResponse.ok) {
-        throw new Error(`Erreur lors de l'envoie de la facture : ${factureResponse.statusText}`);
-      }
+      sessionStorage.setItem("idCommande", idCommande);
+      sessionStorage.setItem("idPanier", idPanier);
 
-      
-
-      sessionStorage.setItem('idCommande', idCommande);
-      sessionStorage.setItem('idPanier', idPanier);
-      console.log("cartItems");
       setSuccess("Commande validée avec succès !");
-      setTimeout(() => navigate('/orders'), 3000);
+      setTimeout(() => navigate("/orders"), 3000);
     } catch (err) {
       console.error("Erreur :", err);
-      console.log("cartItems");
       setError(err.message || "Impossible de compléter l'opération.");
     } finally {
       setLoading(false);
@@ -851,18 +830,9 @@ function ValidationCart() {
 
   return (
     <div className="cont">
-      <script src ="https://cdn.cinetpay.com/seamless/main.js"></script>
-      <div
-        className="container d-flex justify-content-center align-items-center vh-100"
-        style={{ marginBottom: '10px' }}
-      >
-        <div
-          className="card shadow-lg p-4 w-100"
-          style={{
-            maxWidth: '500px',
-            minHeight: '400px',
-          }}
-        >
+      <script src="https://cdn.cinetpay.com/seamless/main.js"></script>
+      <div className="container d-flex justify-content-center align-items-center vh-100">
+        <div className="card shadow-lg p-4 w-100" style={{ maxWidth: "500px", minHeight: "400px" }}>
           <div>
             <button onClick={() => navigate(-1)}>
               <FaArrowLeft size={20} className="pointer" />
@@ -871,7 +841,9 @@ function ValidationCart() {
           <h2 className="text-center mb-4">Formulaire des commandes</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label htmlFor="email" className="form-label text-warning-emphasis">Email :</label>
+              <label htmlFor="email" className="form-label text-warning-emphasis">
+                Email :
+              </label>
               <input
                 type="email"
                 className="form-control"
@@ -885,7 +857,9 @@ function ValidationCart() {
             </div>
 
             <div className="mb-3">
-              <label htmlFor="name" className="form-label text-warning-emphasis">Nom :</label>
+              <label htmlFor="name" className="form-label text-warning-emphasis">
+                Nom :
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -899,8 +873,8 @@ function ValidationCart() {
             </div>
 
             <PaymentComponent
-              handleCheckout={handleCheckout}
-              handleDeliveryCheckout={handleDeliveryCheckout}
+              checkout={handleCheckout}
+              DeliveryCheckout={handleDeliveryCheckout}
               testCheckout={testCheckout}
             />
 
@@ -918,14 +892,9 @@ function ValidationCart() {
               </label>
             </div>
 
-            <button
-              type="submit"
-              className="btn btn-primary w-100"
-              disabled={loading}
-            >
-              {loading ? 'Validation en cours...' : 'Envoyer'}
+            <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+              {loading ? "Validation en cours..." : "Envoyer"}
             </button>
-
           </form>
 
           {error && <div className="alert alert-danger mt-3">{error}</div>}

@@ -97,7 +97,16 @@ const MapComponent = ({ currentPosition, routes }) => {
         }
 
         // Stocker le prix dans le Local Storage
-        localStorage.setItem("prixLivraison", price);
+        // Récupérer l'ID de l'utilisateur depuis sessionStorage
+        const userId = sessionStorage.getItem("utilisateurId")
+
+          if (userId) {
+              // Stocker le prix de livraison en fonction de l'ID de l'utilisateur
+              sessionStorage.setItem(`prixLivraison_${userId}`, price); 
+          } else {
+              console.error("ID utilisateur introuvable dans sessionStorage !");
+          }
+
       }
     }
   }, [currentPosition, routes]); // Réexécuter l'effet si les dépendances changent

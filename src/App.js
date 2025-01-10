@@ -37,18 +37,19 @@ import NotificationSystem from './pages/Asso/NotificationSystem.js';
 import Livraisons from './pages/Acceuil/Livraisons.jsx';
 import Nouveaute from './pages/Acceuil/Nouvostés.jsx';
 import LivraisonScene from "./pages/delivries/LivraisonScene.jsx";
+import HistoriqueLivraisons from './pages/delivries/HistoriqueLivraisons.jsx';
 function App() {
 
   // Définir des produits par défaut
-  /*const defaultProducts = [
+  const cartItems = [
     { id: 1, name: "Cosmetic Set", price: 25, quantity: 1, description: "A set of organic cosmetic products" },
     { id: 2, name: "Clothing - Dress", price: 50, quantity: 1, description: "A beautiful evening dress" },
     { id: 3, name: "Apple - Fruit", price: 1, quantity: 1, description: "Fresh and juicy apple" },
     { id: 4, name: "Chocolate Bar", price: 2, quantity: 1, description: "Delicious milk chocolate" }
-  ];*/
+  ];
 
   // Initialiser l'état avec des produits par défaut
-  const [cartItems, setCartItems] = useState([]);
+  const [/*cartItems,*/ setCartItems] = useState([]);
 
   // Fonction pour ajouter un produit au panier
   const handleAddToCart = (product) => {
@@ -106,6 +107,8 @@ function App() {
         <Route path="/Clothing" element={<Clothing />} />
         <Route path="/aliments" element={<Aliments />} />
         <Route path="/fruits" element={<Fruits />} />
+        <Route path="/livraison-scene" element={<LivraisonScene />} />
+        <Route path="/accessoires" element={<Accessoires />} />
 
         {/* Regroupement des routes avec MainLayout */}
         <Route
@@ -142,7 +145,8 @@ function App() {
                 <Route path="/notification" element={<NotificationSystem />} />
                 <Route path='/livraisons' element={<Livraisons />} />
                 <Route path="/nouveaute" element={<Nouveaute />} />
-                <Route path="/livraison-scene" element={<LivraisonScene />} />
+                <Route path="/historique-livraisons" element={<HistoriqueLivraisons />} />
+                
                 </Routes>
             </MainLayout>
           }
