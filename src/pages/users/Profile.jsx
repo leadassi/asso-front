@@ -97,7 +97,7 @@ const Profile = () => {
       .catch((error) => console.error("Erreur lors du chargement des données utilisateur :", error));
 
     // Charger l'historique des commandes en temps réel
-    fetch(`http://192.168.17.234:8081/commande/utilisateur/${utilisateurId}`) // URL de l'API des commandes
+    fetch(`http://localhost:8081/commande/utilisateur/${utilisateurId}`) // URL de l'API des commandes
       .then((response) => response.json())
       .then((data) => setOrders(data))
       .catch(error => console.error("Erreur lors du chargement des commandes :", error));

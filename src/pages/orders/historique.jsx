@@ -23,7 +23,7 @@ const Historique = () => {
 
     const fetchCommandes = async () => {
       try {
-        const response = await fetch(`http://192.168.107.234:8081/commande/utilisateur/${utilisateurId}`);
+        const response = await fetch(`http://localhost:8081/commande/utilisateur/${utilisateurId}`);
         if (!response.ok) {
           const errorText = await response.text();
           throw new Error(`Erreur ${response.status} : ${errorText}`);

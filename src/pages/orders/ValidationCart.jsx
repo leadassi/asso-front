@@ -1,4 +1,4 @@
-import React, { useState,/*useEffect*/ } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -7,7 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 
-{/*function PaymentComponen({ handleCheckout, handleDeliveryCheckout, testCheckout }) {
+function PaymentComponen({ handleCheckout, handleDeliveryCheckout, testCheckout }) {
   return (
     <div className="d-flex justify-content-between mb-3">
       <button
@@ -63,10 +63,10 @@ function ValidationCart() {
     }));
   };
 
-  const paymentServiceURL = "http://192.168.227.101:9090/";
-  const orderServiceURL = "http://192.168.227.101:8081/";
-  const userId = 1; // Remplacez par la logique pour obtenir l'ID utilisateur
-  const orderId = 26; // Remplacez par la logique pour obtenir l'ID commande
+  const paymentServiceURL = "http://localhost:9090/";
+  const orderServiceURL = "http://localhost:8081/";
+  const userId = sessionStorage.getItem('utilisateurId'); // Remplacez par la logique pour obtenir l'ID utilisateur
+  const orderId = sessionStorage.setItem('idCommande'); // Remplacez par la logique pour obtenir l'ID commande
 
   useEffect(() => {
     if (!userId || !orderId) {
@@ -495,14 +495,14 @@ function ValidationCart() {
       }));
 
       const panier = {
-        idUtilisateur: 1,
+        idUtilisateur: userId,
         prixTotal: prixTotal,
         contenances: contenances,
       };
 
       console.log("Données du panier :", panier);
 
-      const panierResponse = await fetch('http://192.168.227.101:8081/commande/panier/validerPanier', {
+      const panierResponse = await fetch('http://localhost:8081/commande/panier/validerPanier', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(panier),
@@ -519,10 +519,10 @@ function ValidationCart() {
         prixTotal: prixTotal + 5.0,
         montant_livraison: 5.0,
         statutCommande: "NULL",
-        idUtilisateur: 1,
+        idUtilisateur: userId,
         panier: {
           idPanier: idPanier,
-          idUtilisateur: 1,
+          idUtilisateur: userId,
           prixTotal: prixTotal,
           contenances: contenances.map(item => ({
             idProduit: item.idProduit,
@@ -531,7 +531,7 @@ function ValidationCart() {
         },
       };
 
-      const commandeResponse = await fetch('http://192.168.227.101:8081/commande/validercmd', {
+      const commandeResponse = await fetch('http://localhost:8081/commande/validercmd', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(commande),
@@ -544,7 +544,7 @@ function ValidationCart() {
       const idCommande  = await commandeResponse.text();
       console.log("Commande validée. ID de commande :", idCommande);
 
-      const factureResponse = await fetch(`http://192.168.227.101:8081/commande/email/envoyer-facture/${idCommande}`,{
+      const factureResponse = await fetch(`http://localhost:8081/commande/email/envoyer-facture/${idCommande}`,{
         method: 'POST',
         headers: { "Content-Type": "application/json" },
       });
@@ -655,9 +655,9 @@ function ValidationCart() {
       </div>
     </div>
   );
-}*/}
+}
 
-function PaymentComponent({ checkout, DeliveryCheckout, testCheckout }) {
+{/*function PaymentComponent({ checkout, DeliveryCheckout, testCheckout }) {
   return (
     <div className="d-flex justify-content-between mb-3">
       <button
@@ -700,7 +700,7 @@ function ValidationCart() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const userId = sessionStorage.getItem('utilisateurId');
   
   
 
@@ -782,7 +782,7 @@ function ValidationCart() {
 
       console.log("Données du panier :", panier);
 
-      const panierResponse = await fetch('http://192.168.17.234:8081/commande/panier/validerPanier', {
+      const panierResponse = await fetch('http://localhost:8081/commande/panier/validerPanier', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(panier),
@@ -799,10 +799,10 @@ function ValidationCart() {
         prixTotal: prixTotal + 5.0,
         montant_livraison: 5.0,
         statutCommande: "NULL",
-        idUtilisateur: 1,
+        idUtilisateur: userId,
         panier: {
           idPanier: idPanier,
-          idUtilisateur: 1,
+          idUtilisateur: userId,
           prixTotal: prixTotal,
           contenances: contenances.map(item => ({
             idProduit: item.idProduit,
@@ -811,7 +811,7 @@ function ValidationCart() {
         },
       };
 
-      const commandeResponse = await fetch('http://192.168.17.234:8081/commande/validercmd', {
+      const commandeResponse = await fetch('http://localhost:8081/commande/validercmd', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(commande),
@@ -824,7 +824,7 @@ function ValidationCart() {
       const idCommande  = await commandeResponse.text();
       console.log("Commande validée. ID de commande :", idCommande);
 
-      const factureResponse = await fetch(`http://192.168.17.234:8081/commande/email/envoyer-facture/${idCommande}`,{
+      const factureResponse = await fetch(`http://localhost:8081/commande/email/envoyer-facture/${idCommande}`,{
         method: 'POST',
         headers: { "Content-Type": "application/json" },
       });
@@ -839,7 +839,7 @@ function ValidationCart() {
       sessionStorage.setItem('idPanier', idPanier);
       console.log("cartItems");
       setSuccess("Commande validée avec succès !");
-      setTimeout(() => navigate('/orders'), 3000);
+      setTimeout(() => navigate('/livraisons'), 5000);
     } catch (err) {
       console.error("Erreur :", err);
       console.log("cartItems");
@@ -934,6 +934,6 @@ function ValidationCart() {
       </div>
     </div>
   );
-}
+}*/}
 
 export default ValidationCart;
