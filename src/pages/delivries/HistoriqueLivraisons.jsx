@@ -9,7 +9,7 @@ const HistoriqueLivraisons = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const utilisateurId = sessionStorage.getItem('id_utilisateur'); // Récupération de l'ID utilisateur
+    const utilisateurId = sessionStorage.getItem('utilisateurId'); // Récupération de l'ID utilisateur
     console.log("ID utilisateur :", utilisateurId);
 
     if (!utilisateurId) {

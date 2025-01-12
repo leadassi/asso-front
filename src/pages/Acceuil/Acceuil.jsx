@@ -146,7 +146,7 @@ const Accueil = () => {
   // Fonction pour récupérer les recommandations
   const fetchRecommandations = async () => {
     try {
-      const response = await fetch('http://192.168.88.129:8082/recommandations', {
+      const response = await fetch('http://localhost:8082/recommandations', {
         method: 'GET',
         headers: {
           'Access-Control-Allow-Origin': '*', // Permet de gérer CORS pour les requêtes vers l'API
@@ -204,7 +204,7 @@ const Accueil = () => {
   /*nouvele */
   const fetchProduits = async () => {
     try {
-      const response = await fetch('http://192.168.88.23:8080/produitService/getAllProduits', {
+      const response = await fetch('http://localhost:8080/produitService/getAllProduits', {
         method: 'GET',
         headers: {
           'Access-Control-Allow-Origin': '*',
@@ -331,8 +331,8 @@ const produitsAffiches = [
 
         <div className="white-card">
           <div className="text-container">
-          <h3>Nos Nouveautés</h3>
-          <p>Découvrez les meilleurs articles et tendances du moment à prix réduits.</p>
+          <h3>Nos Réductions</h3>
+          <p>Découvrez les meilleurs articles et tendances du moment à des prix réduits.</p>
           <button className="blue-button" onClick={handleDiscoverClick}>
             Découvrir</button>
           </div>
