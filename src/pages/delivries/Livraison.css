@@ -8,7 +8,9 @@
   background-color: #fff;
   text-align: center;
 }
-
+.table-responsive-1{
+  margin-top: 88px;
+}
 /* Animation du texte défilant */
 .scrolling-text {
   width: 100%;
@@ -192,4 +194,98 @@
   height: 3px;
   background: #ffcc00;
   margin: 10px auto;
+}
+/* Animation sur l'image du livreur */
+.livreur-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.livreur-image:hover {
+  transform: scale(1.2);
+}
+.livraisons-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.livraisons-table th, .livraisons-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.livraison-card {
+  margin: 20px 0;
+}
+
+.livreur-info-1 {
+  display: flex;
+  align-items: center;
+}
+
+.livreur-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.qr-code-link {
+  color: blue;
+  text-decoration: none;
+}
+
+.qr-code-link:hover {
+  text-decoration: underline;
+}
+.status-label {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.status-encours {
+  background-color: orange;
+  color: white;
+}
+
+.status-terminé {
+  background-color: green;
+  color: white;
+}
+
+.livré-button {
+
+ 
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.livré-button:hover {
+  background-color: darkgreen;
+  transform: scale(1.1);
+}
+
+.animate-image {
+  transition: transform 0.3s ease-in-out;
+}
+
+.animate-image:hover {
+  transform: scale(1.2);
 }

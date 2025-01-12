@@ -9,26 +9,38 @@ const HistoriqueLivraisons = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const utilisateurId = sessionStorage.getItem('utilisateurId');
+    const utilisateurId = sessionStorage.getItem('id_utilisateur'); // Récupération de l'ID utilisateur
     console.log("ID utilisateur :", utilisateurId);
 
     if (!utilisateurId) {
       console.error("Aucun ID utilisateur trouvé dans le sessionStorage.");
       setError("Aucun ID utilisateur trouvé.");
       setLoading(false);
-      return;
+      
     }
+    const id=2;
 
     const fetchLivraisons = async () => {
       try {
-        const response = await fetch(`http://192.168.107.234:8082/livraison/utilisateur/${utilisateurId}`);
+        // Envoi d'une requête GET
+        const response = await fetch(`http://localhost:8000/Livraisonservices/historique/${id}/`, {
+          method: 'GET', // Assure que la requête est bien un GET
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
         if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Erreur ${response.status} : ${errorText}`);
+          const errorData = await response.json();
+          throw new Error(errorData.error || `Erreur ${response.status}`);
         }
 
         const data = await response.json();
-        setLivraisons(data);
+        if (data.message) {
+          setLivraisons([]); // Aucune livraison trouvée
+        } else {
+          setLivraisons(data);
+        }
       } catch (error) {
         console.error("Erreur lors de la récupération des livraisons :", error);
         setError(error.message);
@@ -48,7 +60,7 @@ const HistoriqueLivraisons = () => {
         </button>
 
         <h2 className="mb-4">Historique des Livraisons</h2>
-        <p className="text-muted" style={{ color: "#666" }}>
+        <p className="text-muted">
           Retrouvez ici l'historique de toutes vos livraisons effectuées.
         </p>
 
@@ -56,46 +68,46 @@ const HistoriqueLivraisons = () => {
           <table className="table table-bordered">
             <thead>
               <tr>
-                <th>Commande</th>
+                <th>Commande N</th>
                 <th>Date</th>
-                <th>Qr_code</th>
+                <th>Qr Code</th>
                 <th>Livreur</th>
                 <th>Statut</th>
               </tr>
             </thead>
             <tbody>
-              {livraisons.length > 0 ? (
+              {loading ? (
+                <tr>
+                  <td colSpan="5" style={{ textAlign: "center" }}>
+                    Chargement des livraisons...
+                  </td>
+                </tr>
+              ) : livraisons.length > 0 ? (
                 livraisons.map((livraison) => (
-                  <tr key={livraison.idLivraison}>
-                    <td>{livraison.idCommande}</td>
-                    <td>{new Date(livraison.date).toLocaleDateString()}</td>
+                  <tr key={livraison.id_commande}>
+                    <td>{livraison.id_commande}</td>
+                    <td>{new Date(livraison.date).toLocaleString()}</td>
                     <td>
-                      <img 
-                        src={livraison.qr_code} 
-                        alt="QR Code" 
-                        style={{ width: '50px', height: '50px' }} 
-                      />
+                      {livraison.qr_code ? (
+                        <img 
+                          src={livraison.qr_code} 
+                          alt="QR Code" 
+                          style={{ width: '50px', height: '50px' }} 
+                        />
+                      ) : (
+                        "Non disponible"
+                      )}
                     </td>
                     <td>{livraison.livreur_nom}</td>
                     <td>
-                      <span
-                        className={`badge ${
-                          livraison.statut === "DELIVERED"
-                            ? "bg-success"
-                            : livraison.statut === "INPROGRESS"
-                            ? "bg-warning text-dark"
-                            : "bg-danger"
-                        }`}
-                      >
-                        {livraison.statut}
-                      </span>
+                      <span className="badge bg-success">Effectuée</span>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
                   <td colSpan="5" style={{ textAlign: "center" }}>
-                    {loading ? <p>Chargement des livraisons...</p> : <p>Aucune livraison disponible.</p>}
+                    Aucune livraison effectuée.
                   </td>
                 </tr>
               )}

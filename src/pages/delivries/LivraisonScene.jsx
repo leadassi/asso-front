@@ -94,7 +94,7 @@ const LivraisonScene = () => {
           </div>
         </div>
       </div>
-      <p>salut</p>
+     
     </div>
   );
 };
