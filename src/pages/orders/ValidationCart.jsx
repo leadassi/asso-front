@@ -66,7 +66,7 @@ function ValidationCart() {
   const paymentServiceURL = "http://localhost:9090/";
   const orderServiceURL = "http://localhost:8081/";
   const userId = sessionStorage.getItem('utilisateurId'); // Remplacez par la logique pour obtenir l'ID utilisateur
-  const orderId = sessionStorage.setItem('idCommande'); // Remplacez par la logique pour obtenir l'ID commande
+  const orderId = sessionStorage.getItem('idCommande'); // Remplacez par la logique pour obtenir l'ID commande
 
   useEffect(() => {
     if (!userId || !orderId) {
@@ -514,10 +514,12 @@ function ValidationCart() {
 
       const idPanier = await panierResponse.text();
 
+      const livraisonPrice = parseFloat(sessionStorage.getItem(`prixLivraison_${userId}`));
+
       const commande = {
         date: new Date().toISOString(),
-        prixTotal: prixTotal + 5.0,
-        montant_livraison: 5.0,
+        prixTotal: prixTotal + livraisonPrice,
+        montant_livraison: livraisonPrice,
         statutCommande: "NULL",
         idUtilisateur: userId,
         panier: {

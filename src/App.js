@@ -41,15 +41,15 @@ import HistoriqueLivraisons from './pages/delivries/HistoriqueLivraisons.jsx';
 function App() {
 
   // Définir des produits par défaut
-  const cartItems = [
+  /*const cartItems = [
     { id: 1, name: "Cosmetic Set", price: 25, quantity: 1, description: "A set of organic cosmetic products" },
     { id: 2, name: "Clothing - Dress", price: 50, quantity: 1, description: "A beautiful evening dress" },
     { id: 3, name: "Apple - Fruit", price: 1, quantity: 1, description: "Fresh and juicy apple" },
     { id: 4, name: "Chocolate Bar", price: 2, quantity: 1, description: "Delicious milk chocolate" }
-  ];
+  ];*/
 
   // Initialiser l'état avec des produits par défaut
-  const [/*cartItems,*/ setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   // Fonction pour ajouter un produit au panier
   const handleAddToCart = (product) => {
