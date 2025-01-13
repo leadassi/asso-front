@@ -16,14 +16,13 @@ const HistoriqueLivraisons = () => {
       console.error("Aucun ID utilisateur trouvé dans le sessionStorage.");
       setError("Aucun ID utilisateur trouvé.");
       setLoading(false);
-      
+      return;
     }
-    const id=2;
 
     const fetchLivraisons = async () => {
       try {
         // Envoi d'une requête GET
-        const response = await fetch(`http://localhost:8000/Livraisonservices/historique/${id}/`, {
+        const response = await fetch(`http://localhost:8000/Livraisonservices/historique/${utilisateurId}/`, {
           method: 'GET', // Assure que la requête est bien un GET
           headers: {
             'Content-Type': 'application/json',
@@ -49,8 +48,16 @@ const HistoriqueLivraisons = () => {
       }
     };
 
+    // Effectuer le premier fetch immédiatement
     fetchLivraisons();
-  }, []);
+
+    // Recharger les données toutes les 1 minute (60000 ms)
+    const intervalId = setInterval(fetchLivraisons, 60000);
+
+    // Nettoyer l'intervalle à la désactivation du composant
+    return () => clearInterval(intervalId);
+
+  }, []); // L'effet ne se déclenche qu'une seule fois au montage du composant
 
   return (
     <div className="container" style={{ marginTop: "10%" }}>

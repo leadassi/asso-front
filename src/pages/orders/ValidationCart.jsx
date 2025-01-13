@@ -545,6 +545,13 @@ function ValidationCart() {
 
       const idCommande  = await commandeResponse.text();
       console.log("Commande validée. ID de commande :", idCommande);
+      if (idCommande) {
+        sessionStorage.setItem("idCommande", idCommande);
+        console.log("Commande stockée :", idCommande);
+    } else {
+        console.error("Erreur : idCommande est vide ou undefined");
+    }
+    
 
       const factureResponse = await fetch(`http://localhost:8081/commande/email/envoyer-facture/${idCommande}`,{
         method: 'POST',

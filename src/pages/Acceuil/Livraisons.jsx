@@ -22,8 +22,8 @@ const Livraisons = () => {
 
   useEffect(() => {
     const fetchLivraisons = async () => {
-      const idUtilisateur = 2;
-      const idCommande = 5;
+      const idUtilisateur =  sessionStorage.getItem('utilisateurId');
+      const idCommande = sessionStorage.getItem('idCommande');
 
       try {
         const response = await fetch(
