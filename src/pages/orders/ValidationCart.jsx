@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,/*useEffect*/ } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -7,7 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 
-function PaymentComponen({ handleCheckout, handleDeliveryCheckout, testCheckout }) {
+/*function PaymentComponen({ handleCheckout, handleDeliveryCheckout, testCheckout }) {
   return (
     <div className="d-flex justify-content-between mb-3">
       <button
@@ -664,9 +664,8 @@ function ValidationCart() {
       </div>
     </div>
   );
-}
-/*
-{/*function PaymentComponent({ checkout, DeliveryCheckout, testCheckout }) {
+}*/
+function PaymentComponent({ checkout, DeliveryCheckout, testCheckout }) {
   return (
     <div className="d-flex justify-content-between mb-3">
       <button type="button" className="btn btn-warning me-4" onClick={checkout}>
@@ -909,6 +908,6 @@ function ValidationCart() {
       </div>
     </div>
   );
-}*/
+}
 
 export default ValidationCart;
